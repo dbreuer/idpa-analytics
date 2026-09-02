@@ -5,11 +5,14 @@ from pathlib import Path
 import fitz
 import pdfplumber
 
-from common import COMPETITIONS_PATH, RAW_EXTRACTED_PATH, ensure_dirs, identify_header, load_json, now_iso, save_json
+from common import COMPETITIONS_PATH, RAW_EXTRACTED_PATH, ensure_dirs, load_json, now_iso, save_json, split_table_rows
 
 
 def extract_with_pdfplumber(pdf_path: Path) -> list[dict]:
     tables: list[dict] = []
+    last_header: list[str] = []
+    last_header_map: dict[str, int] = {}
+    last_metadata: dict[str, str] = {}
     with pdfplumber.open(pdf_path) as pdf:
         for page_index, page in enumerate(pdf.pages, start=1):
             extracted_tables = page.extract_tables() or []
@@ -17,14 +20,22 @@ def extract_with_pdfplumber(pdf_path: Path) -> list[dict]:
                 rows = [[(cell or "").strip() for cell in row] for row in table if row]
                 if not rows:
                     continue
+                metadata, header, header_map, data_rows = split_table_rows(rows)
+                if header:
+                    last_header, last_header_map = header, header_map
+                else:
+                    # continuation page: metadata/header row isn't repeated, so reuse the previous division/columns
+                    header, header_map, data_rows = last_header, last_header_map, rows
+                last_metadata = metadata or last_metadata
                 tables.append(
                     {
                         "page": page_index,
                         "table": table_index,
                         "strategy": "pdfplumber",
-                        "header": rows[0],
-                        "headerMap": identify_header(rows[0]),
-                        "rows": rows[1:],
+                        "metadata": metadata or last_metadata,
+                        "header": header,
+                        "headerMap": header_map,
+                        "rows": data_rows,
                     }
                 )
     return tables
@@ -32,6 +43,9 @@ def extract_with_pdfplumber(pdf_path: Path) -> list[dict]:
 
 def extract_with_pymupdf(pdf_path: Path) -> list[dict]:
     tables: list[dict] = []
+    last_header: list[str] = []
+    last_header_map: dict[str, int] = {}
+    last_metadata: dict[str, str] = {}
     with fitz.open(pdf_path) as document:
         for page_index, page in enumerate(document, start=1):
             text = page.get_text("text")
@@ -41,20 +55,22 @@ def extract_with_pymupdf(pdf_path: Path) -> list[dict]:
             header_index = next((i for i, line in enumerate(lines) if "Név" in line or "Nev" in line), None)
             if header_index is None:
                 continue
-            header = [segment.strip() for segment in lines[header_index].split("|")]
-            rows = []
-            for line in lines[header_index + 1 :]:
-                segments = [segment.strip() for segment in line.split("|")]
-                if len(segments) >= 2:
-                    rows.append(segments)
+            all_rows = [[segment.strip() for segment in line.split("|")] for line in lines]
+            metadata, header, header_map, data_rows = split_table_rows(all_rows)
+            if header:
+                last_header, last_header_map = header, header_map
+            else:
+                header, header_map, data_rows = last_header, last_header_map, all_rows
+            last_metadata = metadata or last_metadata
             tables.append(
                 {
                     "page": page_index,
                     "table": 1,
                     "strategy": "pymupdf-text",
+                    "metadata": metadata or last_metadata,
                     "header": header,
-                    "headerMap": identify_header(header),
-                    "rows": rows,
+                    "headerMap": header_map,
+                    "rows": data_rows,
                 }
             )
     return tables

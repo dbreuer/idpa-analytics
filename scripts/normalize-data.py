@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 
-from common import CLUB_ALIASES_PATH, COMPETITIONS_PATH, QUALITY_PATH, RAW_EXTRACTED_PATH, RESULTS_PATH, ensure_dirs, identify_header, load_json, normalize_key, normalize_text, now_iso, save_json
+from common import CLUB_ALIASES_PATH, COMPETITIONS_PATH, QUALITY_PATH, RAW_EXTRACTED_PATH, RESULTS_PATH, ensure_dirs, identify_header, load_json, normalize_key, normalize_text, now_iso, parse_division_code, save_json
 
 
 PLACEMENT_PATTERN = re.compile(r"(\d+)")
@@ -92,6 +92,7 @@ def main() -> None:
         for table in tables:
             header = table.get("header", [])
             header_map = table.get("headerMap") or identify_header(header)
+            division = parse_division_code(table.get("metadata", {}).get("division"))
             for row in table.get("rows", []):
                 if not any(normalize_text(cell) for cell in row):
                     continue
@@ -134,8 +135,8 @@ def main() -> None:
                     "normalizedTeam": normalize_text(team),
                     "club": club,
                     "normalizedClub": canonical_club(club or "", aliases) if club else None,
-                    "division": normalize_text(padded_row[header_map.get("division", 4)] if len(padded_row) > header_map.get("division", 4) else "") or None,
-                    "category": normalize_text(padded_row[header_map.get("category", 3)] if len(padded_row) > header_map.get("category", 3) else "") or None,
+                    "division": division,
+                    "category": (normalize_text(padded_row[header_map["category"]]) or None) if "category" in header_map and len(padded_row) > header_map["category"] else None,
                     "rawResult": normalize_text(padded_row[header_map.get("result", 5)] if len(padded_row) > header_map.get("result", 5) else "") or None,
                     "rawClubTeam": club_raw,
                     "rawRow": raw_row,

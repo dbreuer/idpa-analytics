@@ -29,7 +29,7 @@ USER_AGENT = os.getenv(
 
 
 HEADER_ALIASES = {
-    "placement": ["helyezes", "helyezés", "rank", "hely"],
+    "placement": ["helyezes", "helyezés", "sorszam", "sorszám", "rank"],
     "name": ["nev", "név", "competitor", "versenyzo", "versenyző"],
     "club_team": ["egyesulet / csapat", "egyesület / csapat", "club / team", "csapat", "egyesulet", "egyesület"],
     "category": ["kategoria", "kategória", "category"],
@@ -37,6 +37,72 @@ HEADER_ALIASES = {
     "result": ["eredmeny", "eredmény", "score", "result"],
     "notes": ["megjegyzesek", "megjegyzések", "megjegyzes", "megjegyzés", "notes"],
 }
+
+# Result PDFs print a metadata block (organizer/location/date/division, etc.) as
+# label/value pairs above the actual competitor table, one table per division.
+METADATA_KEYS = {
+    "szervezo": "organizer",
+    "helyszin": "location",
+    "datum": "date",
+    "szakag": "discipline",
+    "verseny tipusa": "competitionType",
+    "verseny tipus": "competitionType",
+    "divizio": "division",
+}
+
+# Divisions are printed as "CODE - Hungarian description" except a few that
+# only carry the English name, so those are mapped explicitly to their code.
+DIVISION_NAME_TO_CODE = {
+    "carry optic": "CO",
+    "carry optics": "CO",
+    "back up gun": "BUG",
+    "backup gun": "BUG",
+}
+
+
+def parse_division_code(value: str | None) -> str | None:
+    text = normalize_text(value)
+    if not text:
+        return None
+    if " - " in text:
+        return text.split(" - ", 1)[0].strip().upper()
+    return DIVISION_NAME_TO_CODE.get(normalize_key(text), text.upper())
+
+
+def parse_metadata_row(row: list[str]) -> dict[str, str]:
+    metadata: dict[str, str] = {}
+    cells = [normalize_text(cell) for cell in row]
+    index = 0
+    while index < len(cells) - 1:
+        label = cells[index]
+        if label.endswith(":"):
+            field = METADATA_KEYS.get(normalize_key(label.rstrip(":")))
+            value = cells[index + 1]
+            if field and value:
+                metadata[field] = value
+            index += 2
+        else:
+            index += 1
+    return metadata
+
+
+def split_table_rows(rows: list[list[str]]) -> tuple[dict[str, str], list[str], dict[str, int], list[list[str]]]:
+    """Split raw PDF table rows into the metadata block, the real column header, and data rows."""
+    metadata: dict[str, str] = {}
+    header: list[str] = []
+    header_map: dict[str, int] = {}
+    data_rows: list[list[str]] = []
+    header_found = False
+    for row in rows:
+        if not header_found:
+            candidate_map = identify_header(row)
+            if "name" in candidate_map and "placement" in candidate_map:
+                header, header_map, header_found = row, candidate_map, True
+                continue
+            metadata.update(parse_metadata_row(row))
+            continue
+        data_rows.append(row)
+    return metadata, header, header_map, data_rows
 
 
 def now_iso() -> str:

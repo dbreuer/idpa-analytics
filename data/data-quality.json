@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-02T05:21:00.003295+00:00",
+  "generatedAt": "2026-09-02T05:31:48.748748+00:00",
   "quality": {
     "totalPdfsDiscovered": 29,
     "successfullyProcessedPdfs": 29,
     "failedPdfs": 0,
-    "totalExtractedRows": 2033,
-    "validCompetitorRows": 2031,
-    "rowsWithValidTime": 1350,
-    "rowsWithMissingTeam": 2030,
-    "rowsWithParsingErrors": 175
+    "totalExtractedRows": 1365,
+    "validCompetitorRows": 1365,
+    "rowsWithValidTime": 1360,
+    "rowsWithMissingTeam": 1131,
+    "rowsWithParsingErrors": 4
   },
   "errors": []
 }
