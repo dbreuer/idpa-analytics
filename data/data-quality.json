@@ -1,0 +1,14 @@
+{
+  "generatedAt": null,
+  "quality": {
+    "totalPdfsDiscovered": 0,
+    "successfullyProcessedPdfs": 0,
+    "failedPdfs": 0,
+    "totalExtractedRows": 0,
+    "validCompetitorRows": 0,
+    "rowsWithValidTime": 0,
+    "rowsWithMissingTeam": 0,
+    "rowsWithParsingErrors": 0
+  },
+  "errors": []
+}

@@ -1,12 +1,18 @@
 {
-  "name": "idpa-app",
+  "name": "idpa-analytics",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint .",
+    "pipeline:discover": "python scripts/discover-competitions.py",
+    "pipeline:download": "python scripts/download-results.py",
+    "pipeline:extract": "python scripts/extract-pdfs.py",
+    "pipeline:normalize": "python scripts/normalize-data.py",
+    "pipeline:stats": "python scripts/calculate-statistics.py",
+    "pipeline:all": "npm run pipeline:discover && npm run pipeline:download && npm run pipeline:extract && npm run pipeline:normalize && npm run pipeline:stats"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
