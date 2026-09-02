@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MDLSZ IDPA 2025 Season Analytics
 
-## Getting Started
+Interactive Next.js dashboard and Python data pipeline for analyzing official Hungarian MDLSZ IDPA 2025 competition results.
 
-First, run the development server:
+## Stack
+
+- Next.js 16
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- Recharts
+- Lucide Icons
+- Python data pipeline with Requests, BeautifulSoup, pdfplumber, PyMuPDF, and pandas
+
+## Installation
+
+```bash
+npm install
+python -m pip install -r requirements.txt
+```
+
+## Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Data Pipeline
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The pipeline is designed to keep missing data and parsing failures visible instead of silently hiding them.
 
-## Learn More
+```bash
+python scripts/discover-competitions.py
+python scripts/download-results.py
+python scripts/extract-pdfs.py
+python scripts/normalize-data.py
+python scripts/calculate-statistics.py
+```
 
-To learn more about Next.js, take a look at the following resources:
+Or run everything in sequence:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run pipeline:all
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Pipeline Outputs
 
-## Deploy on Vercel
+- `/home/runner/work/idpa-analytics/idpa-analytics/data/competitions.json`
+- `/home/runner/work/idpa-analytics/idpa-analytics/data/raw-extracted-results.json`
+- `/home/runner/work/idpa-analytics/idpa-analytics/data/results.json`
+- `/home/runner/work/idpa-analytics/idpa-analytics/data/data-quality.json`
+- `/home/runner/work/idpa-analytics/idpa-analytics/data/statistics.json`
+- `/home/runner/work/idpa-analytics/idpa-analytics/data/club-aliases.json`
+- `/home/runner/work/idpa-analytics/idpa-analytics/data/pdfs/`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Environment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Copy `.env.example` to `.env` if you need to override defaults.
+
+```bash
+cp .env.example .env
+```
+
+Available settings:
+
+- `MDLSZ_CALENDAR_URL`
+- `MDLSZ_REQUEST_TIMEOUT`
+- `MDLSZ_USER_AGENT`
+- `NEXT_PUBLIC_SITE_NAME`
+
+## Production
+
+```bash
+npm run build
+npm start
+```
+
+## Refreshing Source Data
+
+1. Run the discovery script to rebuild the 2025 IDPA competition list from the official MDLSZ calendar.
+2. Run the download script to resolve every `Eredmények` link and fetch available PDFs.
+3. Run extraction and normalization to rebuild normalized competitor rows and parsing diagnostics.
+4. Run statistics calculation to regenerate leaderboard and insight data.
+5. Review `data/data-quality.json` and `data/results.json` for parse errors, missing teams, and ambiguous identities before publishing.
+
+## Notes Parsing
+
+The normalization pipeline parses `Megjegyzések` values such as:
+
+- `HU1018104 / 71,33`
+- `HU1018104/71,33`
+- `HU1018104 / 71.33`
+- `HU1018104`
+- `71,33`
+
+The original raw value is preserved. Failed parsing is surfaced via `parseError` and the data quality report.
+
+## Dashboard Features
+
+- Premium dark analytics layout
+- Global competition, division, club, and participation filters
+- Top competitor leaderboard
+- Club power and club strength ranking
+- Competitor detail trends
+- Competition timeline with source links
+- Division, performance, and speed/consistency charts
+- Methodology page
+- Data quality dashboard
+
+## Validation
+
+Verified in this repository with:
+
+```bash
+npm run lint
+npm run build
+```

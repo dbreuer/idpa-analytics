@@ -24,7 +24,6 @@ export function buildStatistics(
 ): StatisticsSnapshot {
   const clubAliases = options.clubAliases ?? {};
   const minimumConsistencyCompetitions = options.minimumConsistencyCompetitions ?? 3;
-  const competitionsById = new Map(competitions.map((competition) => [competition.id, competition]));
 
   const normalizedResults = results.map((result) => ({
     ...result,
@@ -83,7 +82,7 @@ export function buildStatistics(
       if (result.placement <= 3) existing.podiums += 1;
     }
     if (result.timeSeconds !== undefined) {
-      existing.fastestTime = existing.fastestTime === null
+      existing.fastestTime = existing.fastestTime == null
         ? result.timeSeconds
         : Math.min(existing.fastestTime, result.timeSeconds);
     }
@@ -189,7 +188,7 @@ export function buildStatistics(
     };
     existing.appearances += 1;
     if (result.timeSeconds !== undefined) {
-      existing.fastestTime = existing.fastestTime === null
+      existing.fastestTime = existing.fastestTime == null
         ? result.timeSeconds
         : Math.min(existing.fastestTime, result.timeSeconds);
     }

@@ -1,5 +1,30 @@
 {
-  "generatedAt": null,
-  "statistics": null,
+  "generatedAt": "2026-09-02T05:00:33.178668+00:00",
+  "statistics": {
+    "totalCompetitions": 0,
+    "uniqueCompetitors": 0,
+    "clubs": 0,
+    "totalEntries": 0,
+    "fastestRecordedTime": null,
+    "mostActiveCompetitor": null,
+    "competitors": [],
+    "overallTop5": [],
+    "speedTop5": [],
+    "ironmanTop5": [],
+    "consistencyTop5": [],
+    "clubsRanking": [],
+    "divisions": [],
+    "competitions": [],
+    "insights": {
+      "dominator": null,
+      "speedDemon": null,
+      "ironman": null,
+      "mrConsistent": null,
+      "risingStar": null,
+      "biggestCompetition": null,
+      "strongestClub": null,
+      "podiumMachine": null
+    }
+  },
   "errors": []
 }

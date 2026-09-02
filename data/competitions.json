@@ -1,7 +1,9 @@
 {
-  "generatedAt": null,
+  "generatedAt": "2026-09-02T05:00:32.272031+00:00",
   "sourceUrl": "https://mdlsz.com/versenynaptar-2025/",
   "discoveredCount": 0,
   "competitions": [],
-  "errors": []
+  "errors": [
+    "Failed to discover competitions from https://mdlsz.com/versenynaptar-2025/: HTTPSConnectionPool(host='mdlsz.com', port=443): Max retries exceeded with url: /versenynaptar-2025/ (Caused by NameResolutionError(\"<urllib3.connection.HTTPSConnection object at 0x7f3b95489ac0>: Failed to resolve 'mdlsz.com' ([Errno -5] No address associated with hostname)\"))"
+  ]
 }
