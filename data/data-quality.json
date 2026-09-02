@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-02T05:00:33.045148+00:00",
+  "generatedAt": "2026-09-02T05:21:00.003295+00:00",
   "quality": {
-    "totalPdfsDiscovered": 0,
-    "successfullyProcessedPdfs": 0,
+    "totalPdfsDiscovered": 29,
+    "successfullyProcessedPdfs": 29,
     "failedPdfs": 0,
-    "totalExtractedRows": 0,
-    "validCompetitorRows": 0,
-    "rowsWithValidTime": 0,
-    "rowsWithMissingTeam": 0,
-    "rowsWithParsingErrors": 0
+    "totalExtractedRows": 2033,
+    "validCompetitorRows": 2031,
+    "rowsWithValidTime": 1350,
+    "rowsWithMissingTeam": 2030,
+    "rowsWithParsingErrors": 175
   },
   "errors": []
 }

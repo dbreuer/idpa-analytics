@@ -20,7 +20,7 @@ STATISTICS_PATH = DATA_DIR / "statistics.json"
 QUALITY_PATH = DATA_DIR / "data-quality.json"
 CLUB_ALIASES_PATH = DATA_DIR / "club-aliases.json"
 
-CALENDAR_URL = os.getenv("MDLSZ_CALENDAR_URL", "https://mdlsz.com/versenynaptar-2025/")
+CALENDAR_URL = os.getenv("MDLSZ_CALENDAR_URL", "https://portal.mdlsz.com/racecalendar?year=2025")
 REQUEST_TIMEOUT = int(os.getenv("MDLSZ_REQUEST_TIMEOUT", "30"))
 USER_AGENT = os.getenv(
     "MDLSZ_USER_AGENT",
