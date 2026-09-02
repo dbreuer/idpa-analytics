@@ -1,0 +1,16 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "MDLSZ IDPA 2025 Season Analytics",
+  description:
+    "Interactive analytics dashboard for official Hungarian MDLSZ IDPA 2025 competition results.",
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html lang="en" className="h-full">
+      <body className="min-h-full bg-slate-950 text-white antialiased">{children}</body>
+    </html>
+  );
+}

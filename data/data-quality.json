@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-09-02T05:00:33.045148+00:00",
+  "quality": {
+    "totalPdfsDiscovered": 0,
+    "successfullyProcessedPdfs": 0,
+    "failedPdfs": 0,
+    "totalExtractedRows": 0,
+    "validCompetitorRows": 0,
+    "rowsWithValidTime": 0,
+    "rowsWithMissingTeam": 0,
+    "rowsWithParsingErrors": 0
+  },
+  "errors": []
+}
