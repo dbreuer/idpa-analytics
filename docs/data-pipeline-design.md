@@ -5,18 +5,27 @@ Notes on the non-obvious parts of the `scripts/` pipeline. Read this before chan
 
 ## Stages
 
-1. `discover-competitions.py` — scrapes the MDLSZ calendar table and writes `data/competitions.json`.
-2. `download-results.py` — resolves each competition's `Eredmények` link and downloads the result PDF into `data/pdfs/`.
-3. `extract-pdfs.py` — extracts raw tables from each PDF into `data/raw-extracted-results.json`.
-4. `normalize-data.py` — turns raw tables into per-competitor rows in `data/results.json`, plus `data/data-quality.json`.
-5. `calculate-statistics.py` — aggregates `results.json` into `data/statistics.json` for the dashboard.
+1. `discover-competitions.py` — scrapes the MDLSZ calendar table and writes `data/<year>/competitions.json`.
+2. `download-results.py` — resolves each competition's `Eredmények` link and downloads the result PDF into `data/<year>/pdfs/`.
+3. `extract-pdfs.py` — extracts raw tables from each PDF into `data/<year>/raw-extracted-results.json`.
+4. `normalize-data.py` — turns raw tables into per-competitor rows in `data/<year>/results.json`, plus `data/<year>/data-quality.json`.
+5. `calculate-statistics.py` — aggregates `results.json` into `data/<year>/statistics.json` for the dashboard.
+
+All stages accept `--year <year>` (default: current year). `common.parse_pipeline_args()`
+resolves year-specific paths and the calendar URL; `run-pipeline.py` runs all five
+stages with the same year. Club aliases remain shared in `data/club-aliases.json`.
+PDF paths in competition JSON are relative to the season directory (`pdfs/<id>.pdf`).
+Missing required inputs stop downstream stages rather than generating empty output.
+Generated JSON includes a top-level `year`.
 
 ## Calendar source
 
 The public page `https://mdlsz.com/versenynaptar-2025/` does not contain the calendar
 table itself — the table is rendered inside an `<iframe src="https://portal.mdlsz.com/racecalendar?year=2025">`.
-`CALENDAR_URL` in `common.py` must point at that iframe URL directly, since the scraper
-does not execute JavaScript or render iframes.
+The URL built by `common.pipeline_paths()` must point at that iframe endpoint directly,
+since the scraper does not execute JavaScript or render iframes. `MDLSZ_CALENDAR_URL`
+can override the endpoint, but the requested year's query parameter always takes
+precedence. Discovery only accepts calendar rows from that year.
 
 ## Result PDF table layout
 

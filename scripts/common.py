@@ -1,31 +1,69 @@
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import urljoin
+from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
 import requests
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = REPO_ROOT / "data"
-PDF_DIR = DATA_DIR / "pdfs"
-RAW_EXTRACTED_PATH = DATA_DIR / "raw-extracted-results.json"
-COMPETITIONS_PATH = DATA_DIR / "competitions.json"
-RESULTS_PATH = DATA_DIR / "results.json"
-STATISTICS_PATH = DATA_DIR / "statistics.json"
-QUALITY_PATH = DATA_DIR / "data-quality.json"
 CLUB_ALIASES_PATH = DATA_DIR / "club-aliases.json"
-
-CALENDAR_URL = os.getenv("MDLSZ_CALENDAR_URL", "https://portal.mdlsz.com/racecalendar?year=2025")
-REQUEST_TIMEOUT = int(os.getenv("MDLSZ_REQUEST_TIMEOUT", "30"))
+REQUEST_TIMEOUT = int(os.getenv("MDLSZ_REQUEST_TIMEOUT", "60"))
 USER_AGENT = os.getenv(
     "MDLSZ_USER_AGENT",
     "mdlsz-idpa-analytics/1.0 (+https://github.com/dbreuer/idpa-analytics)",
 )
+
+@dataclass(frozen=True)
+class PipelinePaths:
+    year: int
+    data_dir: Path
+    pdf_dir: Path
+    competitions: Path
+    raw_extracted: Path
+    results: Path
+    statistics: Path
+    quality: Path
+    calendar_url: str
+
+
+def parse_year(value: str) -> int:
+    if not re.fullmatch(r"[1-9]\d{3}", value):
+        raise argparse.ArgumentTypeError("year must be a four-digit year (1000-9999)")
+    return int(value)
+
+
+def pipeline_paths(year: int) -> PipelinePaths:
+    if not 1000 <= year <= 9999:
+        raise ValueError("year must be between 1000 and 9999")
+    directory = DATA_DIR / str(year)
+    calendar = urlsplit(os.getenv("MDLSZ_CALENDAR_URL", "https://portal.mdlsz.com/racecalendar"))
+    query = [(key, value) for key, value in parse_qsl(calendar.query) if key != "year"]
+    query.append(("year", str(year)))
+    return PipelinePaths(
+        year=year,
+        data_dir=directory,
+        pdf_dir=directory / "pdfs",
+        competitions=directory / "competitions.json",
+        raw_extracted=directory / "raw-extracted-results.json",
+        results=directory / "results.json",
+        statistics=directory / "statistics.json",
+        quality=directory / "data-quality.json",
+        calendar_url=urlunsplit(calendar._replace(query=urlencode(query))),
+    )
+
+
+def parse_pipeline_args(description: str) -> PipelinePaths:
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("--year", type=parse_year, default=datetime.now().year, help="Season year (default: current year)")
+    return pipeline_paths(parser.parse_args().year)
 
 
 HEADER_ALIASES = {
@@ -109,18 +147,19 @@ def now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def ensure_dirs() -> None:
-    DATA_DIR.mkdir(exist_ok=True)
-    PDF_DIR.mkdir(exist_ok=True)
+def ensure_dirs(paths: PipelinePaths) -> None:
+    paths.pdf_dir.mkdir(parents=True, exist_ok=True)
 
 
 def save_json(path: Path, payload: Any) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def load_json(path: Path, fallback: Any) -> Any:
+def load_json(path: Path, fallback: Any = ...) -> Any:
     if not path.exists():
-        return fallback
+        if fallback is not ...:
+            return fallback
+        raise FileNotFoundError(f"Required pipeline input missing: {path}. Run the previous stage for this year first.")
     return json.loads(path.read_text(encoding="utf-8"))
 
 

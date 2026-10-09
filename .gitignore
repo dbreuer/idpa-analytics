@@ -44,6 +44,7 @@ next-env.d.ts
 
 # results
 data/pdfs/*
+data/*/pdfs/
 
 # cache
 __pycache__/

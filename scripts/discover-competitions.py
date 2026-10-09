@@ -2,16 +2,17 @@ from __future__ import annotations
 
 from bs4 import BeautifulSoup
 
-from common import CALENDAR_URL, COMPETITIONS_PATH, ensure_dirs, fetch, make_session, normalize_key, normalize_text, now_iso, resolve_url, save_json, slugify
+from common import ensure_dirs, fetch, make_session, normalize_key, normalize_text, now_iso, parse_pipeline_args, resolve_url, save_json, slugify
 
 
 def main() -> None:
-    ensure_dirs()
+    paths = parse_pipeline_args("Discover IDPA competitions for one season.")
+    ensure_dirs(paths)
     errors: list[str] = []
     competitions: list[dict] = []
 
     try:
-        response = fetch(make_session(), CALENDAR_URL)
+        response = fetch(make_session(), paths.calendar_url)
         soup = BeautifulSoup(response.text, "lxml")
         rows = soup.select("table tr")
         for row in rows:
@@ -22,13 +23,13 @@ def main() -> None:
             discipline = next((value for value in values if normalize_key(value) == "idpa"), None)
             if not discipline:
                 continue
-            date = next((value for value in values if value.startswith("2025")), "")
-            if not date.startswith("2025"):
+            date = next((value for value in values if value.startswith(str(paths.year))), "")
+            if not date.startswith(str(paths.year)):
                 continue
             links = row.find_all("a", href=True)
             name = values[1] if len(values) > 1 else values[0]
             location = values[4] if len(values) > 4 else ""
-            source_url = resolve_url(CALENDAR_URL, links[0]["href"] if links else None) or CALENDAR_URL
+            source_url = resolve_url(paths.calendar_url, links[0]["href"] if links else None) or paths.calendar_url
             code = values[6] if len(values) > 6 else None
             competition_id = slugify(code or f"{date}-{name}")
             competitions.append(
@@ -47,16 +48,19 @@ def main() -> None:
                 }
             )
     except Exception as error:  # noqa: BLE001
-        errors.append(f"Failed to discover competitions from {CALENDAR_URL}: {error}")
+        errors.append(f"Failed to discover competitions from {paths.calendar_url}: {error}")
 
     payload = {
         "generatedAt": now_iso(),
-        "sourceUrl": CALENDAR_URL,
+        "year": paths.year,
+        "sourceUrl": paths.calendar_url,
         "discoveredCount": len(competitions),
         "competitions": competitions,
         "errors": errors,
     }
-    save_json(COMPETITIONS_PATH, payload)
+    save_json(paths.competitions, payload)
+    if errors:
+        raise SystemExit("\n".join(errors))
 
 
 if __name__ == "__main__":

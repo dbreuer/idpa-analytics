@@ -1,6 +1,10 @@
-# MDLSZ IDPA 2025 Season Analytics
+# MDLSZ IDPA Season Analytics
 
-Interactive Next.js dashboard and Python data pipeline for analyzing official Hungarian MDLSZ IDPA 2025 competition results.
+Interactive Next.js dashboard and Python data pipeline for analyzing official Hungarian MDLSZ IDPA competition results, separated by season.
+
+The intended production domain is `https://hero-of-idpa.hu`. Each generated season has
+its own page (for example `/2025` or `/2026`), and `/` redirects to the latest available
+season. The season navigation preserves the existing dashboard design.
 
 ## Stack
 
@@ -16,7 +20,7 @@ Interactive Next.js dashboard and Python data pipeline for analyzing official Hu
 
 ```bash
 npm install
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 ## Development
@@ -32,43 +36,54 @@ Open http://localhost:3000.
 The pipeline is designed to keep missing data and parsing failures visible instead of silently hiding them.
 
 ```bash
-python scripts/discover-competitions.py
-python scripts/download-results.py
-python scripts/extract-pdfs.py
-python scripts/normalize-data.py
-python scripts/calculate-statistics.py
+python3 scripts/discover-competitions.py --year 2025
+python3 scripts/download-results.py --year 2025
+python3 scripts/extract-pdfs.py --year 2025
+python3 scripts/normalize-data.py --year 2025
+python3 scripts/calculate-statistics.py --year 2025
 ```
 
 Or run everything in sequence:
 
 ```bash
-npm run pipeline:all
+npm run pipeline:all -- --year 2025
+npm run pipeline:all -- --year 2026
 ```
+
+Every stage accepts `--year`; omitting it uses the current calendar year. The all-stage
+runner forwards the same year to every stage and stops if a stage fails. Individual
+npm commands also forward arguments, e.g. `npm run pipeline:stats -- --year 2025`.
+Downstream stages require the previous stage's files for that year; they never read
+another season's data. Generate all stages before building/publishing a new season.
 
 ### Pipeline Outputs
 
-- `/home/runner/work/idpa-analytics/idpa-analytics/data/competitions.json`
-- `/home/runner/work/idpa-analytics/idpa-analytics/data/raw-extracted-results.json`
-- `/home/runner/work/idpa-analytics/idpa-analytics/data/results.json`
-- `/home/runner/work/idpa-analytics/idpa-analytics/data/data-quality.json`
-- `/home/runner/work/idpa-analytics/idpa-analytics/data/statistics.json`
-- `/home/runner/work/idpa-analytics/idpa-analytics/data/club-aliases.json`
-- `/home/runner/work/idpa-analytics/idpa-analytics/data/pdfs/`
+- `data/<year>/competitions.json`
+- `data/<year>/raw-extracted-results.json`
+- `data/<year>/results.json`
+- `data/<year>/data-quality.json`
+- `data/<year>/statistics.json`
+- `data/<year>/pdfs/` (ignored by Git)
+- `data/club-aliases.json` (shared across seasons)
+
+Only complete seasons (competition, results, quality, and statistics files present)
+are published. Unknown years return 404. Malformed JSON or mixed-year data fails the
+build rather than displaying misleading empty statistics.
+
+Existing root-level JSON remains readable as a legacy season, inferred from its
+calendar URL or competition dates. New pipeline runs always use year directories;
+once a directory exists for a legacy year, it takes precedence over root-level data.
+Existing root-level files and PDFs are not moved or overwritten.
 
 ### Environment
 
-Copy `.env.example` to `.env` if you need to override defaults.
-
-```bash
-cp .env.example .env
-```
-
 Available settings:
 
-- `MDLSZ_CALENDAR_URL`
+- `MDLSZ_CALENDAR_URL` (direct calendar table URL; `--year` replaces its `year` query parameter)
 - `MDLSZ_REQUEST_TIMEOUT`
 - `MDLSZ_USER_AGENT`
-- `NEXT_PUBLIC_SITE_NAME`
+
+The Python scripts read these from the process environment, not automatically from `.env`.
 
 ## Production
 
@@ -77,13 +92,18 @@ npm run build
 npm start
 ```
 
+Year pages are prerendered at build time from the locally generated JSON, with no
+database or API. Rebuild after refreshing or adding seasons. Point the hosting
+provider's custom-domain configuration at `hero-of-idpa.hu`; metadata alone does not
+configure DNS or deploy the site.
+
 ## Refreshing Source Data
 
-1. Run the discovery script to rebuild the 2025 IDPA competition list from the official MDLSZ calendar.
+1. Run the discovery script with `--year <year>` to rebuild that season's IDPA competition list from the official MDLSZ calendar.
 2. Run the download script to resolve every `Eredmények` link and fetch available PDFs.
 3. Run extraction and normalization to rebuild normalized competitor rows and parsing diagnostics.
 4. Run statistics calculation to regenerate leaderboard and insight data.
-5. Review `data/data-quality.json` and `data/results.json` for parse errors, missing teams, and ambiguous identities before publishing.
+5. Review `data/<year>/data-quality.json` and `data/<year>/results.json` for parse errors, missing teams, and ambiguous identities before publishing.
 
 ## Notes Parsing
 
@@ -100,6 +120,7 @@ The original raw value is preserved. Failed parsing is surfaced via `parseError`
 ## Dashboard Features
 
 - Premium dark analytics layout
+- Separate season URLs, year navigation, and a latest-season homepage
 - Global competition, division, club, and participation filters
 - Top competitor leaderboard
 - Club power and club strength ranking
@@ -114,6 +135,8 @@ The original raw value is preserved. Failed parsing is surfaced via `parseError`
 Verified in this repository with:
 
 ```bash
+python3 -m unittest discover -s tests -p 'test_*.py'
+node --test tests/year-data.test.mjs
 npm run lint
 npm run build
 ```

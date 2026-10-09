@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from math import sqrt
 
-from common import COMPETITIONS_PATH, RESULTS_PATH, STATISTICS_PATH, load_json, now_iso, save_json
+from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json
 
 
 def average(values: list[float]) -> float | None:
@@ -37,8 +37,10 @@ def placement_points(placement: int | None) -> float:
 
 
 def main() -> None:
-    competitions_file = load_json(COMPETITIONS_PATH, {"competitions": []})
-    results_file = load_json(RESULTS_PATH, {"results": []})
+    paths = parse_pipeline_args("Calculate statistics for one season.")
+    ensure_dirs(paths)
+    competitions_file = load_json(paths.competitions)
+    results_file = load_json(paths.results)
     competitions = competitions_file.get("competitions", [])
     results = results_file.get("results", [])
 
@@ -173,7 +175,7 @@ def main() -> None:
         },
     }
 
-    save_json(STATISTICS_PATH, {"generatedAt": now_iso(), "statistics": statistics, "errors": []})
+    save_json(paths.statistics, {"generatedAt": now_iso(), "year": paths.year, "statistics": statistics, "errors": []})
 
 
 if __name__ == "__main__":

@@ -5,14 +5,15 @@ import type { CompetitionStanding } from "@/lib/types";
 import { formatDate, formatNullableNumber } from "@/lib/utils";
 
 interface CompetitionTimelineProps {
+  year: number;
   competitions: CompetitionStanding[];
 }
 
-export function CompetitionTimeline({ competitions }: CompetitionTimelineProps) {
+export function CompetitionTimeline({ year, competitions }: CompetitionTimelineProps) {
   return (
     <Card>
       <CardTitle>Competition Timeline</CardTitle>
-      <CardDescription className="mb-6">Every discovered 2025 IDPA competition with source transparency.</CardDescription>
+      <CardDescription className="mb-6">Every discovered {year} IDPA competition with source transparency.</CardDescription>
       <div className="space-y-4">
         {competitions.map((competition) => (
           <div key={competition.competitionId} className="rounded-2xl border border-white/8 bg-slate-950/70 p-4">

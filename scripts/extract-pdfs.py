@@ -5,7 +5,7 @@ from pathlib import Path
 import fitz
 import pdfplumber
 
-from common import COMPETITIONS_PATH, RAW_EXTRACTED_PATH, ensure_dirs, load_json, now_iso, save_json, split_table_rows
+from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, split_table_rows
 
 
 def extract_with_pdfplumber(pdf_path: Path) -> list[dict]:
@@ -77,8 +77,9 @@ def extract_with_pymupdf(pdf_path: Path) -> list[dict]:
 
 
 def main() -> None:
-    ensure_dirs()
-    competitions_file = load_json(COMPETITIONS_PATH, {"competitions": []})
+    paths = parse_pipeline_args("Extract PDF tables for one season.")
+    ensure_dirs(paths)
+    competitions_file = load_json(paths.competitions)
     outputs = []
     errors: list[str] = []
 
@@ -95,7 +96,7 @@ def main() -> None:
             )
             continue
 
-        pdf_path = Path(COMPETITIONS_PATH.parent / pdf_relative_path)
+        pdf_path = Path(paths.data_dir / pdf_relative_path)
         try:
             tables = extract_with_pdfplumber(pdf_path)
             if not tables:
@@ -120,8 +121,8 @@ def main() -> None:
             )
 
     save_json(
-        RAW_EXTRACTED_PATH,
-        {"generatedAt": now_iso(), "extractions": outputs, "errors": errors},
+        paths.raw_extracted,
+        {"generatedAt": now_iso(), "year": paths.year, "extractions": outputs, "errors": errors},
     )
 
 

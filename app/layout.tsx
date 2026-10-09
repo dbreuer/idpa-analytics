@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MDLSZ IDPA 2025 Season Analytics",
+  metadataBase: new URL("https://hero-of-idpa.hu"),
+  title: "MDLSZ IDPA Season Analytics",
   description:
-    "Interactive analytics dashboard for official Hungarian MDLSZ IDPA 2025 competition results.",
+    "Interactive analytics dashboard for official Hungarian MDLSZ IDPA competition results.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

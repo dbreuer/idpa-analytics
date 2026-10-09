@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-10-09T18:43:09.025155+00:00",
+  "year": 2025,
+  "quality": {
+    "totalPdfsDiscovered": 29,
+    "successfullyProcessedPdfs": 29,
+    "failedPdfs": 0,
+    "totalExtractedRows": 1365,
+    "validCompetitorRows": 1365,
+    "rowsWithValidTime": 1360,
+    "rowsWithMissingTeam": 1131,
+    "rowsWithParsingErrors": 4
+  },
+  "errors": []
+}

@@ -40,9 +40,11 @@ import type {
   CompetitorStanding,
   ClubStanding,
 } from "@/lib/types";
-import { formatDate, formatNullableNumber, formatNumber } from "@/lib/utils";
+import { cn, formatDate, formatNullableNumber, formatNumber } from "@/lib/utils";
 
 interface DashboardAppProps {
+  year: number;
+  availableYears: number[];
   competitionsFile: CompetitionDiscoveryFile;
   resultsFile: ResultsFile;
   qualityFile: QualityFile;
@@ -52,6 +54,8 @@ interface DashboardAppProps {
 const medalColors = ["#facc15", "#cbd5e1", "#fb923c", "#a855f7", "#22d3ee"];
 
 export function DashboardApp({
+  year,
+  availableYears,
   competitionsFile,
   resultsFile,
   qualityFile,
@@ -107,13 +111,28 @@ export function DashboardApp({
 
   return (
     <div className="pb-20">
+      <nav aria-label="Season" className="mb-6 flex flex-wrap items-center gap-3">
+        <span className="mr-2 text-sm text-slate-300">Season</span>
+        {availableYears.map((season) => (
+          <Link
+            key={season}
+            href={`/${season}`}
+            aria-current={season === year ? "page" : undefined}
+            className={cn("rounded-full border px-4 py-2 text-sm font-medium transition focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300", season === year
+              ? "border-cyan-400/30 bg-cyan-400/10 text-cyan-100"
+              : "border-white/10 bg-white/5 text-slate-300 hover:border-cyan-300/40 hover:text-white")}
+          >
+            {season}
+          </Link>
+        ))}
+      </nav>
       <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[radial-gradient(circle_at_top,#312e81,transparent_40%),radial-gradient(circle_at_right,#0ea5e9,transparent_35%),linear-gradient(180deg,#020617_0%,#020617_100%)] px-6 py-12 shadow-2xl md:px-10">
         <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.04),transparent_35%,transparent_65%,rgba(255,255,255,0.03))]" />
         <div className="relative grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <div>
             <Badge>🇭🇺 MDLSZ · Official source PDFs</Badge>
             <h1 className="mt-5 max-w-3xl text-5xl font-black tracking-tight text-white md:text-7xl">
-              IDPA 2025 <span className="bg-gradient-to-r from-fuchsia-400 via-cyan-300 to-orange-300 bg-clip-text text-transparent">Season Analytics</span>
+              IDPA {year} <span className="bg-gradient-to-r from-fuchsia-400 via-cyan-300 to-orange-300 bg-clip-text text-transparent">Season Analytics</span>
             </h1>
             <p className="mt-5 max-w-2xl text-lg text-slate-300">
               Premium season intelligence for Hungarian IDPA competitions with transparent methodology, resilient PDF parsing, and filter-driven insight views.
@@ -191,7 +210,7 @@ export function DashboardApp({
       )}
 
       <section className="mt-8 grid gap-8 xl:grid-cols-[1.4fr_1fr]">
-        <TopCompetitors competitors={filteredTop5} onSelect={setSelectedCompetitor} />
+        <TopCompetitors year={year} competitors={filteredTop5} onSelect={setSelectedCompetitor} />
         <Card>
           <Badge>🏅 Club Power Ranking</Badge>
           <CardTitle className="mt-3 text-2xl">Top Clubs</CardTitle>
@@ -342,7 +361,7 @@ export function DashboardApp({
       </section>
 
       <section className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-        <CompetitionTimeline competitions={statistics.competitions} />
+        <CompetitionTimeline year={year} competitions={statistics.competitions} />
         <Card>
           <Badge>Season Awards</Badge>
           <CardTitle className="mt-3 text-2xl">Interesting Season Insights</CardTitle>

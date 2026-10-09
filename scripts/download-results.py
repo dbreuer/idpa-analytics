@@ -4,7 +4,7 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-from common import COMPETITIONS_PATH, PDF_DIR, ensure_dirs, fetch, load_json, make_session, now_iso, resolve_url, save_json
+from common import ensure_dirs, fetch, load_json, make_session, now_iso, parse_pipeline_args, resolve_url, save_json
 
 
 def discover_result_link(session, competition: dict) -> tuple[str | None, str | None]:
@@ -37,8 +37,9 @@ def download_pdf(session, url: str, target_path: Path) -> None:
 
 
 def main() -> None:
-    ensure_dirs()
-    competitions_file = load_json(COMPETITIONS_PATH, {"competitions": [], "errors": []})
+    paths = parse_pipeline_args("Download result PDFs for one season.")
+    ensure_dirs(paths)
+    competitions_file = load_json(paths.competitions)
     competitions = competitions_file.get("competitions", [])
     errors = competitions_file.get("errors", [])
     session = make_session()
@@ -55,9 +56,9 @@ def main() -> None:
                 competition["downloadStatus"] = "missing"
                 competition["downloadError"] = "Result PDF URL missing"
                 continue
-            target_path = PDF_DIR / f"{competition['id']}.pdf"
+            target_path = paths.pdf_dir / f"{competition['id']}.pdf"
             download_pdf(session, pdf_url, target_path)
-            competition["resultPdfPath"] = str(target_path.relative_to(PDF_DIR.parent))
+            competition["resultPdfPath"] = str(target_path.relative_to(paths.data_dir))
             competition["downloadStatus"] = "downloaded"
             competition.pop("downloadError", None)
         except Exception as error:  # noqa: BLE001
@@ -67,10 +68,11 @@ def main() -> None:
     payload = {
         **competitions_file,
         "generatedAt": now_iso(),
+        "year": paths.year,
         "competitions": competitions,
         "errors": errors,
     }
-    save_json(COMPETITIONS_PATH, payload)
+    save_json(paths.competitions, payload)
 
 
 if __name__ == "__main__":

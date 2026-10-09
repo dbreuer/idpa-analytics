@@ -11,11 +11,12 @@ import { formatNullableNumber, formatNumber } from "@/lib/utils";
 const medals = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"];
 
 interface TopCompetitorsProps {
+  year: number;
   competitors: CompetitorStanding[];
   onSelect: (competitor: CompetitorStanding) => void;
 }
 
-export function TopCompetitors({ competitors, onSelect }: TopCompetitorsProps) {
+export function TopCompetitors({ year, competitors, onSelect }: TopCompetitorsProps) {
   const maxScore = competitors[0]?.overallScore ?? 1;
 
   return (
@@ -23,7 +24,7 @@ export function TopCompetitors({ competitors, onSelect }: TopCompetitorsProps) {
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <Badge>Top 5 Competitors</Badge>
-          <CardTitle className="mt-3 text-3xl">IDPA Hungary 2025</CardTitle>
+          <CardTitle className="mt-3 text-3xl">IDPA Hungary {year}</CardTitle>
           <CardDescription>Configurable overall performance score with wins, podiums, participation, and consistency.</CardDescription>
         </div>
         <div className="hidden rounded-full border border-amber-300/30 bg-amber-300/10 p-4 text-amber-100 md:block">

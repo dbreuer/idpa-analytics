@@ -7,12 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "pipeline:discover": "python scripts/discover-competitions.py",
-    "pipeline:download": "python scripts/download-results.py",
-    "pipeline:extract": "python scripts/extract-pdfs.py",
-    "pipeline:normalize": "python scripts/normalize-data.py",
-    "pipeline:stats": "python scripts/calculate-statistics.py",
-    "pipeline:all": "npm run pipeline:discover && npm run pipeline:download && npm run pipeline:extract && npm run pipeline:normalize && npm run pipeline:stats"
+    "pipeline:discover": "python3 scripts/discover-competitions.py",
+    "pipeline:download": "python3 scripts/download-results.py",
+    "pipeline:extract": "python3 scripts/extract-pdfs.py",
+    "pipeline:normalize": "python3 scripts/normalize-data.py",
+    "pipeline:stats": "python3 scripts/calculate-statistics.py",
+    "pipeline:all": "python3 scripts/run-pipeline.py"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

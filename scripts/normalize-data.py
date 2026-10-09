@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 
-from common import CLUB_ALIASES_PATH, COMPETITIONS_PATH, QUALITY_PATH, RAW_EXTRACTED_PATH, RESULTS_PATH, ensure_dirs, identify_header, load_json, normalize_key, normalize_text, now_iso, parse_division_code, save_json
+from common import CLUB_ALIASES_PATH, ensure_dirs, identify_header, load_json, normalize_key, normalize_text, now_iso, parse_pipeline_args, parse_division_code, save_json
 
 
 PLACEMENT_PATTERN = re.compile(r"(\d+)")
@@ -59,9 +59,10 @@ def split_club_team(value: str | None) -> tuple[str | None, str | None]:
 
 
 def main() -> None:
-    ensure_dirs()
-    competitions_file = load_json(COMPETITIONS_PATH, {"competitions": []})
-    extracted = load_json(RAW_EXTRACTED_PATH, {"extractions": []})
+    paths = parse_pipeline_args("Normalize competitor results for one season.")
+    ensure_dirs(paths)
+    competitions_file = load_json(paths.competitions)
+    extracted = load_json(paths.raw_extracted)
     aliases = load_json(CLUB_ALIASES_PATH, {})
     competitions_by_id = {item["id"]: item for item in competitions_file.get("competitions", [])}
 
@@ -156,15 +157,16 @@ def main() -> None:
             )
 
     save_json(
-        RESULTS_PATH,
+        paths.results,
         {
             "generatedAt": now_iso(),
+            "year": paths.year,
             "results": results,
             "parsingErrors": parsing_errors,
             "ambiguousCompetitors": ambiguous_competitors,
         },
     )
-    save_json(QUALITY_PATH, {"generatedAt": now_iso(), "quality": quality, "errors": extracted.get("errors", [])})
+    save_json(paths.quality, {"generatedAt": now_iso(), "year": paths.year, "quality": quality, "errors": extracted.get("errors", [])})
 
 
 if __name__ == "__main__":
