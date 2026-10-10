@@ -5,6 +5,7 @@ import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { DashboardApp } from "@/components/dashboard/dashboard-app";
 import { DescriptiveDisciplineReport } from "@/components/dashboard/descriptive-discipline-report";
 import { IpscDashboard } from "@/components/dashboard/ipsc-dashboard";
+import { GyorskombinaltDashboard } from "@/components/dashboard/gyorskombinalt-dashboard";
 import { canonicalUrl, disciplinePath, seasonPath } from "@/lib/discipline-paths";
 import { getDiscipline, isDisciplineSlug } from "@/lib/disciplines";
 import { getAvailableYears, getDisciplinesWithData, loadDashboardData } from "@/lib/data";
@@ -36,11 +37,15 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]/[yea
       ? `${discipline.name} ${year} · szezoneredmények`
       : discipline.analytics === "ipsc"
         ? `${discipline.name} ${year} · divíziórangsorok és statisztikák`
+        : discipline.analytics === "gyorskombinalt"
+          ? `${discipline.name} ${year} · részvételi statisztikák és eredmények`
         : `${discipline.name} ${year} · eredménykimutatás`,
     description: discipline.analytics === "idpa"
       ? `A ${year}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái, hivatalos forrásokra visszavezetve.`
       : discipline.analytics === "ipsc"
         ? `A ${year}. évi IPSC-versenyek divíziónként elkülönített rangsorai, szezonstatisztikái és hivatalos eredményforrásai.`
+        : discipline.analytics === "gyorskombinalt"
+          ? `A ${year}. évi Gyorskombinált és Precíziós szakági versenyek részvételi statisztikái, versenyzői előzményei és hivatalos eredményjegyzékei, számított szezonrangsor nélkül.`
         : `A ${year}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása; pontozott rangsor nem készül.`,
     alternates: { canonical: canonicalUrl(seasonPath(discipline.slug, year)) },
   };
@@ -99,6 +104,22 @@ export default async function SeasonPage({ params }: PageProps<"/[discipline]/[y
           resultsFile={data.resultsFile}
           qualityFile={data.qualityFile}
           statistics={buildIpscStatistics(data.competitionsFile.competitions, data.resultsFile.results)}
+        />
+      </>
+    );
+  }
+
+  if (discipline.analytics === "gyorskombinalt") {
+    return (
+      <>
+        {breadcrumb}
+        <GyorskombinaltDashboard
+          key={`${discipline.slug}-${year}`}
+          year={year}
+          availableYears={getAvailableYears(discipline.slug)}
+          competitionsFile={data.competitionsFile}
+          resultsFile={data.resultsFile}
+          qualityFile={data.qualityFile}
         />
       </>
     );

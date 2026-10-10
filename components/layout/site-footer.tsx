@@ -8,7 +8,7 @@ import { disciplinePath, methodologyPath, seasonPath } from "@/lib/discipline-pa
 
 export function SiteFooter({ disciplineSlug, year }: { disciplineSlug?: DisciplineSlug; year?: number }) {
   const hasMethodology = disciplineSlug
-    ? ["idpa", "ipsc"].includes(getDiscipline(disciplineSlug)?.analytics ?? "")
+    ? ["idpa", "ipsc", "gyorskombinalt"].includes(getDiscipline(disciplineSlug)?.analytics ?? "")
     : false;
   return (
     <footer className="site-footer">

@@ -26,8 +26,8 @@ export const disciplineDefinitions = [
     slug: "gyorskombinalt",
     name: "Gyorskombinált",
     aliases: ["Gyorskombinált", "Gyorskombinált és Precíziós"],
-    published: false,
-    analytics: "unsupported",
+    published: true,
+    analytics: "gyorskombinalt",
   },
   {
     slug: "steel-challenge",

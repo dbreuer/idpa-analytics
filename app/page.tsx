@@ -56,6 +56,8 @@ export default function HomePage() {
                             {isPublished
                               ? discipline.analytics === "ipsc"
                                 ? "Divíziórangsorok és szezonstatisztikák"
+                                : discipline.analytics === "gyorskombinalt"
+                                  ? "Részvételi statisztikák és forráseredmények"
                                 : "Eredmények és szezonranglisták"
                               : withSeasonData.has(discipline.slug)
                                 ? "Forrásalapú eredménykimutatás"

@@ -24,6 +24,7 @@ interface DashboardHeaderProps {
   onCompetitionChange: (value: string) => void;
   onDivisionChange: (value: string) => void;
   onClubChange: (value: string) => void;
+  sectionLabels?: Partial<Record<DashboardSectionId, string>>;
 }
 
 const filterSelectClass =
@@ -80,6 +81,7 @@ export function DashboardHeader({
   onCompetitionChange,
   onDivisionChange,
   onClubChange,
+  sectionLabels,
 }: DashboardHeaderProps) {
   const router = useRouter();
   const headerRef = useRef<HTMLElement>(null);
@@ -253,7 +255,7 @@ export function DashboardHeader({
               className="brand-mark"
             >
               <span className="brand-mark-top">{disciplineSlug === "idpa" ? "HERO OF" : "LÖVÉSZNAPLÓ"}</span>
-              <span className="brand-mark-bottom">{disciplineName}<span className="brand-period">.</span></span>
+              <span className={cn("brand-mark-bottom", disciplineSlug === "gyorskombinalt" && "!text-2xl")}>{disciplineName}<span className="brand-period">.</span></span>
             </Link>
 
             <nav aria-label="Az oldal szakaszai" className="hidden xl:block">
@@ -266,7 +268,7 @@ export function DashboardHeader({
                       onClick={() => handleSectionClick(section.id)}
                       className={cn("section-nav-link", activeSection === section.id && "section-nav-link-active")}
                     >
-                      {section.label}
+                      {sectionLabels?.[section.id] ?? section.label}
                     </a>
                   </li>
                 ))}
@@ -316,7 +318,7 @@ export function DashboardHeader({
                   onClick={() => handleSectionClick(section.id)}
                   className={cn("section-nav-link", activeSection === section.id && "section-nav-link-active")}
                 >
-                  {section.label}
+                  {sectionLabels?.[section.id] ?? section.label}
                 </a>
               ))}
             </nav>

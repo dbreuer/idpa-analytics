@@ -3,7 +3,8 @@
 Next.js dashboard and Python data pipeline for Hungarian MDLSZ sportlövészeti
 eredmények. Discovery, PDF extraction and result normalization are implemented
 for all seven listed disciplines. IDPA and IPSC have discipline-specific public
-season analytics; the other five stop after source-linked normalized ingestion.
+season analytics. Gyorskombinált has a dedicated source-based participation
+dashboard; the other four stop after source-linked normalized ingestion.
 
 The planned canonical domain is `https://statisztika.lovesznaplo.hu`. `/idpa`
 opens the latest available season (currently `/idpa/2026`); older seasons remain
@@ -96,6 +97,17 @@ IDPA score and does not combine divisions. IPSC uses the official competitor
 license ID when available to connect results; otherwise it uses the normalized name.
 `calculate-statistics.py` deliberately rejects non-IDPA scoring requests; IDPA
 retains its existing statistics behavior.
+
+Gyorskombinált (`/gyorskombinalt/<year>`) shows division and club participation,
+monthly calendar activity, searchable source results and competitor histories.
+Numeric competitor-license identifiers connect records when available (including
+the explicit `V.eng.` source field); otherwise normalized names are used.
+Its qualification and precision source values are not combined into a season
+score. `Sorszám` is displayed as a source row number, not a finishing place, and
+numeric notes are not assumed to be times. All event/division names remain as
+published. Top filters apply to participation, histories, results and competition
+counts; season charts and highlights remain unfiltered. Methodology is documented
+at `/gyorskombinalt/methodology`. No new Python scoring stage is required.
 
 ### Pipeline Outputs
 

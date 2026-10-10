@@ -33,6 +33,7 @@ const disciplines = loadModule(
 const paths = loadModule(fs.readFileSync(new URL("../lib/discipline-paths.ts", import.meta.url), "utf8"));
 const sourceSummary = loadModule(fs.readFileSync(new URL("../lib/discipline-summary.ts", import.meta.url), "utf8"));
 const ipscStatistics = loadModule(fs.readFileSync(new URL("../lib/ipsc-statistics.ts", import.meta.url), "utf8"));
+const gyorskombinaltStatistics = loadModule(fs.readFileSync(new URL("../lib/gyorskombinalt-statistics.ts", import.meta.url), "utf8"));
 const utils = loadModule(fs.readFileSync(new URL("../lib/utils.ts", import.meta.url), "utf8"));
 
 test("Hungarian labels preserve section identifiers and cover desktop and mobile filters", () => {
@@ -91,20 +92,78 @@ test("navigation destinations and dashboard anchors remain in lockstep", () => {
   }
 });
 
-test("discipline registry exposes seven source-linked sports and publishes validated IDPA and IPSC", () => {
+test("discipline registry exposes seven source-linked sports and three custom public dashboards", () => {
   const records = Array.from(disciplines.disciplineDefinitions);
   assert.equal(records.length, 7);
   assert.deepEqual(records.map(({ slug }) => slug), [
     "ipsc", "imssu", "idpa", "gyorskombinalt", "steel-challenge",
     "gyorspont-es-hazai-versenyszamok", "iprf",
   ]);
-  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["ipsc", "idpa"]);
+  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["ipsc", "idpa", "gyorskombinalt"]);
   assert.equal(disciplines.getDiscipline("ipsc").analytics, "ipsc");
+  assert.equal(disciplines.getDiscipline("gyorskombinalt").analytics, "gyorskombinalt");
   for (const record of records) {
     assert.ok(disciplines.getDisciplineMark(record.slug));
     assert.ok(record.aliases.length > 0);
     assert.ok(!record.slug.includes(" "));
   }
+});
+
+test("Gyorskombinalt identifies licenses without bridging names or guessing missing identifiers", () => {
+  const identify = gyorskombinaltStatistics.gyorskombinaltIdentity;
+  const row = { competitorName: "Teszt Elek", normalizedCompetitorName: "teszt-elek" };
+  assert.equal(identify({ ...row, rawRow: { "V.eng.": "00123" } }), "license:123");
+  assert.equal(identify({ ...row, competitorLicenseId: "123" }), "license:123");
+  assert.equal(identify({ ...row, rawRow: { "V.eng.": "000" } }), "name:teszt-elek");
+  assert.equal(identify({ ...row, rawRow: { "V.eng.": "nem közölt" } }), "name:teszt-elek");
+  assert.notEqual(identify(row), identify({ ...row, competitorLicenseId: "123" }));
+});
+
+test("Gyorskombinalt counts source rows separately from people and competitions without scoring", () => {
+  const competitions = [
+    { id: "a", date: "2026-02-06 - 02-07" },
+    { id: "b", date: "2026-02-20" },
+    { id: "c", date: "ismeretlen" },
+  ];
+  const base = { competitorName: "Teszt Elek", normalizedCompetitorName: "teszt-elek", club: "Klub", competitorLicenseId: "123" };
+  const results = [
+    { ...base, competitionId: "a", division: "Manual", placement: 99, rawResult: "55", rawNotes: "166.46" },
+    { ...base, competitionId: "a", division: "Manual", placement: 1 },
+    { ...base, competitionId: "b", division: "manual" },
+    { ...base, competitionId: "missing", division: "Manual" },
+    { competitorName: "Másik Elek", normalizedCompetitorName: "masik-elek", competitionId: "a" },
+  ];
+  const summary = gyorskombinaltStatistics.buildGyorskombinaltStatistics(competitions, results);
+  assert.equal(summary.unlinkedRows, 1);
+  assert.equal(summary.linkedResults.length, 4);
+  assert.equal(summary.people[0].rows, 3);
+  assert.equal(summary.people[0].matches, 2);
+  assert.equal(summary.competitions[0].rows, 3);
+  assert.equal(summary.competitions[0].people, 2);
+  assert.equal(summary.divisions.find(({ name }) => name === "Manual").people, 1);
+  assert.equal(summary.divisions.length, 3);
+  assert.equal(summary.clubs[0].rows, 3);
+  assert.equal(summary.clubs[0].people, 1);
+  assert.equal(summary.months[0].count, 2);
+  assert.equal(summary.undatedCompetitions, 1);
+  assert.equal("score" in summary.people[0], false);
+  assert.equal("averagePlacement" in summary.people[0], false);
+  assert.equal("timeSeconds" in summary.people[0], false);
+  assert.equal(summary.linkedResults[0].rawNotes, "166.46");
+});
+
+test("Gyorskombinalt empty seasons and custom navigation do not invent rankings", () => {
+  const empty = gyorskombinaltStatistics.buildGyorskombinaltStatistics([], []);
+  assert.equal(empty.people.length, 0);
+  assert.equal(empty.divisions.length, 0);
+  assert.equal(empty.unlinkedRows, 0);
+  const dashboard = fs.readFileSync(new URL("../components/dashboard/gyorskombinalt-dashboard.tsx", import.meta.url), "utf8");
+  const season = fs.readFileSync(new URL("../app/[discipline]/[year]/page.tsx", import.meta.url), "utf8");
+  for (const { id } of navigation.dashboardSections) assert.match(dashboard, new RegExp(`id="${id}"`));
+  assert.match(dashboard, /rankings: "Részvétel"/);
+  assert.match(dashboard, /Forrássorszám/);
+  assert.match(dashboard, /számított szezonrangsor nélkül/);
+  assert.match(season, /<GyorskombinaltDashboard/);
 });
 
 test("discipline landing pages open the newest season and the footer links every discipline", () => {

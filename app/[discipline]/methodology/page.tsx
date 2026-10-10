@@ -76,11 +76,34 @@ const ipscSections = [
   },
 ];
 
+const gyorskombinaltSections = [
+  {
+    title: "Részvétel, nem teljesítményrangsor",
+    description: "A kimutatás a Gyorskombinált és Precíziós szakági naptár feldolgozott eredménysorait összesíti. Kvalifikációs, minősítő és precíziós események is szerepelhetnek benne. Nem számítunk szezonpontszámot, és nem alkalmazzuk az IDPA vagy az IPSC rangsorolási modelljét.",
+  },
+  {
+    title: "Eredménysorok, versenyek és divíziók",
+    description: "Az eredménysorok száma a feldolgozott forrássorok száma, nem feltétlenül az önálló indulásoké. A versenyek számát különböző naptári versenyazonosítók alapján mérjük. A divíziómegnevezéseket változatlanul tartjuk meg; eltérő fegyvernemek vagy eseménytípusok azonos nevű divíziói ebből nem válnak sporteredmény szempontjából összehasonlíthatóvá.",
+  },
+  {
+    title: "Versenyzői előzmények és azonosítás",
+    description: "A numerikus versenyengedély-azonosító összekapcsolja a rekordokat; a vezető nullák nem módosítják az azonosságot. Ha nincs használható engedélyazonosító, normalizált név alapján kapcsolunk. A névalapú és engedélyalapú rekordokat nem egyesítjük automatikusan. A versenyzőválasztó részvételi gyakoriság szerint rendez, nem eredményesség szerint.",
+  },
+  {
+    title: "A forrásértékek értelmezési korlátai",
+    description: "A „Sorszám” oszlop értéke forrássorszám, nem igazolt helyezés. A közölt eredmény, százalék és megjegyzés eredeti szövegként jelenik meg. A megjegyzésben szereplő numerikus értéket nem tekintjük automatikusan időeredménynek. Nem hasonlítjuk össze különböző versenyek pontértékeit.",
+  },
+  {
+    title: "Szűrés, aktivitás és adatminőség",
+    description: "A verseny-, divízió- és egyesületszűrő a részvételi táblát, a versenyzői előzményeket, az eredménykeresőt és a versenylistát módosítja. A hero, az aktivitási diagramok és a szezonkiemelések teljes szezonadatokat mutatnak. A havi diagram a verseny kezdő hónapját használja. A naptárhoz nem kapcsolható sorokat és az értelmezhetetlen dátumokat külön jelezzük; a feldolgozási diagnosztikák megtekinthetők.",
+  },
+];
+
 async function resolveDiscipline(params: Promise<{ discipline: string }>) {
   const { discipline: slug } = await params;
   if (!isDisciplineSlug(slug)) notFound();
   const discipline = getDiscipline(slug);
-  if (!discipline?.published || !["idpa", "ipsc"].includes(discipline.analytics)) notFound();
+  if (!discipline?.published || !["idpa", "ipsc", "gyorskombinalt"].includes(discipline.analytics)) notFound();
   return discipline;
 }
 
@@ -88,7 +111,9 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]/meth
   const discipline = await resolveDiscipline(params);
   return {
     title: `${discipline.name} · módszertan`,
-    description: `A ${discipline.name} rangsorainak, teljesítménymutatóinak és adatfeldolgozásának módszertana.`,
+    description: discipline.analytics === "gyorskombinalt"
+      ? "A Gyorskombinált részvételi kimutatásainak, forráseredményeinek és versenyzői azonosításának módszertana."
+      : `A ${discipline.name} rangsorainak, teljesítménymutatóinak és adatfeldolgozásának módszertana.`,
     alternates: { canonical: canonicalUrl(methodologyPath(discipline.slug)) },
   };
 }
@@ -113,13 +138,13 @@ export default async function MethodologyPage({ params }: PageProps<"/[disciplin
       </header>
       <main className="methodology-main">
         <h1 className="font-display text-5xl font-extrabold leading-[0.95] md:text-6xl">
-          {discipline.analytics === "ipsc" ? "IPSC-rangsorok és statisztikai módszertan" : "Statisztikai és pontszámítási módszertan"}
+          {discipline.analytics === "gyorskombinalt" ? "Gyorskombinált: a forrásalapú kimutatás módszertana" : discipline.analytics === "ipsc" ? "IPSC-rangsorok és statisztikai módszertan" : "Statisztikai és pontszámítási módszertan"}
         </h1>
         <p className="mt-4 max-w-[68ch] text-base leading-7 text-[var(--ink-muted)]">
           A főbb mutatók számítását dokumentáljuk, hogy a szezoneredmények visszakövethetők legyenek a hivatalos forrásokhoz.
         </p>
         <div className="mt-10 space-y-7">
-          {(discipline.analytics === "ipsc" ? ipscSections : idpaSections).map((section) => (
+          {(discipline.analytics === "gyorskombinalt" ? gyorskombinaltSections : discipline.analytics === "ipsc" ? ipscSections : idpaSections).map((section) => (
             <Card key={section.title}>
               <CardTitle className="font-display text-2xl font-bold">{section.title}</CardTitle>
               <CardDescription className="mt-2 max-w-[68ch] text-base leading-7">
