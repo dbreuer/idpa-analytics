@@ -23,8 +23,7 @@ export default function HomePage() {
     <>
       <main className="empty-main min-h-screen">
         <div className="mx-auto max-w-6xl px-5 py-16 md:py-24">
-          <p className="editorial-kicker">LÖVÉSZNAPLÓ · SPORTLÖVÉSZETI ADATOK</p>
-          <h1 className="mt-3 max-w-4xl font-display text-6xl font-extrabold leading-[0.92] md:text-8xl">
+          <h1 className="max-w-4xl font-display text-6xl font-extrabold leading-[0.92] md:text-8xl">
             Eredményekből<br />átlátható teljesítmény.
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-[var(--ink-muted)] md:text-lg">

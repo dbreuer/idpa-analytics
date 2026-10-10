@@ -9,6 +9,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { SectionHeading } from "@/components/dashboard/section-heading";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { axisStroke, chartPalette, gridStroke, tooltipStyle } from "@/lib/chart-theme";
 import { methodologyPath } from "@/lib/discipline-paths";
 import {
   rankImssuResults,
@@ -27,17 +28,6 @@ interface ImssuDashboardProps {
   qualityFile: QualityFile;
   statistics: ImssuStatistics;
 }
-
-const chartPalette = ["#a82e2c", "#176a63", "#976b17", "#675381", "#285e78", "#65655e", "#b86e28", "#4d7181"];
-const gridStroke = "#dedacf";
-const axisStroke = "#5d605c";
-const tooltipStyle = {
-  background: "#fffefa",
-  border: "1px solid #d4d0c6",
-  color: "#1a1b19",
-  boxShadow: "0 8px 24px rgb(26 27 25 / 12%)",
-  fontSize: 12,
-};
 
 const exclusionLabels: Record<ImssuExcludedRow["reason"], string> = {
   "unknown-competition": "A versenynaptárhoz nem kapcsolható sor",

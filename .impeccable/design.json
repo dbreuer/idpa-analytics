@@ -1,283 +1,162 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-10T15:13:02Z",
-  "title": "Design System: Hero of IDPA",
+  "generatedAt": "2026-10-10T18:24:40+02:00",
+  "title": "Design System: Lövésznapló Statisztika",
   "extensions": {
     "colorMeta": {
-      "primary": {
+      "signal": {
         "role": "primary",
-        "displayName": "Championship Red",
-        "canonical": "#a82e2c",
-        "tonalRamp": ["oklch(15% 0.159 26)", "oklch(25% 0.159 26)", "oklch(35% 0.159 26)", "oklch(45% 0.159 26)", "oklch(55% 0.159 26)", "oklch(65% 0.159 26)", "oklch(75% 0.159 26)", "oklch(95% 0.159 26)"]
+        "displayName": "Match Orange",
+        "canonical": "#ff6b35",
+        "tonalRamp": ["oklch(15% 0.14 38)", "oklch(25% 0.14 38)", "oklch(35% 0.14 38)", "oklch(45% 0.14 38)", "oklch(55% 0.14 38)", "oklch(65% 0.14 38)", "oklch(75% 0.14 38)", "oklch(95% 0.14 38)"]
       },
-      "primary-deep": {
+      "signal-hover": {
+        "role": "primary",
+        "displayName": "Orange Highlight",
+        "canonical": "#ff8a61",
+        "tonalRamp": ["oklch(15% 0.12 40)", "oklch(25% 0.12 40)", "oklch(35% 0.12 40)", "oklch(45% 0.12 40)", "oklch(55% 0.12 40)", "oklch(65% 0.12 40)", "oklch(75% 0.12 40)", "oklch(95% 0.12 40)"]
+      },
+      "signal-wash": {
+        "role": "primary",
+        "displayName": "Orange State Wash",
+        "canonical": "rgb(255 107 53 / 12%)",
+        "tonalRamp": ["oklch(15% 0.05 38)", "oklch(25% 0.05 38)", "oklch(35% 0.05 38)", "oklch(45% 0.05 38)", "oklch(55% 0.05 38)", "oklch(65% 0.05 38)", "oklch(75% 0.05 38)", "oklch(95% 0.05 38)"]
+      },
+      "valid-state": {
         "role": "secondary",
-        "displayName": "Deep Source Red",
-        "canonical": "#852321",
-        "tonalRamp": ["oklch(15% 0.133 26.1)", "oklch(25% 0.133 26.1)", "oklch(35% 0.133 26.1)", "oklch(45% 0.133 26.1)", "oklch(55% 0.133 26.1)", "oklch(65% 0.133 26.1)", "oklch(75% 0.133 26.1)", "oklch(95% 0.133 26.1)"]
-      },
-      "primary-wash": {
-        "role": "secondary",
-        "displayName": "Pale Competition Wash",
-        "canonical": "#f2e5df",
-        "tonalRamp": ["oklch(15% 0.016 46.6)", "oklch(25% 0.016 46.6)", "oklch(35% 0.016 46.6)", "oklch(45% 0.016 46.6)", "oklch(55% 0.016 46.6)", "oklch(65% 0.016 46.6)", "oklch(75% 0.016 46.6)", "oklch(95% 0.016 46.6)"]
-      },
-      "neutral-bg": {
-        "role": "neutral",
-        "displayName": "Warm Canvas",
-        "canonical": "#f3f0e8",
-        "tonalRamp": ["oklch(15% 0.011 89.7)", "oklch(25% 0.011 89.7)", "oklch(35% 0.011 89.7)", "oklch(45% 0.011 89.7)", "oklch(55% 0.011 89.7)", "oklch(65% 0.011 89.7)", "oklch(75% 0.011 89.7)", "oklch(95% 0.011 89.7)"]
-      },
-      "paper": {
-        "role": "neutral",
-        "displayName": "Soft Paper",
-        "canonical": "#faf9f5",
-        "tonalRamp": ["oklch(15% 0.005 95.1)", "oklch(25% 0.005 95.1)", "oklch(35% 0.005 95.1)", "oklch(45% 0.005 95.1)", "oklch(55% 0.005 95.1)", "oklch(65% 0.005 95.1)", "oklch(75% 0.005 95.1)", "oklch(95% 0.005 95.1)"]
-      },
-      "paper-raised": {
-        "role": "neutral",
-        "displayName": "Raised Paper",
-        "canonical": "#fffefa",
-        "tonalRamp": ["oklch(15% 0.005 95.1)", "oklch(25% 0.005 95.1)", "oklch(35% 0.005 95.1)", "oklch(45% 0.005 95.1)", "oklch(55% 0.005 95.1)", "oklch(65% 0.005 95.1)", "oklch(75% 0.005 95.1)", "oklch(95% 0.005 95.1)"]
-      },
-      "paper-deep": {
-        "role": "neutral",
-        "displayName": "Deep Paper",
-        "canonical": "#ebe7dd",
-        "tonalRamp": ["oklch(15% 0.014 88.7)", "oklch(25% 0.014 88.7)", "oklch(35% 0.014 88.7)", "oklch(45% 0.014 88.7)", "oklch(55% 0.014 88.7)", "oklch(65% 0.014 88.7)", "oklch(75% 0.014 88.7)", "oklch(95% 0.014 88.7)"]
-      },
-      "ink": {
-        "role": "neutral",
-        "displayName": "Championship Ink",
-        "canonical": "#1a1b19",
-        "tonalRamp": ["oklch(15% 0.004 128.7)", "oklch(25% 0.004 128.7)", "oklch(35% 0.004 128.7)", "oklch(45% 0.004 128.7)", "oklch(55% 0.004 128.7)", "oklch(65% 0.004 128.7)", "oklch(75% 0.004 128.7)", "oklch(95% 0.004 128.7)"]
-      },
-      "ink-muted": {
-        "role": "neutral",
-        "displayName": "Muted Ink",
-        "canonical": "#5d605c",
-        "tonalRamp": ["oklch(15% 0.007 137.8)", "oklch(25% 0.007 137.8)", "oklch(35% 0.007 137.8)", "oklch(45% 0.007 137.8)", "oklch(55% 0.007 137.8)", "oklch(65% 0.007 137.8)", "oklch(75% 0.007 137.8)", "oklch(95% 0.007 137.8)"]
-      },
-      "rule": {
-        "role": "neutral",
-        "displayName": "Rule Gray",
-        "canonical": "#d4d0c6",
-        "tonalRamp": ["oklch(15% 0.014 88.7)", "oklch(25% 0.014 88.7)", "oklch(35% 0.014 88.7)", "oklch(45% 0.014 88.7)", "oklch(55% 0.014 88.7)", "oklch(65% 0.014 88.7)", "oklch(75% 0.014 88.7)", "oklch(95% 0.014 88.7)"]
-      },
-      "chart-grid": {
-        "role": "neutral",
-        "displayName": "Plot Grid",
-        "canonical": "#dedacf",
-        "tonalRamp": ["oklch(15% 0.015 90.2)", "oklch(25% 0.015 90.2)", "oklch(35% 0.015 90.2)", "oklch(45% 0.015 90.2)", "oklch(55% 0.015 90.2)", "oklch(65% 0.015 90.2)", "oklch(75% 0.015 90.2)", "oklch(95% 0.015 90.2)"]
-      },
-      "chart-ink": {
-        "role": "secondary",
-        "displayName": "Plot Ink",
-        "canonical": "#5f605b",
-        "tonalRamp": ["oklch(15% 0.008 115.9)", "oklch(25% 0.008 115.9)", "oklch(35% 0.008 115.9)", "oklch(45% 0.008 115.9)", "oklch(55% 0.008 115.9)", "oklch(65% 0.008 115.9)", "oklch(75% 0.008 115.9)", "oklch(95% 0.008 115.9)"]
-      },
-      "chart-teal": {
-        "role": "secondary",
-        "displayName": "Measured Teal",
-        "canonical": "#176a63",
-        "tonalRamp": ["oklch(15% 0.076 186.4)", "oklch(25% 0.076 186.4)", "oklch(35% 0.076 186.4)", "oklch(45% 0.076 186.4)", "oklch(55% 0.076 186.4)", "oklch(65% 0.076 186.4)", "oklch(75% 0.076 186.4)", "oklch(95% 0.076 186.4)"]
+        "displayName": "Verified Green",
+        "canonical": "#40b982",
+        "tonalRamp": ["oklch(15% 0.12 157)", "oklch(25% 0.12 157)", "oklch(35% 0.12 157)", "oklch(45% 0.12 157)", "oklch(55% 0.12 157)", "oklch(65% 0.12 157)", "oklch(75% 0.12 157)", "oklch(95% 0.12 157)"]
       },
       "chart-gold": {
         "role": "secondary",
-        "displayName": "Competition Gold",
-        "canonical": "#976b17",
-        "tonalRamp": ["oklch(15% 0.109 77.9)", "oklch(25% 0.109 77.9)", "oklch(35% 0.109 77.9)", "oklch(45% 0.109 77.9)", "oklch(55% 0.109 77.9)", "oklch(65% 0.109 77.9)", "oklch(75% 0.109 77.9)", "oklch(95% 0.109 77.9)"]
+        "displayName": "Chart Gold",
+        "canonical": "#e8c365",
+        "tonalRamp": ["oklch(15% 0.1 87)", "oklch(25% 0.1 87)", "oklch(35% 0.1 87)", "oklch(45% 0.1 87)", "oklch(55% 0.1 87)", "oklch(65% 0.1 87)", "oklch(75% 0.1 87)", "oklch(95% 0.1 87)"]
       },
-      "chart-purple": {
-        "role": "secondary",
-        "displayName": "Plot Purple",
-        "canonical": "#675381",
-        "tonalRamp": ["oklch(15% 0.076 303.7)", "oklch(25% 0.076 303.7)", "oklch(35% 0.076 303.7)", "oklch(45% 0.076 303.7)", "oklch(55% 0.076 303.7)", "oklch(65% 0.076 303.7)", "oklch(75% 0.076 303.7)", "oklch(95% 0.076 303.7)"]
-      },
-      "chart-blue": {
-        "role": "secondary",
-        "displayName": "Plot Blue",
-        "canonical": "#285e78",
-        "tonalRamp": ["oklch(15% 0.071 232.1)", "oklch(25% 0.071 232.1)", "oklch(35% 0.071 232.1)", "oklch(45% 0.071 232.1)", "oklch(55% 0.071 232.1)", "oklch(65% 0.071 232.1)", "oklch(75% 0.071 232.1)", "oklch(95% 0.071 232.1)"]
-      },
-      "chart-gray": {
-        "role": "secondary",
-        "displayName": "Plot Gray",
-        "canonical": "#65655e",
-        "tonalRamp": ["oklch(15% 0.011 106.8)", "oklch(25% 0.011 106.8)", "oklch(35% 0.011 106.8)", "oklch(45% 0.011 106.8)", "oklch(55% 0.011 106.8)", "oklch(65% 0.011 106.8)", "oklch(75% 0.011 106.8)", "oklch(95% 0.011 106.8)"]
-      },
-      "chart-orange": {
-        "role": "secondary",
-        "displayName": "Plot Orange",
-        "canonical": "#b86e28",
-        "tonalRamp": ["oklch(15% 0.124 59.6)", "oklch(25% 0.124 59.6)", "oklch(35% 0.124 59.6)", "oklch(45% 0.124 59.6)", "oklch(55% 0.124 59.6)", "oklch(65% 0.124 59.6)", "oklch(75% 0.124 59.6)", "oklch(95% 0.124 59.6)"]
-      },
-      "chart-slate": {
-        "role": "secondary",
-        "displayName": "Plot Slate",
-        "canonical": "#4d7181",
-        "tonalRamp": ["oklch(15% 0.048 227.5)", "oklch(25% 0.048 227.5)", "oklch(35% 0.048 227.5)", "oklch(45% 0.048 227.5)", "oklch(55% 0.048 227.5)", "oklch(65% 0.048 227.5)", "oklch(75% 0.048 227.5)", "oklch(95% 0.048 227.5)"]
-      },
-      "footer-accent": {
-        "role": "secondary",
-        "displayName": "Footer Coral",
-        "canonical": "#e07868",
-        "tonalRamp": ["oklch(15% 0.132 30)", "oklch(25% 0.132 30)", "oklch(35% 0.132 30)", "oklch(45% 0.132 30)", "oklch(55% 0.132 30)", "oklch(65% 0.132 30)", "oklch(75% 0.132 30)", "oklch(95% 0.132 30)"]
-      },
-      "footer-copy": {
-        "role": "secondary",
-        "displayName": "Footer Copy",
-        "canonical": "#d0cec8",
-        "tonalRamp": ["oklch(15% 0.009 91.5)", "oklch(25% 0.009 91.5)", "oklch(35% 0.009 91.5)", "oklch(45% 0.009 91.5)", "oklch(55% 0.009 91.5)", "oklch(65% 0.009 91.5)", "oklch(75% 0.009 91.5)", "oklch(95% 0.009 91.5)"]
-      },
-      "footer-muted": {
-        "role": "secondary",
-        "displayName": "Footer Muted",
-        "canonical": "#aaa8a2",
-        "tonalRamp": ["oklch(15% 0.009 91.5)", "oklch(25% 0.009 91.5)", "oklch(35% 0.009 91.5)", "oklch(45% 0.009 91.5)", "oklch(55% 0.009 91.5)", "oklch(65% 0.009 91.5)", "oklch(75% 0.009 91.5)", "oklch(95% 0.009 91.5)"]
-      },
-      "steel-background": {
+      "canvas": {
         "role": "neutral",
-        "displayName": "Steel Graphite",
+        "displayName": "Charcoal Canvas",
         "canonical": "#111418",
-        "tonalRamp": ["oklch(15% 0.012 250)", "oklch(25% 0.012 250)", "oklch(35% 0.012 250)", "oklch(45% 0.012 250)", "oklch(55% 0.012 250)", "oklch(65% 0.012 250)", "oklch(75% 0.012 250)", "oklch(95% 0.012 250)"]
+        "tonalRamp": ["oklch(15% 0.01 250)", "oklch(25% 0.01 250)", "oklch(35% 0.01 250)", "oklch(45% 0.01 250)", "oklch(55% 0.01 250)", "oklch(65% 0.01 250)", "oklch(75% 0.01 250)", "oklch(95% 0.01 250)"]
       },
-      "steel-paper": {
+      "footer-canvas": {
         "role": "neutral",
-        "displayName": "Steel Graphite Panel",
+        "displayName": "Footer Charcoal",
+        "canonical": "#0c1014",
+        "tonalRamp": ["oklch(15% 0.01 250)", "oklch(25% 0.01 250)", "oklch(35% 0.01 250)", "oklch(45% 0.01 250)", "oklch(55% 0.01 250)", "oklch(65% 0.01 250)", "oklch(75% 0.01 250)", "oklch(95% 0.01 250)"]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Graphite Panel",
         "canonical": "#1b2027",
         "tonalRamp": ["oklch(15% 0.017 252)", "oklch(25% 0.017 252)", "oklch(35% 0.017 252)", "oklch(45% 0.017 252)", "oklch(55% 0.017 252)", "oklch(65% 0.017 252)", "oklch(75% 0.017 252)", "oklch(95% 0.017 252)"]
       },
-      "steel-inset": {
+      "panel-raised": {
         "role": "neutral",
-        "displayName": "Steel Inset",
+        "displayName": "Raised Graphite",
+        "canonical": "#222832",
+        "tonalRamp": ["oklch(15% 0.02 252)", "oklch(25% 0.02 252)", "oklch(35% 0.02 252)", "oklch(45% 0.02 252)", "oklch(55% 0.02 252)", "oklch(65% 0.02 252)", "oklch(75% 0.02 252)", "oklch(95% 0.02 252)"]
+      },
+      "panel-inset": {
+        "role": "neutral",
+        "displayName": "Inset Graphite",
         "canonical": "#181d24",
         "tonalRamp": ["oklch(15% 0.017 254)", "oklch(25% 0.017 254)", "oklch(35% 0.017 254)", "oklch(45% 0.017 254)", "oklch(55% 0.017 254)", "oklch(65% 0.017 254)", "oklch(75% 0.017 254)", "oklch(95% 0.017 254)"]
       },
-      "steel-filter-rail": {
+      "filter-rail": {
         "role": "neutral",
-        "displayName": "Steel Filter Rail",
+        "displayName": "Filter Rail",
         "canonical": "#15191f",
         "tonalRamp": ["oklch(15% 0.015 252)", "oklch(25% 0.015 252)", "oklch(35% 0.015 252)", "oklch(45% 0.015 252)", "oklch(55% 0.015 252)", "oklch(65% 0.015 252)", "oklch(75% 0.015 252)", "oklch(95% 0.015 252)"]
       },
-      "steel-ink": {
+      "foreground": {
         "role": "neutral",
-        "displayName": "Steel Light Text",
+        "displayName": "Cool White",
         "canonical": "#f4f6f8",
         "tonalRamp": ["oklch(15% 0.004 240)", "oklch(25% 0.004 240)", "oklch(35% 0.004 240)", "oklch(45% 0.004 240)", "oklch(55% 0.004 240)", "oklch(65% 0.004 240)", "oklch(75% 0.004 240)", "oklch(95% 0.004 240)"]
       },
-      "steel-muted": {
+      "muted-foreground": {
         "role": "neutral",
-        "displayName": "Steel Muted Text",
+        "displayName": "Steel Mist",
         "canonical": "#9ba6b2",
         "tonalRamp": ["oklch(15% 0.025 250)", "oklch(25% 0.025 250)", "oklch(35% 0.025 250)", "oklch(45% 0.025 250)", "oklch(55% 0.025 250)", "oklch(65% 0.025 250)", "oklch(75% 0.025 250)", "oklch(95% 0.025 250)"]
       },
-      "steel-rule": {
+      "rule": {
         "role": "neutral",
         "displayName": "Steel Rule",
         "canonical": "#262d37",
         "tonalRamp": ["oklch(15% 0.024 250)", "oklch(25% 0.024 250)", "oklch(35% 0.024 250)", "oklch(45% 0.024 250)", "oklch(55% 0.024 250)", "oklch(65% 0.024 250)", "oklch(75% 0.024 250)", "oklch(95% 0.024 250)"]
       },
-      "steel-orange": {
-        "role": "primary",
-        "displayName": "Steel Orange Signal",
-        "canonical": "#ff6b35",
-        "tonalRamp": ["oklch(15% 0.215 38)", "oklch(25% 0.215 38)", "oklch(35% 0.215 38)", "oklch(45% 0.215 38)", "oklch(55% 0.215 38)", "oklch(65% 0.215 38)", "oklch(75% 0.215 38)", "oklch(95% 0.215 38)"]
-      },
-      "steel-orange-hover": {
-        "role": "primary",
-        "displayName": "Steel Orange Hover",
-        "canonical": "#ff8a61",
-        "tonalRamp": ["oklch(15% 0.175 40)", "oklch(25% 0.175 40)", "oklch(35% 0.175 40)", "oklch(45% 0.175 40)", "oklch(55% 0.175 40)", "oklch(65% 0.175 40)", "oklch(75% 0.175 40)", "oklch(95% 0.175 40)"]
-      },
-      "steel-green": {
-        "role": "secondary",
-        "displayName": "Verified Status Green",
-        "canonical": "#40b982",
-        "tonalRamp": ["oklch(15% 0.15 157)", "oklch(25% 0.15 157)", "oklch(35% 0.15 157)", "oklch(45% 0.15 157)", "oklch(55% 0.15 157)", "oklch(65% 0.15 157)", "oklch(75% 0.15 157)", "oklch(95% 0.15 157)"]
-      },
-      "steel-border": {
+      "control-border": {
         "role": "neutral",
-        "displayName": "Steel Control Border",
+        "displayName": "Control Border",
         "canonical": "#343c48",
         "tonalRamp": ["oklch(15% 0.022 250)", "oklch(25% 0.022 250)", "oklch(35% 0.022 250)", "oklch(45% 0.022 250)", "oklch(55% 0.022 250)", "oklch(65% 0.022 250)", "oklch(75% 0.022 250)", "oklch(95% 0.022 250)"]
       },
-      "steel-row-hover": {
+      "logo-plate": {
         "role": "neutral",
-        "displayName": "Steel Row Hover",
-        "canonical": "#222832",
-        "tonalRamp": ["oklch(15% 0.021 252)", "oklch(25% 0.021 252)", "oklch(35% 0.021 252)", "oklch(45% 0.021 252)", "oklch(55% 0.021 252)", "oklch(65% 0.021 252)", "oklch(75% 0.021 252)", "oklch(95% 0.021 252)"]
+        "displayName": "Official Logo White",
+        "canonical": "#fffefa",
+        "tonalRamp": ["oklch(15% 0.005 95)", "oklch(25% 0.005 95)", "oklch(35% 0.005 95)", "oklch(45% 0.005 95)", "oklch(55% 0.005 95)", "oklch(65% 0.005 95)", "oklch(75% 0.005 95)", "oklch(95% 0.005 95)"]
       },
-      "steel-chart-blue": {
+      "chart-blue": {
         "role": "secondary",
-        "displayName": "Steel Chart Blue",
+        "displayName": "Plot Blue",
         "canonical": "#66a8e6",
-        "tonalRamp": ["oklch(15% 0.14 250)", "oklch(25% 0.14 250)", "oklch(35% 0.14 250)", "oklch(45% 0.14 250)", "oklch(55% 0.14 250)", "oklch(65% 0.14 250)", "oklch(75% 0.14 250)", "oklch(95% 0.14 250)"]
+        "tonalRamp": ["oklch(15% 0.12 250)", "oklch(25% 0.12 250)", "oklch(35% 0.12 250)", "oklch(45% 0.12 250)", "oklch(55% 0.12 250)", "oklch(65% 0.12 250)", "oklch(75% 0.12 250)", "oklch(95% 0.12 250)"]
       },
-      "steel-chart-gold": {
+      "chart-purple": {
         "role": "secondary",
-        "displayName": "Steel Chart Gold",
-        "canonical": "#e8c365",
-        "tonalRamp": ["oklch(15% 0.14 87)", "oklch(25% 0.14 87)", "oklch(35% 0.14 87)", "oklch(45% 0.14 87)", "oklch(55% 0.14 87)", "oklch(65% 0.14 87)", "oklch(75% 0.14 87)", "oklch(95% 0.14 87)"]
-      },
-      "steel-chart-purple": {
-        "role": "secondary",
-        "displayName": "Steel Chart Purple",
+        "displayName": "Plot Purple",
         "canonical": "#c58ce5",
-        "tonalRamp": ["oklch(15% 0.16 305)", "oklch(25% 0.16 305)", "oklch(35% 0.16 305)", "oklch(45% 0.16 305)", "oklch(55% 0.16 305)", "oklch(65% 0.16 305)", "oklch(75% 0.16 305)", "oklch(95% 0.16 305)"]
+        "tonalRamp": ["oklch(15% 0.13 305)", "oklch(25% 0.13 305)", "oklch(35% 0.13 305)", "oklch(45% 0.13 305)", "oklch(55% 0.13 305)", "oklch(65% 0.13 305)", "oklch(75% 0.13 305)", "oklch(95% 0.13 305)"]
+      },
+      "chart-slate": {
+        "role": "secondary",
+        "displayName": "Plot Slate",
+        "canonical": "#70889b",
+        "tonalRamp": ["oklch(15% 0.04 235)", "oklch(25% 0.04 235)", "oklch(35% 0.04 235)", "oklch(45% 0.04 235)", "oklch(55% 0.04 235)", "oklch(65% 0.04 235)", "oklch(75% 0.04 235)", "oklch(95% 0.04 235)"]
       }
     },
     "typographyMeta": {
       "display": {
-        "displayName": "Season Display",
-        "purpose": "Season masthead and product wordmark."
+        "displayName": "Masthead Display",
+        "purpose": "Site-wide display headlines and mastheads in Barlow Condensed."
       },
       "headline": {
-        "displayName": "Section Heading",
-        "purpose": "Semantically named dashboard sections."
+        "displayName": "Report Heading",
+        "purpose": "Site-wide report and section headings in Barlow Condensed."
       },
       "title": {
-        "displayName": "Report Title",
-        "purpose": "Ranking, club, and report titles."
+        "displayName": "Panel Title",
+        "purpose": "Division, ranking, report-card, and methodology titles."
       },
       "body": {
-        "displayName": "Report Body",
-        "purpose": "Explanatory copy, interface controls, and competitor records."
+        "displayName": "Interface and Prose",
+        "purpose": "DM Sans for body copy, navigation, controls, and result identities."
       },
       "label": {
-        "displayName": "Control Label",
-        "purpose": "Concise uppercase control and data labels."
+        "displayName": "Compact Label",
+        "purpose": "Concise uppercase controls and factual labels."
       },
-      "steel-display": {
-        "displayName": "Steel Masthead",
-        "purpose": "Route-specific uppercase Steel Challenge masthead in Barlow Condensed."
-      },
-      "steel-headline": {
-        "displayName": "Steel Section Heading",
-        "purpose": "Route-specific Steel Challenge report section headings in Barlow Condensed."
-      },
-      "steel-data": {
-        "displayName": "Steel Telemetry",
-        "purpose": "Route-specific positions, counts, percentiles, and compact metadata."
+      "telemetry": {
+        "displayName": "Telemetry Mono",
+        "purpose": "Measured values and telemetry: dates, positions, counts, percentiles, and compact table metadata."
       }
     },
     "shadows": [
       {
         "name": "chart-tooltip",
-        "value": "0 8px 24px rgb(26 27 25 / 12%)",
-        "purpose": "Keep chart tooltip legible above plotted data."
-      },
-      {
-        "name": "steel-chart-tooltip",
         "value": "0 8px 24px rgb(0 0 0 / 35%)",
-        "purpose": "Separate a chart tooltip from Steel Challenge's dark plot surface."
+        "purpose": "Separate floating chart information from the graphite plotting surface."
       }
     ],
     "motion": [
       {
-        "name": "state-transition",
+        "name": "interface-state",
         "value": "150ms-160ms ease",
-        "purpose": "Subtle hover, focus, and disclosure state changes."
+        "purpose": "Subtle color and border transitions for navigation, rows, and controls."
       },
       {
         "name": "reduced-motion",
@@ -288,9 +167,8 @@
     "breakpoints": [
       { "name": "md", "value": "768px" },
       { "name": "lg", "value": "1024px" },
-      { "name": "xl", "value": "1280px" },
-      { "name": "steel-card-columns", "value": "1100px" },
-      { "name": "steel-phone-layout", "value": "767px" }
+      { "name": "steel-columns", "value": "1100px" },
+      { "name": "xl", "value": "1280px" }
     ]
   },
   "components": [
@@ -298,139 +176,113 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Square ink button for an emphasized action, with red hover and keyboard focus.",
+      "description": "Compact foreground-filled action with orange hover and visible keyboard focus.",
       "html": "<button class=\"ds-primary-button\" type=\"button\">Open results</button>",
-      "css": ".ds-primary-button{display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border:1px solid var(--ink);border-radius:0;background:var(--ink);color:var(--paper);font:600 0.875rem 'DM Sans',sans-serif;transition:background-color 150ms ease}.ds-primary-button:hover{background:var(--signal-dark)}.ds-primary-button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}.ds-primary-button:disabled{cursor:not-allowed;opacity:.5}"
+      "css": ".ds-primary-button{display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border:1px solid var(--ink);border-radius:0;background:var(--ink);color:var(--paper);font:600 14px 'DM Sans',sans-serif;transition:background-color 150ms ease}.ds-primary-button:hover{background:var(--signal-dark)}.ds-primary-button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}.ds-primary-button:disabled{cursor:not-allowed;opacity:.5}"
+    },
+    {
+      "name": "Report Card",
+      "kind": "card",
+      "refersTo": "report-card",
+      "description": "Flat graphite report field with a structural top rule and responsive internal padding.",
+      "html": "<section class=\"ds-report-card\"><h3>Season overview</h3><p>Source-traceable season data.</p></section>",
+      "css": ".ds-report-card{min-width:0;padding:20px;border-top:1px solid var(--rule);background:var(--paper);color:var(--ink)}.ds-report-card h3{margin:0;font:700 1.5rem/1 'Barlow Condensed',sans-serif}.ds-report-card p{margin:8px 0 0;color:var(--ink-muted);font:400 14px/1.55 'DM Sans',sans-serif}@media(min-width:768px){.ds-report-card{padding:24px}}"
     },
     {
       "name": "Filter Select",
       "kind": "input",
       "refersTo": "filter-control",
-      "description": "Labeled compact selector with warm paper fill and visible red focus.",
-      "html": "<label class=\"ds-filter-label\" for=\"season-filter\">Division</label><select id=\"season-filter\" class=\"ds-filter-control\"><option>All divisions</option></select>",
-      "css": ".ds-filter-label{display:block;color:var(--ink-muted);font:700 0.67rem 'DM Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase}.ds-filter-control{display:block;width:100%;margin-top:6px;padding:8px 12px;border:1px solid var(--rule);border-radius:10.4px;background:var(--paper);color:var(--ink);font:400 0.875rem 'DM Sans',sans-serif}.ds-filter-control:hover{border-color:var(--ink-muted)}.ds-filter-control:focus-visible{border-color:var(--signal);outline:2px solid var(--signal);outline-offset:2px}"
+      "description": "Labeled dark selector for season filters, with orange focus treatment.",
+      "html": "<label class=\"ds-filter-label\" for=\"discipline-filter\">Division</label><select id=\"discipline-filter\" class=\"ds-filter-control\"><option>All divisions</option></select>",
+      "css": ".ds-filter-label{display:block;color:var(--ink-muted);font:600 .67rem 'DM Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase}.ds-filter-control{display:block;width:100%;margin-top:6px;padding:8px 32px 8px 12px;border:1px solid var(--rule);border-radius:10.4px;background:var(--paper);color:var(--ink);font:400 14px 'DM Sans',sans-serif;transition:border-color 150ms ease}.ds-filter-control:hover{border-color:var(--ink-muted)}.ds-filter-control:focus-visible{border-color:var(--signal);outline:2px solid var(--signal);outline-offset:2px}"
     },
     {
       "name": "Section Navigation Link",
       "kind": "nav",
       "refersTo": "navigation-active",
-      "description": "An anchor to a semantic season-report section; current destination is underlined in red.",
+      "description": "Semantic report anchor whose current section receives a slim orange underline.",
       "html": "<a class=\"ds-section-link ds-section-link-active\" href=\"#rankings\" aria-current=\"location\">Rankings</a>",
-      "css": ".ds-section-link{position:relative;display:inline-flex;min-height:2.75rem;align-items:center;padding:0 .55rem;color:var(--ink-muted);font:600 .79rem 'DM Sans',sans-serif;text-decoration:none;white-space:nowrap;transition:color 160ms ease}.ds-section-link:hover,.ds-section-link-active{color:var(--ink)}.ds-section-link-active:after{position:absolute;right:.55rem;bottom:.25rem;left:.55rem;height:2px;background:var(--signal);content:''}.ds-section-link:focus-visible{outline:2px solid var(--signal);outline-offset:3px}"
+      "css": ".ds-section-link{position:relative;display:inline-flex;min-height:44px;align-items:center;padding:0 9px;color:var(--ink-muted);font:600 .79rem 'DM Sans',sans-serif;text-decoration:none;white-space:nowrap;transition:color 160ms ease}.ds-section-link:hover,.ds-section-link-active{color:var(--ink)}.ds-section-link-active:after{position:absolute;right:9px;bottom:4px;left:9px;height:2px;background:var(--signal);content:''}.ds-section-link:focus-visible{outline:2px solid var(--signal);outline-offset:3px}"
     },
     {
-      "name": "Active Filter Count",
+      "name": "Telemetry Status Chip",
       "kind": "chip",
-      "refersTo": "filter-count",
-      "description": "A small red numeric count identifies active mobile filters.",
-      "html": "<span class=\"ds-filter-count\" aria-label=\"2 active filters\">2</span>",
-      "css": ".ds-filter-count{display:inline-flex;min-width:20px;min-height:20px;align-items:center;justify-content:center;padding:2px 6px;border-radius:2px;background:var(--signal);color:var(--paper);font:700 .75rem/1 'DM Sans',sans-serif;font-variant-numeric:tabular-nums}"
+      "refersTo": "status-chip",
+      "description": "Compact inset status marker using orange for context and green only for verified availability.",
+      "html": "<span class=\"ds-status-chip\"><i aria-hidden=\"true\"></i> VERIFIED RESULTS</span>",
+      "css": ".ds-status-chip{display:inline-flex;min-height:28px;align-items:center;gap:7px;padding:6px 9px;border:1px solid #343c48;border-radius:4px;background:var(--paper-raised);color:var(--signal);font:700 10px/1.2 ui-monospace,'SFMono-Regular',Consolas,monospace;letter-spacing:.1em}.ds-status-chip i{width:7px;height:7px;flex:none;border-radius:50%;background:#40b982}.ds-status-chip:focus-visible{outline:2px solid var(--signal);outline-offset:3px}"
     },
     {
-      "name": "Editorial Report Panel",
-      "kind": "card",
-      "refersTo": "report-card",
-      "description": "Flat paper report field separated from neighboring content by an ink hairline.",
-      "html": "<section class=\"ds-report-panel\"><h3>Season standings</h3><p>Official result totals.</p></section>",
-      "css": ".ds-report-panel{min-width:0;padding:20px;border-top:1px solid var(--rule);background:var(--paper)}.ds-report-panel h3{margin:0;color:var(--ink);font:700 1.875rem/1 'Barlow Condensed',sans-serif}.ds-report-panel p{color:var(--ink-muted);font:400 .875rem/1.55 'DM Sans',sans-serif}"
-    },
-    {
-      "name": "Ranking Scoreline",
+      "name": "Season Facts Ledger",
       "kind": "custom",
       "refersTo": "report-card",
-      "description": "A factual score and proportionally sized red hairline preserve rank readability without decorative imagery.",
-      "html": "<div class=\"ds-scoreline\"><strong>01</strong><span>Competitor name</span><output>1131 points</output><span class=\"ds-score-track\"><i style=\"width:72%\"></i></span></div>",
-      "css": ".ds-scoreline{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:16px;border-bottom:1px solid var(--rule);background:var(--paper-raised);color:var(--ink);font:600 .9rem 'DM Sans',sans-serif}.ds-scoreline strong{color:var(--signal);font:700 1.5rem 'Barlow Condensed',sans-serif}.ds-scoreline output{font-variant-numeric:tabular-nums}.ds-score-track{grid-column:1/-1;display:block;height:5px;background:var(--paper-deep)}.ds-score-track i{display:block;height:100%;background:var(--signal)}"
+      "description": "Ruled season facts shown in aligned columns on desktop and a single factual column on phones.",
+      "html": "<dl class=\"ds-season-ledger\"><div><dt>Competitions</dt><dd>—</dd></div><div><dt>Result rows</dt><dd>—</dd></div></dl>",
+      "css": ".ds-season-ledger{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px;border-top:2px solid var(--signal)}.ds-season-ledger div{display:flex;min-width:0;align-items:baseline;justify-content:space-between;gap:8px;padding:12px 8px 13px 0;border-bottom:1px solid var(--rule)}.ds-season-ledger dt{color:var(--ink-muted);font:700 .67rem 'DM Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase}.ds-season-ledger dd{margin:0;color:var(--ink);font:700 1.25rem 'Barlow Condensed',sans-serif;font-variant-numeric:tabular-nums}@media(max-width:767px){.ds-season-ledger{grid-template-columns:1fr}}"
     },
     {
-      "name": "Footer Discipline Link",
-      "kind": "nav",
-      "refersTo": "discipline-link",
-      "description": "A real official federation page link with an unmodified mark and a visible discipline name.",
-      "html": "<a class=\"ds-discipline-link\" href=\"https://mdlsz.com/idpa-szakag/\"><img alt=\"\" src=\"/logos/idpa-discipline.png\"><span>IDPA</span><span aria-hidden=\"true\">↗</span></a>",
-      "css": ".ds-discipline-link{display:flex;min-width:0;min-height:4rem;align-items:center;gap:10px;padding:8px;border:1px solid rgb(250 249 245 / 20%);color:var(--paper);font:600 .76rem/1.25 'DM Sans',sans-serif;text-decoration:none;transition:border-color 150ms ease,background-color 150ms ease}.ds-discipline-link:hover{border-color:var(--footer-accent);background:rgb(250 249 245 / 5%)}.ds-discipline-link img{width:59px;height:42px;object-fit:contain;background:var(--paper-raised)}.ds-discipline-link:focus-visible{outline:2px solid var(--footer-accent);outline-offset:3px}"
-    },
-    {
-      "name": "Steel Status Chip",
-      "kind": "chip",
-      "refersTo": "steel-status-chip",
-      "description": "Route-scoped archive status and season context; green is reserved for available verified data.",
-      "html": "<span class=\"ds-steel-status\"><i aria-hidden=\"true\"></i> MDLSZ / RESULTS ARCHIVE</span>",
-      "css": ".ds-steel-status{display:inline-flex;min-height:28px;align-items:center;gap:7px;padding:6px 9px;border:1px solid #343c48;border-radius:4px;background:#181d24;color:#ff6b35;font:700 10px/1.2 ui-monospace,monospace;letter-spacing:.1em}.ds-steel-status i{width:7px;height:7px;border-radius:50%;background:#40b982}.ds-steel-status:hover{border-color:#ff6b35}.ds-steel-status:focus-visible{outline:2px solid #ff6b35;outline-offset:3px}"
-    },
-    {
-      "name": "Steel Season Ledger",
-      "kind": "custom",
-      "refersTo": "steel-season-ledger",
-      "description": "A ruled, factual season summary that moves from paired columns to a single handset list.",
-      "html": "<dl class=\"ds-steel-ledger\"><div><dt>Ranked fields</dt><dd>—</dd></div><div><dt>Divisions</dt><dd>—</dd></div></dl>",
-      "css": ".ds-steel-ledger{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px;border-top:1px solid #262d37}.ds-steel-ledger div{display:flex;min-height:52px;align-items:baseline;justify-content:space-between;gap:8px;padding:9px 2px;border-bottom:1px solid #262d37}.ds-steel-ledger dt{color:#9ba6b2;font:600 10px ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase}.ds-steel-ledger dd{margin:0;color:#f4f6f8;font:700 20px ui-monospace,monospace;font-variant-numeric:tabular-nums}@media(max-width:767px){.ds-steel-ledger{grid-template-columns:1fr}}"
-    },
-    {
-      "name": "Steel Division Ranking Card",
+      "name": "Division Ranking Card",
       "kind": "card",
-      "refersTo": "steel-division-card",
-      "description": "A graphite division card with selectable, percentile-based rows and native field expansion.",
-      "html": "<article class=\"ds-steel-card\"><h3>Division name</h3><button type=\"button\" class=\"ds-steel-rank\"><b>01</b><span>Competitor name</span><strong>Percentile</strong><i><em></em></i></button></article>",
-      "css": ".ds-steel-card{padding:16px;border:1px solid #262d37;border-radius:5px;background:#1b2027;color:#f4f6f8}.ds-steel-card h3{margin:8px 0 12px;font:650 17px/1.35 'DM Sans',sans-serif}.ds-steel-rank{display:grid;width:100%;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:10px 3px;border:0;border-bottom:1px solid #262d37;background:transparent;color:#f4f6f8;text-align:left;font:600 13px 'DM Sans',sans-serif}.ds-steel-rank:hover,.ds-steel-rank[aria-pressed=true]{background:#222832}.ds-steel-rank:focus-visible{outline:2px solid #ff6b35;outline-offset:2px}.ds-steel-rank b,.ds-steel-rank strong{font:700 12px ui-monospace,monospace}.ds-steel-rank b{color:#ff6b35}.ds-steel-rank i{grid-column:1/-1;height:4px;background:#262d37}.ds-steel-rank em{display:block;width:70%;height:100%;background:#ff6b35}"
+      "refersTo": "division-card",
+      "description": "A restrained graphite division surface with selectable, source-grounded leaderboard rows.",
+      "html": "<article class=\"ds-division-card\"><h3>Division</h3><button class=\"ds-rank-row\" type=\"button\" aria-pressed=\"false\"><b>01</b><span>Competitor name</span><strong>Percentile</strong><i><em></em></i></button></article>",
+      "css": ".ds-division-card{min-width:0;padding:16px;border:1px solid var(--rule);border-radius:4.8px;background:var(--paper);color:var(--ink)}.ds-division-card h3{margin:0 0 12px;font:600 1.35rem/1.05 'Barlow Condensed',sans-serif}.ds-rank-row{display:grid;width:100%;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px 12px;padding:10px 3px;border:0;border-bottom:1px solid var(--rule);background:transparent;color:var(--ink);text-align:left;font:600 13px 'DM Sans',sans-serif}.ds-rank-row:hover,.ds-rank-row[aria-pressed=true]{background:var(--paper-raised)}.ds-rank-row:focus-visible{outline:2px solid var(--signal);outline-offset:2px}.ds-rank-row b,.ds-rank-row strong{font:700 12px ui-monospace,monospace}.ds-rank-row b{color:var(--signal)}.ds-rank-row i{grid-column:1/-1;height:4px;background:var(--rule)}.ds-rank-row em{display:block;width:70%;height:100%;background:var(--signal)}"
     },
     {
-      "name": "Steel Result Table",
+      "name": "Chart Tooltip",
       "kind": "custom",
-      "refersTo": "steel-record-table",
-      "description": "A compact, ruled result ledger with secondary metadata and explicit source links.",
-      "html": "<div class=\"ds-steel-table-wrap\"><table class=\"ds-steel-table\"><thead><tr><th>Event</th><th>Place</th><th>Field</th><th>Source</th></tr></thead><tbody><tr><td>Competition<span>date · level</span></td><td>—</td><td>—</td><td><a href=\"#source\">Official result</a></td></tr></tbody></table></div>",
-      "css": ".ds-steel-table-wrap{overflow-x:auto;border:1px solid #262d37;border-radius:5px;background:#1b2027}.ds-steel-table{width:100%;min-width:600px;border-collapse:collapse;color:#f4f6f8;font:400 13px 'DM Sans',sans-serif}.ds-steel-table th,.ds-steel-table td{padding:12px 14px;border-bottom:1px solid #262d37;text-align:left;vertical-align:top}.ds-steel-table thead{background:#181d24;color:#9ba6b2;font:600 10px ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase}.ds-steel-table tbody tr:hover{background:#222832}.ds-steel-table td span{display:block;margin-top:4px;color:#9ba6b2;font-size:11px}.ds-steel-table a{color:#ff6b35;text-decoration:underline;text-underline-offset:3px}.ds-steel-table a:hover{color:#ff8a61}.ds-steel-table a:focus-visible{outline:2px solid #ff6b35;outline-offset:3px}"
+      "description": "Dark raised chart annotation with a fine rule and one soft shadow for plot legibility.",
+      "html": "<div class=\"ds-chart-tooltip\" role=\"tooltip\"><strong>Season</strong><span>Result: 42</span></div>",
+      "css": ".ds-chart-tooltip{display:grid;gap:4px;padding:10px 12px;border:1px solid var(--rule);background:var(--paper-raised);color:var(--ink);font:400 12px 'DM Sans',sans-serif;box-shadow:0 8px 24px rgb(0 0 0 / 35%)}.ds-chart-tooltip strong{font-weight:700}.ds-chart-tooltip span{color:var(--ink-muted);font-variant-numeric:tabular-nums}"
     }
   ],
   "narrative": {
-    "northStar": "The Championship Record",
-    "overview": "Hero of IDPA reads each season as a traceable championship editorial record. A full-width season masthead, measured totals, open report grids, official links, and restrained data plots make rankings legible without presenting them as free-floating claims. The audience is competitors comparing a season of official Hungarian IDPA results.\n\nWarm opaque paper, championship ink, hairline rules, and a precise red signal form the page's reusable grammar. Display lettering carries the competition identity; ordinary interface work remains easy to read and operate. Section links, live season filters, year-specific routes, quality warnings, and official result sources are functional parts of the record.\n\nSteel Challenge carries a route-scoped telemetry treatment: graphite panels, orange active signals, restrained green availability, a ruled season ledger, division cards, and source-backed result tables. Other disciplines retain the warm editorial palette.",
+    "northStar": "The Match Telemetry Console",
+    "overview": "The site treats home, discipline, season, descriptive, methodology, and unavailable-data routes as a legible, source-traceable competition console. A charcoal ground, graphite report fields, fine steel rules, a receding reticle-dot texture, and condensed Barlow headings create a technical atmosphere without displacing the results themselves. DM Sans carries explanations, navigation, and controls; monospaced type is reserved for measured values and telemetry such as dates, counts, positions, and percentiles.\n\nThe orange signal identifies active navigation, ranking emphasis, source actions, and selected states. Green marks only verified positive or available state. Flat surfaces and structural rules keep cards, charts, and tables quiet enough for dense comparison. The shared chart sequence is orange, blue, gold, purple, light orange, muted slate, and slate; green is not present in the chart palette. Official organization and discipline artwork keeps its original colors on white plates and remains linked in its actual organizational context. IDPA's Hero of IDPA identity can remain in its wordmark; it does not create a separate color or surface theme.",
     "keyCharacteristics": [
-      "Full-bleed season masthead; centered editorial reading measure below.",
-      "Opaque warm-paper surfaces and ruled, mostly square-corner reports.",
-      "Championship red marks current state, standings, source links, and plot series.",
-      "Reproducible season totals and rankings remain tied to official sources.",
-      "Official organization marks retain their original artwork and attribution.",
-      "Steel Challenge uses a route-scoped graphite telemetry variant; the warm editorial system remains the default for every other discipline."
+      "One charcoal-and-graphite visual world across home, discipline, season, methodology, descriptive, and unavailable-data routes.",
+      "Barlow Condensed display and headline hierarchy; DM Sans body and interface; monospaced type only for measured values and telemetry.",
+      "Functional orange signal, green only for verified positive or available state, and a seven-color chart sequence that excludes green.",
+      "Flat, ruled reports over a subtle 24px reticle-dot ground.",
+      "Official marks retain their artwork and sit on unrounded white plates.",
+      "Page arrangements and analytics remain discipline-specific; visual consistency never implies shared scoring methods."
     ],
     "rules": [
       {
-        "name": "The Scoreline Rule",
-        "body": "Red identifies an active navigation state, a source link, a ranking or a chart series. Keep it functional rather than using it to fill report surfaces decoratively.",
+        "name": "The Signal-Not-Fill Rule",
+        "body": "Orange marks actions, current state, rankings, and source access; keep large report surfaces graphite rather than filling them with the accent.",
+        "section": "colors"
+      },
+      {
+        "name": "The Green-For-Validity Rule",
+        "body": "Use green only for verified positive or available state; never use it as a general brand accent.",
         "section": "colors"
       },
       {
         "name": "The Heading-First Rule",
-        "body": "Let the semantic title lead. Reserve uppercase label styling for controls and actual data terms, not decorative text above card headings.",
+        "body": "Let semantic headings carry hierarchy. Use DM Sans for interface copy and factual labels; reserve monospaced type for measured values and telemetry.",
         "section": "typography"
       },
       {
         "name": "The Rule-Over-Shadow Rule",
-        "body": "Prefer a visible editorial rule or tonal paper shift to adding elevation.",
+        "body": "Use tonal panels and visible structural rules to separate reports; reserve shadow for floating chart tooltips.",
         "section": "elevation"
-      },
-      {
-        "name": "The Route Scope Rule",
-        "body": "Steel telemetry colors and treatments belong only to the Steel Challenge route. Do not promote its graphite surfaces or orange signal to the shared editorial palette.",
-        "section": "colors"
       }
     ],
     "dos": [
-      "Do keep one URL and data set per published season; the selector lists available seasons only.",
-      "Do retain source attribution, visible parsing/quality states, and semantic season-wide versus filtered scope.",
-      "Do label and shape chart series with the existing palette, legible axes, and paper tooltips.",
-      "Do retain official organization artwork without recoloring or distorting it; its source-to-link mapping lives in docs/asset-sources.md.",
-      "Do maintain visible keyboard focus, a skip-to-content link, reduced-motion support, and a measured anchor offset.",
-      "Do confine the Steel Challenge telemetry variant to its own route, keep orange functional and green status-only, and retain the warm editorial discipline palette elsewhere.",
-      "Do keep Steel Challenge rankings tied to official placement percentiles and provide the source-backed season record; never infer unsupported performance measures from visual styling."
+      "Do apply the charcoal-and-graphite telemetry palette across the home page, all discipline dashboards and routes, methodology, descriptive reports, unavailable states, shared navigation, and footer.",
+      "Do preserve each discipline's facts, data methods, and page-specific composition; shared styling does not make one discipline's scoring portable to another.",
+      "Do reserve orange for active/ranking/source signals and green for verified positive or available state.",
+      "Do keep source attribution, data-quality states, and missing-data explanations visible.",
+      "Do preserve official organization artwork unchanged on white plates and use it only in its real linked context.",
+      "Do keep visible keyboard focus, reduced-motion support, responsive filters/navigation, and contained horizontal overflow for wide tables.",
+      "Do keep the dot texture subtle and behind opaque content panels."
     ],
     "donts": [
-      "Don't imply sponsorship or endorsement through organization or discipline marks.",
-      "Don't use color as the only way to distinguish a ranking, state, or chart series.",
-      "Don't make report cards compete with the actual season figures using glass, gradients, decorative shadow stacks, or ornamental accents.",
-      "Don't apply Steel Challenge graphite, orange, or status-green tokens to other discipline routes by default.",
-      "Don't imply stage records, raw stage timings, plate layouts, shooter ratings, or calculator results that the published data does not establish."
+      "Don't use green outside verified positive or available state or introduce it into the chart palette; don't use orange as a large decorative panel fill.",
+      "Don't imply endorsement through federation or discipline marks.",
+      "Don't rely on color alone to communicate rank, chart series, availability, or selection.",
+      "Don't invent unavailable seasons, analytics, records, measurements, or performance claims."
     ]
   }
 }

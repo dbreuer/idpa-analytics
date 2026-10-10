@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/dashboard/section-heading";
 import { SectionChart } from "@/components/charts/section-chart";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Card } from "@/components/ui/card";
+import { axisStroke, chartPalette, gridStroke, tooltipStyle } from "@/lib/chart-theme";
 import { methodologyPath } from "@/lib/discipline-paths";
 import { buildGyorskombinaltStatistics, gyorskombinaltIdentity } from "@/lib/gyorskombinalt-statistics";
 import type { CompetitionDiscoveryFile, CompetitionResult, QualityFile, ResultsFile } from "@/lib/types";
@@ -121,14 +122,14 @@ export function GyorskombinaltDashboard({ year, availableYears, competitionsFile
             <div className="grid gap-6 lg:grid-cols-2">
               <SectionChart title="Versenyek havonta" description="A naptári eseményeket a kezdő dátum hónapja szerint összesítjük.">
                 <ResponsiveContainer width="100%" height="100%"><BarChart data={season.months}>
-                  <CartesianGrid vertical={false} stroke="#dedacf" /><XAxis dataKey="month" tick={{ fontSize: 11 }} /><YAxis allowDecimals={false} />
-                  <Tooltip /><Bar dataKey="count" name="Versenyek" fill="#a82e2c" />
+                  <CartesianGrid vertical={false} stroke={gridStroke} /><XAxis dataKey="month" stroke={axisStroke} tick={{ fontSize: 11 }} /><YAxis stroke={axisStroke} allowDecimals={false} />
+                  <Tooltip contentStyle={tooltipStyle} /><Bar dataKey="count" name="Versenyek" fill={chartPalette[0]} />
                 </BarChart></ResponsiveContainer>
               </SectionChart>
               <SectionChart title="Egyesületi részvétel" description="A tíz legtöbb forrássorral képviselt egyesület; nem egyesületi teljesítményrangsor.">
                 <ResponsiveContainer width="100%" height="100%"><BarChart data={season.clubs.slice(0, 10)} layout="vertical" margin={{ left: 10, right: 20 }}>
-                  <CartesianGrid horizontal={false} stroke="#dedacf" /><XAxis type="number" allowDecimals={false} /><YAxis type="category" dataKey="name" width={145} tick={{ fontSize: 10 }} />
-                  <Tooltip /><Bar dataKey="rows" name="Eredménysorok" fill="#176a63" />
+                  <CartesianGrid horizontal={false} stroke={gridStroke} /><XAxis type="number" stroke={axisStroke} allowDecimals={false} /><YAxis type="category" dataKey="name" stroke={axisStroke} width={145} tick={{ fontSize: 10 }} />
+                  <Tooltip contentStyle={tooltipStyle} /><Bar dataKey="rows" name="Eredménysorok" fill={chartPalette[1]} />
                 </BarChart></ResponsiveContainer>
               </SectionChart>
             </div>

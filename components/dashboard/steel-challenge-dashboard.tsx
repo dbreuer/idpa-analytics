@@ -9,6 +9,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { SectionHeading } from "@/components/dashboard/section-heading";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { axisStroke, chartPalette, gridStroke, tooltipStyle } from "@/lib/chart-theme";
 import { methodologyPath } from "@/lib/discipline-paths";
 import {
   rankSteelChallengeResults,
@@ -27,17 +28,6 @@ interface SteelChallengeDashboardProps {
   qualityFile: QualityFile;
   statistics: SteelChallengeStatistics;
 }
-
-const chartPalette = ["#ff6b35", "#40b982", "#66a8e6", "#e8c365", "#c58ce5", "#9ba6b2"];
-const gridStroke = "#262d37";
-const axisStroke = "#9ba6b2";
-const tooltipStyle = {
-  background: "var(--paper-raised)",
-  border: "1px solid var(--rule)",
-  color: "#f4f6f8",
-  boxShadow: "0 8px 24px rgb(0 0 0 / 35%)",
-  fontSize: 12,
-};
 
 const exclusionLabels: Record<SteelChallengeExcludedRow["reason"], string> = {
   "unknown-competition": "A versenynaptárhoz nem kapcsolható sor",
@@ -488,7 +478,7 @@ export function SteelChallengeDashboard({
                         <XAxis dataKey="shortDate" tick={{ fontSize: 11, fill: axisStroke }} />
                         <YAxis tick={{ fontSize: 11, fill: axisStroke }} allowDecimals={false} reversed domain={["dataMin - 1", "dataMax + 1"]} />
                         <Tooltip contentStyle={tooltipStyle} formatter={(value) => [`${formatNumber(Number(value))}.`, "Helyezés"]} labelFormatter={(label, payload) => payload?.[0]?.payload?.date ? formatDate(payload[0].payload.date) : String(label)} />
-                        <Line type="monotone" dataKey="placement" stroke="#ff6b35" strokeWidth={2.4} dot={{ r: 3 }} activeDot={{ r: 5 }} />
+                        <Line type="monotone" dataKey="placement" stroke={chartPalette[0]} strokeWidth={2.4} dot={{ r: 3 }} activeDot={{ r: 5 }} />
                       </LineChart>
                     </ResponsiveContainer>
                   </SectionChart>

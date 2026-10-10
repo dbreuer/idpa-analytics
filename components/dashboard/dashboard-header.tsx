@@ -204,7 +204,7 @@ export function DashboardHeader({
                 <span className="inline-flex items-center gap-2">
                   <ListFilter aria-hidden="true" className="h-4 w-4 text-[var(--signal)]" />
                   Szűrők
-                  <span className="rounded-sm bg-[var(--signal)] px-1.5 py-0.5 text-xs tabular-nums text-white">{activeFilterCount}</span>
+                  <span className="rounded-sm bg-[var(--signal)] px-1.5 py-0.5 text-xs tabular-nums text-[#111418]">{activeFilterCount}</span>
                 </span>
                 <span className="max-w-[65%] truncate text-xs font-medium text-[var(--ink-muted)]">
                   {competition === "all" ? "Összes verseny" : competitionOptions.find((option) => option.id === competition)?.name}

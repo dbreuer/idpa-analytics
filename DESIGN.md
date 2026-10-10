@@ -1,48 +1,30 @@
 ---
-name: Hero of IDPA
-description: Season analytics presented as a traceable championship editorial record.
+name: Lövésznapló Statisztika
+description: Source-traceable shooting-season analytics in a shared charcoal telemetry interface.
 colors:
-  primary: "#a82e2c"
-  primary-deep: "#852321"
-  primary-wash: "#f2e5df"
-  neutral-bg: "#f3f0e8"
-  paper: "#faf9f5"
-  paper-raised: "#fffefa"
-  paper-deep: "#ebe7dd"
-  ink: "#1a1b19"
-  ink-muted: "#5d605c"
-  rule: "#d4d0c6"
-  chart-grid: "#dedacf"
-  chart-ink: "#5f605b"
-  chart-teal: "#176a63"
-  chart-gold: "#976b17"
-  chart-purple: "#675381"
-  chart-blue: "#285e78"
-  chart-gray: "#65655e"
-  chart-orange: "#b86e28"
-  chart-slate: "#4d7181"
-  footer-accent: "#e07868"
-  footer-copy: "#d0cec8"
-  footer-muted: "#aaa8a2"
-  steel-background: "#111418"
-  steel-paper: "#1b2027"
-  steel-inset: "#181d24"
-  steel-filter-rail: "#15191f"
-  steel-ink: "#f4f6f8"
-  steel-muted: "#9ba6b2"
-  steel-rule: "#262d37"
-  steel-orange: "#ff6b35"
-  steel-orange-hover: "#ff8a61"
-  steel-green: "#40b982"
-  steel-border: "#343c48"
-  steel-row-hover: "#222832"
-  steel-chart-blue: "#66a8e6"
-  steel-chart-gold: "#e8c365"
-  steel-chart-purple: "#c58ce5"
+  signal: "#ff6b35"
+  signal-hover: "#ff8a61"
+  signal-wash: "rgb(255 107 53 / 12%)"
+  valid-state: "#40b982"
+  chart-gold: "#e8c365"
+  canvas: "#111418"
+  footer-canvas: "#0c1014"
+  panel: "#1b2027"
+  panel-raised: "#222832"
+  panel-inset: "#181d24"
+  filter-rail: "#15191f"
+  foreground: "#f4f6f8"
+  muted-foreground: "#9ba6b2"
+  rule: "#262d37"
+  control-border: "#343c48"
+  logo-plate: "#fffefa"
+  chart-blue: "#66a8e6"
+  chart-purple: "#c58ce5"
+  chart-slate: "#70889b"
 typography:
   display:
     fontFamily: "Barlow Condensed, sans-serif"
-    fontSize: "clamp(3.6rem, 9.2vw, 7rem)"
+    fontSize: "clamp(3.3rem, 9.2vw, 7rem)"
     fontWeight: 800
     lineHeight: 0.82
     letterSpacing: "-0.055em"
@@ -55,37 +37,29 @@ typography:
   title:
     fontFamily: "Barlow Condensed, sans-serif"
     fontSize: "1.875rem"
-    fontWeight: 700
+    fontWeight: 600
+    lineHeight: 1.05
   body:
     fontFamily: "DM Sans, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
-    lineHeight: 1.65
+    lineHeight: 1.5
   label:
     fontFamily: "DM Sans, sans-serif"
     fontSize: "0.67rem"
     fontWeight: 700
-    letterSpacing: "0.14em"
-  steel-display:
-    fontFamily: "Barlow Condensed, sans-serif"
-    fontSize: "clamp(3.25rem, 7vw, 6rem)"
-    fontWeight: 800
-    lineHeight: 0.84
-    letterSpacing: "-0.055em"
-  steel-headline:
-    fontFamily: "Barlow Condensed, sans-serif"
-    fontSize: "clamp(1.8rem, 3vw, 2.35rem)"
-    fontWeight: 600
-    lineHeight: 1
-    letterSpacing: "-0.025em"
-  steel-data:
+    letterSpacing: "0.13em"
+  telemetry:
     fontFamily: "ui-monospace, SFMono-Regular, Consolas, monospace"
+    fontSize: "0.65rem"
+    fontWeight: 600
+    lineHeight: 1.3
 rounded:
   none: "0px"
-  sm: "2px"
-  md: "10.4px"
-  steel-chip: "4px"
-  steel-card: "4.8px"
+  minimal: "2px"
+  chip: "4px"
+  panel: "4.8px"
+  control: "10.4px"
 spacing:
   sm: "8px"
   md: "16px"
@@ -93,265 +67,228 @@ spacing:
   xl: "32px"
 components:
   button-primary:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
+    backgroundColor: "{colors.foreground}"
+    textColor: "{colors.panel}"
     rounded: "{rounded.none}"
     padding: "8px 16px"
   report-card:
-    backgroundColor: "{colors.paper}"
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.foreground}"
     rounded: "{rounded.none}"
     padding: "20px"
   filter-control:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.control}"
     padding: "8px 12px"
-  filter-count:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.paper}"
-    rounded: "{rounded.sm}"
-    padding: "2px 6px"
   navigation-active:
-    textColor: "{colors.ink}"
+    textColor: "{colors.foreground}"
     size: "44px"
-  discipline-link:
-    backgroundColor: "{colors.ink}"
-    textColor: "{colors.paper}"
+  status-chip:
+    backgroundColor: "{colors.panel-inset}"
+    textColor: "{colors.signal}"
+    rounded: "{rounded.chip}"
+    padding: "5.6px 8.8px"
+  division-card:
+    backgroundColor: "{colors.panel}"
+    textColor: "{colors.foreground}"
+    rounded: "{rounded.panel}"
+    padding: "16px"
+  official-logo-plate:
+    backgroundColor: "{colors.logo-plate}"
     rounded: "{rounded.none}"
     padding: "8px"
-  steel-status-chip:
-    backgroundColor: "{colors.steel-inset}"
-    textColor: "{colors.steel-orange}"
-    rounded: "{rounded.steel-chip}"
-    padding: "5.6px 8.8px"
-  steel-division-card:
-    backgroundColor: "{colors.steel-paper}"
-    textColor: "{colors.steel-ink}"
-    rounded: "{rounded.steel-card}"
-    padding: "16px"
-  steel-season-ledger:
-    backgroundColor: "transparent"
-    textColor: "{colors.steel-ink}"
-    padding: "8.8px 2.4px"
-  steel-record-table:
-    backgroundColor: "{colors.steel-paper}"
-    textColor: "{colors.steel-ink}"
-    rounded: "{rounded.steel-card}"
 ---
 
-# Design System: Hero of IDPA
+# Design System: Lövésznapló Statisztika
 
 ## Overview
 
-**Creative North Star: "The Championship Record"**
+**Creative North Star: "The Match Telemetry Console"**
 
-Hero of IDPA reads each season as a traceable championship editorial record. A
-full-width season masthead, measured totals, open report grids, official links, and
-restrained data plots make rankings legible without presenting them as free-floating
-claims. The audience is competitors comparing a season of official Hungarian IDPA
-results.
+The site treats home, discipline, season, descriptive, methodology, and
+unavailable-data routes as a legible, source-traceable competition console. A
+charcoal ground, graphite report fields, fine steel rules, a receding reticle-dot
+texture, and condensed Barlow headings create a technical atmosphere without
+displacing the results themselves. DM Sans carries explanations, navigation, and
+controls; monospaced type is reserved for measured values and telemetry such as
+dates, counts, positions, and percentiles.
 
-Warm opaque paper, championship ink, hairline rules, and a precise red signal form
-the page's reusable grammar. Display lettering carries the competition identity;
-ordinary interface work remains easy to read and operate. Section links, live
-season filters, year-specific routes, quality warnings, and official result sources
-are functional parts of the record.
-
-Steel Challenge carries a route-scoped telemetry treatment: graphite panels, orange
-active signals, restrained green availability, a ruled season ledger, division
-cards, and source-backed result tables. Other disciplines retain the warm editorial
-palette.
+The orange signal identifies active navigation, ranking emphasis, source actions,
+and selected states. Green marks only verified positive or available state. Flat
+surfaces and structural rules keep cards, charts, and tables quiet enough for
+dense comparison. The shared chart sequence is orange, blue, gold, purple, light
+orange, muted slate, and slate; green is not present in the chart palette.
+Official organization and discipline artwork keeps its original colors on white
+plates and remains linked in its actual organizational context. IDPA's Hero of
+IDPA identity can remain in its wordmark; it does not create a separate color or
+surface theme.
 
 **Key Characteristics:**
-- Full-bleed season masthead; centered editorial reading measure below.
-- Opaque warm-paper surfaces and ruled, mostly square-corner reports.
-- Championship red marks current state, standings, source links, and plot series.
-- Reproducible season totals and rankings remain tied to official sources.
-- Official organization marks retain their original artwork and attribution.
-- Steel Challenge uses a route-scoped graphite telemetry variant; the warm editorial system remains the default for every other discipline.
+- One charcoal-and-graphite visual world across home, discipline, season, methodology, descriptive, and unavailable-data routes.
+- Barlow Condensed display and headline hierarchy; DM Sans body and interface; monospaced type only for measured values and telemetry.
+- Functional orange signal, green only for verified positive or available state, and a seven-color chart sequence that excludes green.
+- Flat, ruled reports over a subtle 24px reticle-dot ground.
+- Official marks retain their artwork and sit on unrounded white plates.
+- Page arrangements and analytics remain discipline-specific; visual consistency never implies shared scoring methods.
 
 ## Colors
 
-Warm ivory and ink carry most of the interface; red is a scarce championship
-signal. Muted categorical chart colors distinguish series without competing with
-the interface accent.
+The shared palette is dark and cool-neutral: orange carries interaction and ranking emphasis, while green marks only verified positive or available state.
 
 ### Primary
-- **Championship red** (`{colors.primary}`): current navigation underline, podium rank, ranking scoreline, and first plot series.
-- **Deep source red** (`{colors.primary-deep}`): readable text-link emphasis on paper and footer copy hierarchy where appropriate.
-- **Pale competition wash** (`{colors.primary-wash}`): selected/hovered report rows and pipeline/source warning surfaces.
+*Match orange** (`{colors.signal}`): active section underline, selected ranking, source links, podium emphasis, and score tracks.
+- **Orange highlight** (`{colors.signal-hover}`): hover emphasis for orange links and controls.
+- **Orange state wash** (`{colors.signal-wash}`): restrained selected or hover background where a soft state field is used.
 
 ### Secondary
-- **Measured teal** (`{colors.chart-teal}`) and **competition gold** (`{colors.chart-gold}`): chart series only.
-- **Plot purple** (`{colors.chart-purple}`), **plot blue** (`{colors.chart-blue}`), **plot gray** (`{colors.chart-gray}`), **plot orange** (`{colors.chart-orange}`), and **plot slate** (`{colors.chart-slate}`): additional categorical series, not interface accents.
+- **Verified green** (`{colors.valid-state}`): verified positive or available
+  state only; it does not appear in the chart palette.
+- **Chart sequence:** match orange, plot blue (`{colors.chart-blue}`), chart gold
+  (`{colors.chart-gold}`), plot purple (`{colors.chart-purple}`), light orange
+  (`{colors.signal-hover}`), muted slate (`{colors.muted-foreground}`), and slate
+  (`{colors.chart-slate}`). These seven categorical colors are not competing
+  interface accents.
 
 ### Neutral
-- **Warm canvas** (`{colors.neutral-bg}`): full-page ground.
-- **Soft paper** (`{colors.paper}`): header, inputs, and report surfaces.
-- **Raised paper** (`{colors.paper-raised}`): report rows and light plates behind official marks.
-- **Deep paper** (`{colors.paper-deep}`): filter rail and season masthead.
-- **Championship ink** (`{colors.ink}`) and **muted ink** (`{colors.ink-muted}`): primary and secondary content.
-- **Rule gray** (`{colors.rule}`): report dividers and input borders.
-- **Plot grid** (`{colors.chart-grid}`) and **plot ink** (`{colors.chart-ink}`): chart grid and supplemental annotation.
-- **Footer coral** (`{colors.footer-accent}`), **footer copy** (`{colors.footer-copy}`), and **footer subdued copy** (`{colors.footer-muted}`): ink-footer wordmark and secondary details.
+- **Charcoal canvas** (`{colors.canvas}`): global page ground and reticle-dot field.
+- **Footer charcoal** (`{colors.footer-canvas}`): deeper footer ground.
+- **Graphite panel** (`{colors.panel}`), **raised graphite** (`{colors.panel-raised}`), **inset graphite** (`{colors.panel-inset}`), and **filter rail** (`{colors.filter-rail}`): report surfaces, row interaction, compact chips, and the fixed filter band.
+- **Cool white** (`{colors.foreground}`) and **steel mist** (`{colors.muted-foreground}`): primary and secondary text.
+- **Steel rule** (`{colors.rule}`) and **control border** (`{colors.control-border}`): structural dividers and stronger control outlines.
+- **Logo white** (`{colors.logo-plate}`): unrounded backing for unmodified official artwork.
 
-**The Scoreline Rule.** Red identifies an active navigation state, a source link, a
-ranking or a chart series. Keep it functional rather than using it to fill report
-surfaces decoratively.
+**The Signal-Not-Fill Rule.** Orange marks actions, current state, rankings, and
+source access; keep large report surfaces graphite rather than filling them with
+the accent.
 
-### Steel Challenge route-scoped variant
-The Steel Challenge page temporarily replaces the warm paper canvas with graphite
-and cool light text. Orange marks selection, links, ranking emphasis, and signal
-tracks; green appears sparingly for verified archive availability. Inset panels,
-dividers, and row-hover tones keep the telemetry legible without changing the
-identity of other disciplines.
-
-**The Route Scope Rule.** Steel telemetry colors and treatments belong only to the
-Steel Challenge route. Do not promote its graphite surfaces or orange signal to
-the shared editorial palette.
+**The Green-For-Validity Rule.** Use green only for verified positive or available
+state; never use it as a general brand accent.
 
 ## Typography
 
-**Display Font:** Barlow Condensed (with a sans-serif fallback; locally served Latin
-and Latin Extended subsets)  
-**Body Font:** DM Sans (with a sans-serif fallback; locally served Latin and Latin
+**Display Font:** Barlow Condensed (with sans-serif fallback; locally served Latin
+and Latin Extended weights)  
+**Body Font:** DM Sans (with sans-serif fallback; locally served Latin and Latin
 Extended variable subsets)  
-**Label/Mono Font:** DM Sans; global tabular numerals supply the numeric alignment.
+**Label/Mono Font:** UI monospace stack for measured values and compact telemetry.
 
-**Character:** Barlow Condensed carries the championship masthead and report
-headings. DM Sans keeps filters, source context, and detailed records calm and
-readable. Both families are self-hosted with their Open Font License notices in
-`public/licenses/`.
+**Character:** Barlow Condensed gives headings a compact, assertive competition
+voice. DM Sans keeps the interface and longer source explanations calm and easy to
+scan. Monospaced telemetry separates measured data from prose without changing the
+meaning of the figures.
 
 ### Hierarchy
-- **Display** (800, `clamp(3.6rem, 9.2vw, 7rem)`, 0.82 line-height): season masthead; phones use `clamp(3.3rem, 17vw, 5.1rem)`.
-- **Headline** (700, `clamp(2rem, 4.5vw, 3rem)`, 1 line-height): semantic section headings.
-- **Title** (700, 1.875rem): card, ranking, and report titles.
-- **Body** (400, 1rem, 1.65 line-height): explanations and descriptive content; constrained prose stays close to 62–68ch.
-- **Label** (700, 0.67rem, 0.14em tracking, uppercase): filter names and concise fact labels.
+- **Display** (800, `clamp(3.3rem, 9.2vw, 7rem)`, 0.82 line-height): season and landing-page mastheads; handset mastheads reduce to a tighter responsive clamp.
+- **Headline** (700, `clamp(2rem, 4.5vw, 3rem)`, 1 line-height): semantic report-section headings.
+- **Title** (600–700, from 1.2rem to 1.875rem, tight line-height): division, ranking, report-card, and methodology headings.
+- **Body** (400, 1rem, approximately 1.5–1.65 line-height): explanatory and descriptive copy; long introductions stay around 62–68ch.
+- **Label** (700, 0.67rem, 0.14em tracking, commonly uppercase): filter names and concise factual labels.
+- **Telemetry** (600–700, about 0.65rem and up): monospaced measured values,
+  dates, counts, positions, percentiles, and compact telemetry labels.
 
-**The Heading-First Rule.** Let the semantic title lead. Reserve uppercase label
-styling for controls and actual data terms, not decorative text above card headings.
-
-### Steel Challenge route-scoped type
-The Steel Challenge masthead, section headings, division titles, and data-panel
-headings use the locally hosted Barlow Condensed weights, matching the shared
-championship display voice. Monospaced figures and compact data labels identify
-values, dates, field sizes, column headers, and status; descriptive copy stays
-in DM Sans. At handset widths the masthead uses the smaller responsive display
-clamp.
+**The Heading-First Rule.** Let semantic headings carry hierarchy. Use DM Sans
+for interface copy and factual labels; reserve monospaced type for measured
+values and telemetry.
 
 ## Layout
 
-The season masthead and footer backgrounds span the viewport. Their contents,
-section reports, and footer records share an 88rem maximum width with responsive
-gutters between 1rem and 2.25rem. The hero changes from a stacked handset
-composition to headline-and-ledger columns at 768px.
+The dashboard shell and footer use a responsive 96rem maximum width and clamped
+horizontal gutters. Dashboard content uses centered measures between 88rem and
+96rem so dense data grids have room; methodology reading stays near 68rem, while
+home and availability surfaces use a narrower centered measure. These widths
+follow the work: broad data grids get room, while explanatory pages retain a
+comfortable reading line.
 
-The fixed header measures its combined filter and navigation height using a
-`ResizeObserver` and publishes that measurement through `--site-header-height`.
-Section scroll margins and the active-section observer use the measured value.
-Filters remain above navigation; below 1024px they use a compact disclosure, and
-below 1280px section navigation uses a mobile/tablet menu. Opening either
-disclosure closes the other. The year selector stays visible.
+The dashboard header keeps filters above section navigation. A `ResizeObserver`
+measures the fixed shell and supplies the anchor offset; filters collapse into a
+disclosure below 1024px and section navigation into a menu below 1280px. Those
+disclosures close each other, while the season selector remains available.
+Multi-column report and division grids collapse at tablet/phone breakpoints;
+official result tables use horizontal overflow containers rather than making the
+page itself wider than the viewport. Paired factual ledgers collapse to one ruled
+column on phones. Footer associations and discipline links follow the same
+mobile-first collapse.
 
-Rankings and plotted reports are dense and ruled; competitor and club details,
-competition entries, insights, and data quality receive independent section
-anchors. At tablet width the footer uses two discipline columns, expanding to four
-from 1024px and one at phone widths. Charts and records keep `min-width: 0` behavior
-to avoid creating page-level horizontal overflow.
-
-On the Steel Challenge route, the content measure widens to 96rem. The masthead
-places title and a six-fact ruled ledger in two columns on wide screens; the
-ledger stacks on phones. Division cards use three columns above 1100px, two
-columns at tablet widths, and one on phones. The fine 24px dot field recedes
-behind the report content. Long record tables remain readable in horizontal
-overflow containers rather than forcing page-wide overflow.
+Use the 24px reticle dot field as a low-contrast ground texture; content panels
+remain opaque and legible over it. Spacing recurs around 8, 16, 24, and 32px, with
+larger section gaps and responsive page gutters.
 
 ## Elevation & Depth
 
-Surfaces are flat and opaque; tonal fields, typography, spacing, and one-pixel
-rules supply the report's depth. Cards do not use decorative shadows. A chart
-tooltip alone uses an offset soft shadow (`0 8px 24px rgb(26 27 25 / 12%)`) to
-remain legible above the warm editorial plots. Steel Challenge retains flat card
-surfaces and ruled boundaries; its chart tooltip uses a stronger dark shadow
-(`0 8px 24px rgb(0 0 0 / 35%)`) for separation from the graphite plot.
+The system is flat at rest. Opaque graphite layers, subtle surface changes, and
+one-pixel steel rules establish structure; the dot field remains behind content.
+Chart tooltips use a soft dark shadow to separate their floating information from
+the plot. No card relies on a decorative shadow stack for hierarchy.
 
-**The Rule-Over-Shadow Rule.** Prefer a visible editorial rule or tonal paper shift
-to adding elevation.
+**The Rule-Over-Shadow Rule.** Use tonal panels and visible structural rules to
+separate reports; reserve shadow for floating chart tooltips.
 
 ## Shapes
 
-Report cards, rows, buttons, and navigation are square-edged with a one-pixel
-structural rule. Filter selects and participation controls use a restrained 0.65rem
-radius (10.4px); the active-filter count is minimally softened (2px). Logo plates
-are unrounded paper fields that preserve the original official colors.
-
-Steel Challenge division, insight, and report panels use a small, consistent
-rounded edge (4.8px); status chips and count badges are similarly restrained
-(4px). Thin cool-gray rules, rather than heavy outlines, define ledger rows and
-table structure. The fixed header's dark translucent fill and blur are also
-route-scoped.
+Report cards, lists, buttons, footer links, and organization plates are mostly
+square-edged and defined by thin rules. Filters use a restrained 10.4px radius;
+status chips and small counters use a subtler 2–4px radius; compact telemetry
+cards may soften to about 4.8px. The recurring silhouette is a flat, ruled
+rectangle, not a pill or floating tile.
 
 ## Components
 
-Common components use `cn()` for class composition; report-card, heading, button,
-and badge primitives live under `components/ui/`.
-
 ### Buttons
-- **Shape:** square-edged, opaque ink primary with paper text.
-- **Hover / focus / disabled:** subtle deep-red hover; strong red keyboard focus;
-  disabled controls remain visibly inactive.
-- **Secondary:** section/source links remain visibly underlined.
+- **Shape:** square-edged, compact action surface.
+- **Primary:** foreground fill with graphite text and 8px by 16px padding.
+- **Hover / focus:** orange-hover fill; keyboard focus remains a clearly visible 2px orange outline with 3px offset.
+- **Disabled:** visibly dimmed and non-interactive.
 
 ### Chips
-- **Filter count:** small championship-red square counter within the mobile filter disclosure.
-- **Selected navigation:** text uses ink with a two-pixel red underline; unselected links use muted ink.
+- **Style:** compact inset graphite with a fine steel border and restrained rounding.
+- **State:** orange identifies archive/method or selected context; a green marker is reserved for verified availability.
+- **Filter count:** a small numeric counter accompanies the mobile filter disclosure.
 
 ### Cards / Containers
-- **Corner style:** square.
-- **Background:** soft paper, with a structural top rule.
-- **Shadow strategy:** flat at rest.
-- **Internal padding:** 1.25rem phones, 1.5rem at medium widths.
+- **Corner style:** primarily square; compact telemetry cards use only a small radius.
+- **Background:** graphite panel, with raised graphite for interactive rows and inset graphite for compact status/table headings.
+- **Shadow strategy:** flat at rest; see Elevation & Depth for chart tooltips.
+- **Internal padding:** 20px on the shared card primitive, increasing to 24px at medium widths; telemetry cards use 16px.
+- **Boundary:** use a top rule or a fine full border according to the report pattern.
 
 ### Inputs / Fields
-- **Style:** paper background, rule border, compact restrained rounding for filter selects and participation range.
-- **Focus:** visible two-pixel red outline/border treatment.
-- **States:** labeled selects and range input retain their values in both desktop controls and the mobile disclosure.
+- **Style:** labeled dark select controls with steel border, restrained radius, and compact padding.
+- **Focus:** orange border and visible focus ring.
+- **States:** controls retain labels and selected values in both desktop filters and the compact mobile disclosure.
 
 ### Navigation
-- **Header:** fixed two-row shell with filters first; product wordmark at left, available season selector at right.
-- **Sections:** links share the named `dashboardSections` registry; the visible section receives `aria-current="location"`.
-- **Mobile:** independent filter and section disclosures close each other and update the measured header offset.
+- **Style:** fixed two-row dashboard shell with filters first, product/discipline wordmark, available-season selector, and section links.
+- **Active:** foreground text and a 2px orange underline.
+- **Mobile:** measured filter and section disclosures, with only one open at a time; section anchors account for the live header height.
+- **Methodology:** compact top navigation returns to the relevant season and keeps available-year choices visible.
 
-### Scoreline ranking row
-- Competitor and club rankings use tabular place labels, real names and figures, a red score track, and a paper row that responds to hover and focus.
-- Ranking records remain actionable buttons with descriptive accessible names; an empty match state explains how to recover.
+### Ranking and telemetry rows
+- Use real names and sourced figures, tabular/monospaced values, a ruled row, and a thin orange score track when the underlying metric supports one.
+- Selected or hovered rows shift subtly to raised graphite; keyboard selection remains visible and semantic.
+- Steel Challenge division cards show a concise leading group and use native disclosure for remaining ranked entrants. Keep those cards and percentile semantics distinct from other disciplines' own ranking methods.
 
-### Competition record
-- Competition entries use a semantic ordered list, date/time element, concise factual fields, and direct calendar/result source links.
+### Charts and tables
+- Charts use the shared orange/blue/gold/purple/light-orange/muted-slate/slate sequence, cool grid and axis labels, and dark raised tooltips. Green is excluded from the chart palette. Do not use color as the only series distinction.
+- Dense official results keep compact ruled rows, visible source links, and horizontal overflow on narrow screens.
 
-### Steel Challenge telemetry components (route-scoped)
-- **Status chips:** inset graphite, a fine border, compact monospaced uppercase text, orange archive/methodology signal, and a restrained green availability dot.
-- **Season ledger:** six compact facts presented as two columns of baseline-aligned label/value pairs on wide screens, with hairline row rules; it becomes a single ruled column on phones.
-- **Division cards:** restrained graphite panels with a ruled heading, division and comparable-field facts, and entrant count. Each card starts with three selectable leaderboard rows; a native disclosure reveals remaining ranked entries.
-- **Ranking rows:** monospaced position, readable competitor/club identity, right-aligned percentile and match count, and a thin orange score track. Hover/selected rows receive a subtle lighter graphite field.
-- **Record tables:** compact monospaced column headings, ruled rows, secondary metadata, row hover, and horizontal overflow at narrow widths. Official-source links remain explicit.
+### Footer associations and discipline links
+- The footer uses a deeper charcoal field, restrained orange links/wordmark accent, and fine outlined link rows.
+- Organization and discipline marks retain their original colors and proportions on unrounded white plates. Link labels identify the actual organization or discipline; association must not imply sponsorship.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep one URL and data set per published season; the selector lists available seasons only.
-- **Do** retain source attribution, visible parsing/quality states, and semantic season-wide versus filtered scope.
-- **Do** label and shape chart series with the existing palette, legible axes, and paper tooltips.
-- **Do** retain official organization artwork without recoloring or distorting it; its source-to-link mapping lives in `docs/asset-sources.md`.
-- **Do** maintain visible keyboard focus, a skip-to-content link, reduced-motion support, and a measured anchor offset.
-- **Do** confine the Steel Challenge telemetry variant to its own route, keep orange functional and green status-only, and retain the warm editorial discipline palette elsewhere.
-- **Do** keep Steel Challenge rankings tied to official placement percentiles and provide the source-backed season record; never infer unsupported performance measures from visual styling.
+- **Do** apply the charcoal-and-graphite telemetry palette across the home page, all discipline dashboards and routes, methodology, descriptive reports, unavailable states, shared navigation, and footer.
+- **Do** preserve each discipline's facts, data methods, and page-specific composition; shared styling does not make one discipline's scoring portable to another.
+- **Do** reserve orange for active/ranking/source signals and green for verified positive or available state.
+- **Do** keep source attribution, data-quality states, and missing-data explanations visible.
+- **Do** preserve official organization artwork unchanged on white plates and use it only in its real linked context.
+- **Do** keep visible keyboard focus, reduced-motion support, responsive filters/navigation, and contained horizontal overflow for wide tables.
+- **Do** keep the dot texture subtle and behind opaque content panels.
 
 ### Don't:
-- **Don't** imply sponsorship or endorsement through organization or discipline marks.
-- **Don't** use color as the only way to distinguish a ranking, state, or chart series.
-- **Don't** make report cards compete with the actual season figures using glass, gradients, decorative shadow stacks, or ornamental accents.
-- **Don't** apply Steel Challenge graphite, orange, or status-green tokens to other discipline routes by default.
-- **Don't** imply stage records, raw stage timings, plate layouts, shooter ratings, or calculator results that the published data does not establish.
+- **Don't** use green outside verified positive or available state or introduce it into the chart palette; don't use orange as a large decorative panel fill.
+- **Don't** imply endorsement through federation or discipline marks.
+- **Don't** rely on color alone to communicate rank, chart series, availability, or selection.
+- **Don't** invent unavailable seasons, analytics, records, measurements, or performance claims.
