@@ -29,6 +29,9 @@ precedence. Discovery only accepts calendar rows from that year.
 
 ## Result PDF table layout
 
+The PyMuPDF fallback uses the supported `pymupdf` import rather than the deprecated
+`fitz` alias.
+
 Each result PDF prints **one table per division**, and each table has a metadata block
 above the real column header:
 

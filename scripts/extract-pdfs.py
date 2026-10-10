@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import fitz
+import pymupdf
 import pdfplumber
 
 from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, split_table_rows
@@ -46,7 +46,7 @@ def extract_with_pymupdf(pdf_path: Path) -> list[dict]:
     last_header: list[str] = []
     last_header_map: dict[str, int] = {}
     last_metadata: dict[str, str] = {}
-    with fitz.open(pdf_path) as document:
+    with pymupdf.open(pdf_path) as document:
         for page_index, page in enumerate(document, start=1):
             text = page.get_text("text")
             lines = [line.strip() for line in text.splitlines() if line.strip()]

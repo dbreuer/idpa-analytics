@@ -47,6 +47,25 @@ class YearPipelineTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(argparse.ArgumentTypeError):
                 common.parse_year(value)
 
+    def test_pymupdf_fallback_reads_pdf_content(self):
+        import pymupdf
+
+        extract = script_module("extract-pdfs")
+        pdf_path = self.root / "fallback.pdf"
+        with pymupdf.open() as document:
+            page = document.new_page()
+            page.insert_text(
+                (72, 72),
+                "Sorszam | Nev | Egyesulet | Eredmeny\n1 | Test Competitor | Test Club | 100",
+            )
+            document.save(pdf_path)
+
+        tables = extract.extract_with_pymupdf(pdf_path)
+        self.assertEqual(len(tables), 1)
+        self.assertEqual(tables[0]["strategy"], "pymupdf-text")
+        self.assertEqual(tables[0]["headerMap"]["name"], 1)
+        self.assertEqual(tables[0]["rows"], [["1", "Test Competitor", "Test Club", "100"]])
+
     def test_missing_previous_stage_fails_without_empty_outputs(self):
         for name in ("download-results", "extract-pdfs", "normalize-data", "calculate-statistics"):
             module = script_module(name)
