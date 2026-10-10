@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-10T08:17:29.416993+00:00",
+  "discipline": "steel-challenge",
+  "year": 2026,
+  "schemaVersion": 1,
+  "quality": {
+    "totalPdfsDiscovered": 96,
+    "successfullyProcessedPdfs": 94,
+    "failedPdfs": 2,
+    "totalExtractedRows": 7347,
+    "validCompetitorRows": 7259,
+    "rowsWithValidTime": 0,
+    "rowsWithMissingTeam": 6209,
+    "rowsWithParsingErrors": 88
+  },
+  "errors": []
+}

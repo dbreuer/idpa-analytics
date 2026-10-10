@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ArrowUpRight } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
@@ -47,11 +48,14 @@ export default function HomePage() {
                           className="max-h-full max-w-full object-contain"
                         />
                       </span>
-                      <span className="text-right">
-                        <CardTitle>{discipline.name}</CardTitle>
-                        <CardDescription className="mt-1">
-                          {isPublished ? "Eredmények és szezonranglisták" : "A statisztikai oldal készül"}
-                        </CardDescription>
+                      <span className="flex min-w-0 items-center gap-3 text-right">
+                        <span className="min-w-0">
+                          <CardTitle>{discipline.name}</CardTitle>
+                          <CardDescription className="mt-1">
+                            {isPublished ? "Eredmények és szezonranglisták" : "A statisztikai oldal készül"}
+                          </CardDescription>
+                        </span>
+                        <ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0 text-[var(--signal)]" />
                       </span>
                     </div>
                   </Card>
@@ -59,15 +63,13 @@ export default function HomePage() {
 
                 return (
                   <li key={discipline.slug}>
-                    {isPublished ? (
-                      <Link href={disciplinePath(discipline.slug)} className="block h-full" aria-label={`${discipline.name} eredmények megtekintése`}>
-                        {content}
-                      </Link>
-                    ) : (
-                      <div aria-label={`${discipline.name}: az oldal még nem érhető el`} className="h-full opacity-65">
-                        {content}
-                      </div>
-                    )}
+                    <Link
+                      href={disciplinePath(discipline.slug)}
+                      className="block h-full"
+                      aria-label={`${discipline.name} szakági oldal megnyitása`}
+                    >
+                      {content}
+                    </Link>
                   </li>
                 );
               })}

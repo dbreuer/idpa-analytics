@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-10T08:21:45.808506+00:00",
+  "discipline": "imssu",
+  "year": 2026,
+  "schemaVersion": 1,
+  "quality": {
+    "totalPdfsDiscovered": 22,
+    "successfullyProcessedPdfs": 22,
+    "failedPdfs": 0,
+    "totalExtractedRows": 1333,
+    "validCompetitorRows": 1333,
+    "rowsWithValidTime": 0,
+    "rowsWithMissingTeam": 1024,
+    "rowsWithParsingErrors": 0
+  },
+  "errors": []
+}

@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-10T08:24:21.437509+00:00",
+  "discipline": "gyorskombinalt",
+  "year": 2026,
+  "schemaVersion": 1,
+  "quality": {
+    "totalPdfsDiscovered": 44,
+    "successfullyProcessedPdfs": 44,
+    "failedPdfs": 0,
+    "totalExtractedRows": 1630,
+    "validCompetitorRows": 1630,
+    "rowsWithValidTime": 0,
+    "rowsWithMissingTeam": 1499,
+    "rowsWithParsingErrors": 0
+  },
+  "errors": []
+}

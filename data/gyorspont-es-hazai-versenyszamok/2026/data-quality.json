@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-10T08:27:55.108752+00:00",
+  "discipline": "gyorspont-es-hazai-versenyszamok",
+  "year": 2026,
+  "schemaVersion": 1,
+  "quality": {
+    "totalPdfsDiscovered": 266,
+    "successfullyProcessedPdfs": 266,
+    "failedPdfs": 0,
+    "totalExtractedRows": 22917,
+    "validCompetitorRows": 22303,
+    "rowsWithValidTime": 0,
+    "rowsWithMissingTeam": 18631,
+    "rowsWithParsingErrors": 614
+  },
+  "errors": []
+}

@@ -8,8 +8,8 @@ public rankings; the other six stop after source-linked normalized ingestion.
 The planned canonical domain is `https://statisztika.lovesznaplo.hu`. `/idpa`
 opens the latest available season (currently `/idpa/2026`); older seasons remain
 available in that season page's selector. Each season has a stable URL such as
-`/idpa/2026`. The root page introduces the platform and links only to published
-disciplines. Existing
+`/idpa/2026`. The root page introduces the platform and links to every discipline;
+disciplines without validated analytics lead to noindex “coming soon” pages. Existing
 `hero-of-idpa.hu/<year>` URLs permanently redirect to their `/idpa/<year>`
 counterparts. DNS and Vercel domain configuration are not changed by this repository.
 
