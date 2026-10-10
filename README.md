@@ -4,9 +4,11 @@ Next.js dashboard and Python data pipeline for Hungarian MDLSZ sportlövészeti
 eredmények. The platform is designed for seven MDLSZ disciplines; only IDPA
 currently has a validated parser, scoring model, and public season pages.
 
-The planned canonical domain is `https://statisztika.lovesznaplo.hu`. Public IDPA
-pages use `/idpa` and `/idpa/<year>` (for example `/idpa/2026`). The root page
-introduces the platform and links only to published disciplines. Existing
+The planned canonical domain is `https://statisztika.lovesznaplo.hu`. `/idpa`
+opens the latest available season (currently `/idpa/2026`); older seasons remain
+available in that season page's selector. Each season has a stable URL such as
+`/idpa/2026`. The root page introduces the platform and links only to published
+disciplines. Existing
 `hero-of-idpa.hu/<year>` URLs permanently redirect to their `/idpa/<year>`
 counterparts. DNS and Vercel domain configuration are not changed by this repository.
 
@@ -80,7 +82,8 @@ parsers and analytics have been validated.
 
 Each artifact records its discipline, season, and schema version. Only complete
 seasons under a published discipline are prerendered. The repository currently
-publishes IDPA seasons only; other registered sports and unknown years return 404.
+publishes IDPA seasons only. Other registered disciplines have noindex “coming
+soon” landing pages; unsupported season and methodology routes return 404.
 Malformed JSON, mixed seasons, mixed disciplines, and unsupported schemas fail
 instead of producing misleading empty statistics.
 

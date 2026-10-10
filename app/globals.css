@@ -763,6 +763,34 @@ select {
   background: rgb(250 249 245 / 5%);
 }
 
+.discipline-footer-entry {
+  min-width: 0;
+}
+
+.discipline-page-link {
+  display: flex;
+  min-height: 2.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.35rem 0.55rem;
+  color: #dedbd4;
+  font-size: 0.78rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  transition: color 150ms ease;
+}
+
+.discipline-page-link:hover {
+  color: #fffefa;
+}
+
+.discipline-page-link:focus-visible {
+  border-radius: 0.15rem;
+  outline: 2px solid #e07868;
+  outline-offset: 2px;
+}
+
 .discipline-logo-plate {
   display: flex;
   width: 3.7rem;

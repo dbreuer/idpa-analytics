@@ -2,29 +2,42 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { canonicalUrl, disciplinePath, methodologyPath, seasonPath } from "@/lib/discipline-paths";
+import { canonicalUrl, disciplinePath, seasonPath } from "@/lib/discipline-paths";
 import { getDiscipline, getDisciplineMark, isDisciplineSlug } from "@/lib/disciplines";
-import { getAvailableYears, loadDashboardData } from "@/lib/data";
+import { getAvailableYears } from "@/lib/data";
 
 async function resolveDiscipline(params: Promise<{ discipline: string }>) {
   const { discipline: slug } = await params;
   if (!isDisciplineSlug(slug)) notFound();
   const discipline = getDiscipline(slug);
-  if (!discipline?.published || !getAvailableYears(slug).length) notFound();
+  if (!discipline) notFound();
   return discipline;
 }
 
 export async function generateMetadata({ params }: PageProps<"/[discipline]">): Promise<Metadata> {
   const discipline = await resolveDiscipline(params);
+  const latestYear = getAvailableYears(discipline.slug)[0];
+  if (discipline.published && latestYear) {
+    return {
+      title: `${discipline.name} ${latestYear} · szezoneredmények`,
+      description: `A ${latestYear}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái.`,
+      alternates: { canonical: canonicalUrl(seasonPath(discipline.slug, latestYear)) },
+    };
+  }
   return {
-    title: `${discipline.name} eredmények és ranglisták`,
-    description: `A magyarországi ${discipline.name}-versenyek szezoneredményei és statisztikái az MDLSZ hivatalos forrásadatai alapján.`,
+    title: `${discipline.name} · statisztika hamarosan`,
+    description: `A ${discipline.name} eredményadatainak és szakágspecifikus statisztikáinak feldolgozása előkészítés alatt áll.`,
     alternates: { canonical: canonicalUrl(disciplinePath(discipline.slug)) },
-    openGraph: { title: `${discipline.name} · Lövésznapló statisztika`, description: `Szezonrangsorok és versenystatisztikák: ${discipline.name}.` },
+    robots: {
+      index: false,
+      follow: true,
+      googleBot: { index: false, follow: true },
+    },
   };
 }
 
@@ -33,8 +46,8 @@ export default async function DisciplinePage({ params }: PageProps<"/[discipline
   const mark = getDisciplineMark(discipline.slug);
   const years = getAvailableYears(discipline.slug);
   const latestYear = years[0];
-  const latest = loadDashboardData(discipline.slug, latestYear);
   if (!mark) throw new Error(`Missing official discipline logo metadata for ${discipline.slug}.`);
+  if (discipline.published && latestYear) redirect(seasonPath(discipline.slug, latestYear));
 
   return (
     <>
@@ -50,43 +63,24 @@ export default async function DisciplinePage({ params }: PageProps<"/[discipline
             <div>
               <h1 className="font-display text-6xl font-extrabold leading-[0.95] md:text-8xl">{discipline.name}</h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--ink-muted)]">
-                A magyarországi {discipline.name}-versenyek szezoneredményei, versenyzői rangsorai és elemzései. Az adatok az MDLSZ hivatalos versenynaptárából és eredményjegyzékeiből származnak.
+                A szakág hivatalos eredményformátumának és szabályspecifikus statisztikai mutatóinak feldolgozása előkészítés alatt áll.
               </p>
             </div>
           </div>
 
-          <section className="mt-10" aria-labelledby="seasons-title">
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <h2 id="seasons-title" className="section-title">Elérhető szezonok</h2>
-                <p className="mt-2 text-sm text-[var(--ink-muted)]">{years.length} teljes, publikált szezon</p>
-              </div>
-              <Link href={seasonPath(discipline.slug, latestYear)} className="source-link">
-                Legfrissebb szezon: {latestYear}
-              </Link>
-            </div>
-            <ul className="mt-5 grid list-none gap-4 p-0 sm:grid-cols-2 xl:grid-cols-3">
-              {years.map((year) => {
-                const data = year === latestYear ? latest : loadDashboardData(discipline.slug, year);
-                return (
-                  <li key={year}>
-                    <Link href={seasonPath(discipline.slug, year)} className="block">
-                      <Card className="transition-colors hover:border-[var(--ink-muted)]">
-                        <CardTitle className="font-display text-4xl">{year}. szezon</CardTitle>
-                        <CardDescription className="mt-2">
-                          {data.statistics.totalCompetitions} verseny · {data.statistics.uniqueCompetitors} versenyző · {data.statistics.totalEntries} eredmény
-                        </CardDescription>
-                      </Card>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+          <section className="mt-10 max-w-3xl" aria-labelledby="availability-title">
+            <Card>
+              <CardTitle id="availability-title" className="font-display text-3xl">
+                A statisztikai oldal előkészítés alatt áll
+              </CardTitle>
+              <CardDescription className="mt-3 text-base leading-7">
+                A rangsorok és elemzések csak akkor jelennek meg, ha a hivatalos eredményadatok és a szakágra vonatkozó mérőszámok ellenőrzése befejeződött. Addig itt nem jelenítünk meg ellenőrizetlen eredményeket.
+              </CardDescription>
+              <a href={mark.href} target="_blank" rel="noreferrer" className="source-link mt-5 inline-flex">
+                {discipline.name} – az MDLSZ hivatalos szakági oldala
+              </a>
+            </Card>
           </section>
-
-          <p className="mt-8">
-            <Link href={methodologyPath(discipline.slug)} className="source-link">A pontszámítás és az adatfeldolgozás módszertana</Link>
-          </p>
         </div>
       </main>
       <SiteFooter disciplineSlug={discipline.slug} />

@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 
-import { getPublishedDisciplines } from "@/lib/data";
+import { disciplineDefinitions } from "@/lib/disciplines";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getPublishedDisciplines().map((discipline) => ({ discipline: discipline.slug }));
+  return disciplineDefinitions.map((discipline) => ({ discipline: discipline.slug }));
 }
 
 export default function DisciplineLayout({ children }: { children: ReactNode }) {
