@@ -1,0 +1,73 @@
+name: Refresh current season
+
+on:
+  schedule:
+    - cron: "0 4 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-current-season
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install -r requirements.txt
+          npm ci
+
+      - name: Select the current season
+        run: echo "SEASON_YEAR=$(TZ=Europe/Budapest date +%Y)" >> "$GITHUB_ENV"
+
+      - name: Run pipeline regression tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Fetch and generate current season results
+        run: python3 scripts/run-pipeline.py --year "$SEASON_YEAR"
+
+      - name: Validate the dashboard
+        run: |
+          node --test tests/*.test.mjs
+          npm run build
+
+      - name: Commit and push refreshed season data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            "data/$SEASON_YEAR/competitions.json" \
+            "data/$SEASON_YEAR/raw-extracted-results.json" \
+            "data/$SEASON_YEAR/results.json" \
+            "data/$SEASON_YEAR/data-quality.json" \
+            "data/$SEASON_YEAR/statistics.json"
+          if git diff --cached --quiet; then
+            echo "No season data changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(data): refresh $SEASON_YEAR season results"
+          git pull --rebase origin main
+          git push origin HEAD:main

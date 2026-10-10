@@ -117,6 +117,28 @@ configure DNS or deploy the site.
 
 ## Refreshing Source Data
 
+### Scheduled refresh
+
+The `Refresh current season` GitHub Actions workflow runs on the **1st of every
+month at 04:00 UTC**, within the first week of the month. It can also be started
+manually from the Actions tab with **Run workflow** on `main`.
+
+The workflow selects the current year in the `Europe/Budapest` time zone, runs all
+five Python pipeline stages with that year, and validates the regression tests
+and production dashboard build before committing the five generated JSON files
+under `data/<year>/` to `main`. Other seasons and downloaded PDFs are not committed.
+A failing pipeline, test, build, rebase, or push fails the workflow; existing
+parsing diagnostics remain available in the generated data-quality files.
+
+The workflow uses the repository's `GITHUB_TOKEN` with `contents: write`.
+Branch protection must permit this bot to push to `main`; otherwise the push fails.
+GitHub may delay scheduled runs. Commits made with `GITHUB_TOKEN` do not trigger
+other GitHub Actions workflows on `push`; deployment automation must account for
+this (for example, by using a `workflow_run` trigger). This workflow refreshes data
+but does not itself deploy the website.
+
+### Manual refresh
+
 1. Run the discovery script with `--year <year>` to rebuild that season's IDPA competition list from the official MDLSZ calendar.
 2. Run the download script to resolve every `Eredmények` link and fetch available PDFs.
 3. Run extraction and normalization to rebuild normalized competitor rows and parsing diagnostics.
