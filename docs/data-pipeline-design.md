@@ -90,6 +90,28 @@ license IDs are preferred for identity matching, with normalized names as fallba
 License exams, missing divisions/placements, and single-competitor fields are
 excluded from standings and reported separately.
 
+The IMSSU page treats `Eredmény` as the silhouette hit count and compares it only
+within one competition and division (target counts differ between events). Tied
+hit counts share the average of the positions they occupy; the same percentile
+formula and mean apply. `Légpuska - Nemzetközi` and `Légpuska NK (41m)` are one
+division (the 2026 OB PDF prints the same table under both labels), and identical
+repeated rows count once. Rows without a division or integer hits — including
+announcement PDFs and rows whose number sits in `Megjegyzés` while `Eredmény` is
+empty — are reported, not ranked.
+
+### Club column
+
+Every current MDLSZ sheet has a single `Egyesület` column, so normalization keeps
+the full club name and leaves `team` empty. Club/team splitting on `/`, `-`, `,`
+applies only to an explicitly combined header (containing `/`, `csapat` or
+`team`); splitting `Egyesület` used to truncate names such as `48-as SE.` → `48`.
+`club` keeps each row's own published spelling. `normalizedClub` groups spellings
+with `common.club_match_key()` (case/accents and whitespace after an in-word hyphen,
+e.g. the line wrap `Lövész-\nKlub`, are ignored; a suspended compound before
+`és`/`s`/`vagy` keeps its space) and uses the season's most frequent spelling,
+after `club-aliases.json`. `rowsWithMissingTeam` counts rows with no club value,
+which the dashboard reports as rows without club data.
+
 The division only appears in that metadata block — there is no per-row division column.
 `common.split_table_rows()` splits a raw extracted table into:
 

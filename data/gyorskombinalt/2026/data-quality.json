@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T08:24:21.437509+00:00",
+  "generatedAt": "2026-10-10T13:23:39.630604+00:00",
   "discipline": "gyorskombinalt",
   "year": 2026,
   "schemaVersion": 1,
@@ -10,7 +10,7 @@
     "totalExtractedRows": 1630,
     "validCompetitorRows": 1630,
     "rowsWithValidTime": 0,
-    "rowsWithMissingTeam": 1499,
+    "rowsWithMissingTeam": 0,
     "rowsWithParsingErrors": 0
   },
   "errors": []

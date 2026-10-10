@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T08:21:45.808506+00:00",
+  "generatedAt": "2026-10-10T13:23:47.259570+00:00",
   "discipline": "imssu",
   "year": 2026,
   "schemaVersion": 1,
@@ -10,7 +10,7 @@
     "totalExtractedRows": 1333,
     "validCompetitorRows": 1333,
     "rowsWithValidTime": 0,
-    "rowsWithMissingTeam": 1024,
+    "rowsWithMissingTeam": 19,
     "rowsWithParsingErrors": 0
   },
   "errors": []

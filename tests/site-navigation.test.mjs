@@ -33,7 +33,15 @@ const disciplines = loadModule(
 const paths = loadModule(fs.readFileSync(new URL("../lib/discipline-paths.ts", import.meta.url), "utf8"));
 const sourceSummary = loadModule(fs.readFileSync(new URL("../lib/discipline-summary.ts", import.meta.url), "utf8"));
 const ipscStatistics = loadModule(fs.readFileSync(new URL("../lib/ipsc-statistics.ts", import.meta.url), "utf8"));
-const gyorskombinaltStatistics = loadModule(fs.readFileSync(new URL("../lib/gyorskombinalt-statistics.ts", import.meta.url), "utf8"));
+const competitorIdentity = loadModule(fs.readFileSync(new URL("../lib/competitor-identity.ts", import.meta.url), "utf8"));
+const gyorskombinaltStatistics = loadModule(
+  fs.readFileSync(new URL("../lib/gyorskombinalt-statistics.ts", import.meta.url), "utf8"),
+  { "@/lib/competitor-identity": competitorIdentity },
+);
+const imssuStatistics = loadModule(
+  fs.readFileSync(new URL("../lib/imssu-statistics.ts", import.meta.url), "utf8"),
+  { "@/lib/competitor-identity": competitorIdentity },
+);
 const utils = loadModule(fs.readFileSync(new URL("../lib/utils.ts", import.meta.url), "utf8"));
 
 test("Hungarian labels preserve section identifiers and cover desktop and mobile filters", () => {
@@ -92,14 +100,15 @@ test("navigation destinations and dashboard anchors remain in lockstep", () => {
   }
 });
 
-test("discipline registry exposes seven source-linked sports and three custom public dashboards", () => {
+test("discipline registry exposes seven source-linked sports and four custom public dashboards", () => {
   const records = Array.from(disciplines.disciplineDefinitions);
   assert.equal(records.length, 7);
   assert.deepEqual(records.map(({ slug }) => slug), [
     "ipsc", "imssu", "idpa", "gyorskombinalt", "steel-challenge",
     "gyorspont-es-hazai-versenyszamok", "iprf",
   ]);
-  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["ipsc", "idpa", "gyorskombinalt"]);
+  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["ipsc", "imssu", "idpa", "gyorskombinalt"]);
+  assert.equal(disciplines.getDiscipline("imssu").analytics, "imssu");
   assert.equal(disciplines.getDiscipline("ipsc").analytics, "ipsc");
   assert.equal(disciplines.getDiscipline("gyorskombinalt").analytics, "gyorskombinalt");
   for (const record of records) {
@@ -356,4 +365,96 @@ test("footer organization and discipline records include accessible local logos 
     assert.ok(entry.alt.length > 0);
     assert.ok(entry.width > 0 && entry.height > 0);
   }
+});
+
+function imssuRow(overrides) {
+  return {
+    competitionId: "m1",
+    competitionName: "Teszt verseny",
+    competitionDate: "2026-05-01",
+    competitorName: "Teszt Elek",
+    normalizedCompetitorName: "teszt-elek",
+    division: "KKPU - Optika",
+    club: "Klub",
+    rawRow: {},
+    ...overrides,
+  };
+}
+
+test("IMSSU compares hits only within a competition and division, sharing tied positions", () => {
+  const competitions = [
+    { id: "m1", name: "Első", date: "2026-05-01", level: "Minősítő verseny", sourceUrl: "https://example.test/1" },
+    { id: "m2", name: "OB", date: "2026-08-28 - 08-30", level: "Országos Bajnokság", sourceUrl: "https://example.test/2" },
+  ];
+  const person = (name, license, hits, placement, extra = {}) => imssuRow({
+    competitorName: name, normalizedCompetitorName: name.toLowerCase(), rawRow: { "V.eng.": license },
+    rawResult: String(hits), placement, ...extra,
+  });
+  const results = [
+    person("A", "0001", 30, 1),
+    person("B", "0002", 20, 2),
+    person("C", "0003", 20, 3),
+    person("D", "0004", 10, 4),
+    // A different event with far fewer targets: raw hits are never compared across competitions.
+    person("D", "4", 9, 1, { competitionId: "m2" }),
+    person("A", "1", 4, 2, { competitionId: "m2" }),
+  ];
+  const stats = imssuStatistics.buildImssuStatistics(competitions, results);
+  const field = Object.fromEntries(stats.fieldResults.filter((r) => r.competitionId === "m1").map((r) => [r.competitorName, r]));
+  assert.equal(field.A.percentile, 100);
+  assert.equal(field.B.hitPosition, 2.5);
+  assert.equal(field.B.percentile, field.C.percentile);
+  assert.equal(field.B.percentile, 50);
+  assert.equal(field.D.percentile, 0);
+  assert.equal(field.B.winnerShare, (100 * 20) / 30);
+  const leaders = stats.leaderboard.filter((entry) => entry.division === "KKPU - Optika");
+  assert.equal(leaders.find((entry) => entry.competitorName === "D").averagePercentile, 50);
+  assert.equal(leaders.find((entry) => entry.competitorName === "A").averagePercentile, 50);
+  assert.equal(leaders[0].competitorName, "A", "equal percentile and match count break on the higher winner share");
+  assert.equal(leaders.find((entry) => entry.competitorName === "D").wins, 1);
+  assert.deepEqual(Array.from(stats.championshipWinners, (winner) => winner.competitorName), ["D"]);
+  assert.equal(stats.rankedFields, 2);
+});
+
+test("IMSSU merges the documented international air-rifle labels and deduplicates repeated tables", () => {
+  assert.equal(imssuStatistics.canonicalImssuDivision("Légpuska - Nemzetközi"), "Légpuska Nemzetközi (41m)");
+  assert.equal(imssuStatistics.canonicalImssuDivision("Légpuska NK (41m)"), "Légpuska Nemzetközi (41m)");
+  assert.equal(imssuStatistics.canonicalImssuDivision("Légpuska (25m)"), "Légpuska (25m)");
+  assert.equal(imssuStatistics.canonicalImssuDivision("Légpisztoly NK (18m)"), "Légpisztoly NK (18m)");
+  const competitions = [{ id: "m1", name: "OB", date: "2026-08-28", level: "Országos Bajnokság", sourceUrl: "https://example.test" }];
+  const rows = [
+    imssuRow({ division: "Légpuska - Nemzetközi", rawResult: "34", placement: 1, rawRow: { "V.eng.": "04309" }, competitorName: "V" }),
+    imssuRow({ division: "Légpuska NK (41m)", rawResult: "34", placement: 1, rawRow: { "V.eng.": "04309" }, competitorName: "V" }),
+    imssuRow({ division: "Légpuska NK (41m)", rawResult: "33", placement: 2, rawRow: { "V.eng.": "01082" }, competitorName: "G" }),
+  ];
+  const stats = imssuStatistics.buildImssuStatistics(competitions, rows);
+  assert.equal(stats.duplicateIdentityRows, 1);
+  assert.equal(stats.rankedRows, 2);
+  assert.deepEqual(Array.from(stats.divisions[0].sourceLabels), ["Légpuska - Nemzetközi", "Légpuska NK (41m)"]);
+});
+
+test("IMSSU surfaces non-result rows, column shifts, and singleton fields instead of ranking them", () => {
+  const competitions = [{ id: "m1", name: "Teszt", date: "2026-03-22", level: "", sourceUrl: "https://example.test" }];
+  const stats = imssuStatistics.buildImssuStatistics(competitions, [
+    imssuRow({ division: null, competitorName: "- célja:" }),
+    imssuRow({ rawResult: "", rawNotes: "27", competitorName: "Eltolt" }),
+    imssuRow({ rawResult: "kizárva", competitorName: "Hiányos" }),
+    imssuRow({ competitionId: "ismeretlen", rawResult: "10" }),
+    imssuRow({ division: "KKPI revolver", rawResult: "12", competitorName: "Egyedül" }),
+  ]);
+  assert.deepEqual(Array.from(stats.excludedRows, (row) => row.reason).sort(), [
+    "missing-division", "missing-hits", "possible-column-shift", "unknown-competition",
+  ]);
+  assert.equal(stats.excludedRows.find((row) => row.reason === "possible-column-shift").detail, "27");
+  assert.equal(stats.singletonFields, 1);
+  assert.equal(stats.rankedRows, 0);
+  assert.equal(stats.leaderboard.length, 0);
+  assert.equal(imssuStatistics.imssuAgeNote("super senior"), "Super Senior");
+  assert.equal(imssuStatistics.imssuAgeNote("Supersenior"), "Super Senior");
+  assert.equal(imssuStatistics.imssuAgeNote("junior, országos csúcs"), "Junior");
+  assert.equal(imssuStatistics.imssuAgeNote("5* kos"), undefined);
+  const season = fs.readFileSync(new URL("../app/[discipline]/[year]/page.tsx", import.meta.url), "utf8");
+  const dashboard = fs.readFileSync(new URL("../components/dashboard/imssu-dashboard.tsx", import.meta.url), "utf8");
+  assert.match(season, /<ImssuDashboard/);
+  for (const { id } of navigation.dashboardSections) assert.match(dashboard, new RegExp(`id="${id}"`));
 });

@@ -127,6 +127,39 @@ class YearPipelineTests(unittest.TestCase):
         self.assertIsNone(normalize.normalize_license_id("00000"))
         self.assertIsNone(normalize.normalize_license_id("A001"))
 
+    def test_single_club_column_keeps_hyphenated_and_slashed_club_names_whole(self):
+        normalize = script_module("normalize-data")
+        self.assertFalse(normalize.is_combined_club_team_header("Egyesület"))
+        self.assertTrue(normalize.is_combined_club_team_header("Egyesület / Csapat"))
+        self.assertTrue(normalize.is_combined_club_team_header("Club / Team"))
+        for value in ("48-as SE.", "T-BODY Fitness\nSportegyesület", "Városi Lövészklub\nTatabánya (51173/2002)", "Police Academy Sport Club\n- PASC"):
+            club, team = normalize.split_club_team(value, combined_header=False)
+            self.assertEqual(club, common.normalize_text(value))
+            self.assertIsNone(team)
+        self.assertEqual(normalize.split_club_team("Club / Team A", combined_header=True), ("Club", "Team A"))
+        self.assertEqual(normalize.split_club_team("  ", combined_header=False), (None, None))
+
+    def test_club_variants_group_without_rewriting_published_spellings(self):
+        normalize = script_module("normalize-data")
+        key = common.club_match_key
+        self.assertEqual(key("Pandúr Lövész-\nKlub\nSportegyesület"), key("Pandúr Lövész-Klub Sportegyesület"))
+        self.assertEqual(key("MTTSZ Lövész-\nÍjász\nSportegyesület"), key("MTTSZ Lövész- Íjász Sportegyesület"))
+        self.assertEqual(key("Villanás Lövész-\nVitorlás- és Motorsport"), key("Villanás Lövész- Vitorlás-\nés Motorsport"))
+        self.assertNotEqual(key("Püspökladányi Lövész- és Tömegsportklub"), key("Püspökladányi Lövész-és Tömegsportklub"))
+        self.assertNotEqual(key("Diána Sportlövész Klub - Paks"), key("Diána Sportlövész Klub"))
+        results = [
+            {"club": "Pandúr Lövész-Klub Sportegyesület"},
+            {"club": "Pandúr Lövész- Klub Sportegyesület"},
+            {"club": "Pandúr Lövész-Klub Sportegyesület"},
+            {"club": "Globus SE"},
+            {"club": None},
+        ]
+        normalize.unify_club_spellings(results, {"Globus SE": "Globus Sportegyesület"})
+        self.assertEqual({r["normalizedClub"] for r in results[:3]}, {"Pandúr Lövész-Klub Sportegyesület"})
+        self.assertEqual(results[1]["club"], "Pandúr Lövész- Klub Sportegyesület")
+        self.assertEqual(results[3]["normalizedClub"], "Globus Sportegyesület")
+        self.assertNotIn("normalizedClub", results[4])
+
     def test_ipsc_pdf_adapter_tracks_division_headings_across_continuation_pages(self):
         extract = script_module("extract-pdfs")
 

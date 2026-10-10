@@ -1,14 +1,7 @@
+import { sourceCompetitorKey } from "@/lib/competitor-identity";
 import type { Competition, CompetitionResult } from "@/lib/types";
 
-export function gyorskombinaltIdentity(result: CompetitionResult) {
-  const sourceLicense = Object.entries(result.rawRow ?? {})
-    .find(([header]) => header.replace(/\s/g, "").toLowerCase() === "v.eng.")?.[1];
-  const license = result.competitorLicenseId || sourceLicense?.trim();
-  if (license && /^\d+$/.test(license) && /[1-9]/.test(license)) {
-    return `license:${license.replace(/^0+/, "")}`;
-  }
-  return `name:${result.normalizedCompetitorName || result.competitorName.trim()}`;
-}
+export const gyorskombinaltIdentity = sourceCompetitorKey;
 
 export function buildGyorskombinaltStatistics(competitions: Competition[], results: CompetitionResult[]) {
   const knownIds = new Set(competitions.map(({ id }) => id));

@@ -243,6 +243,16 @@ def slugify(value: str) -> str:
     return re.sub(r"(^-|-$)", "", re.sub(r"[^a-z0-9]+", "-", normalize_key(value)))
 
 
+# Hungarian suspended compounds ("Lövész- és Íjász") keep their space before a conjunction.
+_WRAPPED_HYPHEN = re.compile(r"(?<=\w)-\s+(?!(?:és|es|s|vagy)\b)", re.IGNORECASE)
+
+
+def club_match_key(value: str | None) -> str:
+    """Groups PDF variants of one club: case, accents and spacing after an in-word hyphen
+    (line wraps such as "Lövész-\\nKlub") do not create separate clubs."""
+    return normalize_key(_WRAPPED_HYPHEN.sub("-", normalize_text(value)))
+
+
 def resolve_url(base_url: str, href: str | None) -> str | None:
     if not href:
         return None

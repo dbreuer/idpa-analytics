@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T08:17:29.416993+00:00",
+  "generatedAt": "2026-10-10T13:23:51.997665+00:00",
   "discipline": "steel-challenge",
   "year": 2026,
   "schemaVersion": 1,
@@ -10,7 +10,7 @@
     "totalExtractedRows": 7347,
     "validCompetitorRows": 7259,
     "rowsWithValidTime": 0,
-    "rowsWithMissingTeam": 6209,
+    "rowsWithMissingTeam": 45,
     "rowsWithParsingErrors": 88
   },
   "errors": []

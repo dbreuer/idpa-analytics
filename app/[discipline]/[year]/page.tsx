@@ -6,9 +6,11 @@ import { DashboardApp } from "@/components/dashboard/dashboard-app";
 import { DescriptiveDisciplineReport } from "@/components/dashboard/descriptive-discipline-report";
 import { IpscDashboard } from "@/components/dashboard/ipsc-dashboard";
 import { GyorskombinaltDashboard } from "@/components/dashboard/gyorskombinalt-dashboard";
+import { ImssuDashboard } from "@/components/dashboard/imssu-dashboard";
 import { canonicalUrl, disciplinePath, seasonPath } from "@/lib/discipline-paths";
 import { getDiscipline, isDisciplineSlug } from "@/lib/disciplines";
 import { getAvailableYears, getDisciplinesWithData, loadDashboardData } from "@/lib/data";
+import { buildImssuStatistics } from "@/lib/imssu-statistics";
 import { buildIpscStatistics } from "@/lib/ipsc-statistics";
 
 export const dynamicParams = false;
@@ -30,33 +32,51 @@ async function seasonParams(params: Promise<{ discipline: string; year: string }
   return { discipline: definition, year: Number(year) };
 }
 
+function seasonCopy(analytics: string, name: string, year: number) {
+  switch (analytics) {
+    case "idpa":
+      return {
+        title: `${name} ${year} · szezoneredmények`,
+        description: `A ${year}. évi magyarországi ${name}-versenyek rangsorai és statisztikái, hivatalos forrásokra visszavezetve.`,
+      };
+    case "ipsc":
+      return {
+        title: `${name} ${year} · divíziórangsorok és statisztikák`,
+        description: `A ${year}. évi IPSC-versenyek divíziónként elkülönített rangsorai, szezonstatisztikái és hivatalos eredményforrásai.`,
+        openGraph: "IPSC-eredmények, divíziónkénti szezonrangsorok és hivatalos források.",
+      };
+    case "imssu":
+      return {
+        title: `${name} ${year} · fémsziluett divíziórangsorok`,
+        description: `A ${year}. évi IMSSU fémsziluett-versenyek divíziónkénti, versenyen belüli találatszámokból számított rangsorai, statisztikái és hivatalos eredményforrásai.`,
+        openGraph: "IMSSU fémsziluett-eredmények, divíziórangsorok, országos bajnoki győztesek és hivatalos források.",
+      };
+    case "gyorskombinalt":
+      return {
+        title: `${name} ${year} · részvételi statisztikák és eredmények`,
+        description: `A ${year}. évi Gyorskombinált és Precíziós szakági versenyek részvételi statisztikái, versenyzői előzményei és hivatalos eredményjegyzékei, számított szezonrangsor nélkül.`,
+      };
+    default:
+      return {
+        title: `${name} ${year} · eredménykimutatás`,
+        description: `A ${year}. évi ${name}-versenyek forrásból normalizált eredménykimutatása; pontozott rangsor nem készül.`,
+      };
+  }
+}
+
 export async function generateMetadata({ params }: PageProps<"/[discipline]/[year]">): Promise<Metadata> {
   const { discipline, year } = await seasonParams(params);
+  const copy = seasonCopy(discipline.analytics, discipline.name, year);
   const metadata: Metadata = {
-    title: discipline.analytics === "idpa"
-      ? `${discipline.name} ${year} · szezoneredmények`
-      : discipline.analytics === "ipsc"
-        ? `${discipline.name} ${year} · divíziórangsorok és statisztikák`
-        : discipline.analytics === "gyorskombinalt"
-          ? `${discipline.name} ${year} · részvételi statisztikák és eredmények`
-        : `${discipline.name} ${year} · eredménykimutatás`,
-    description: discipline.analytics === "idpa"
-      ? `A ${year}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái, hivatalos forrásokra visszavezetve.`
-      : discipline.analytics === "ipsc"
-        ? `A ${year}. évi IPSC-versenyek divíziónként elkülönített rangsorai, szezonstatisztikái és hivatalos eredményforrásai.`
-        : discipline.analytics === "gyorskombinalt"
-          ? `A ${year}. évi Gyorskombinált és Precíziós szakági versenyek részvételi statisztikái, versenyzői előzményei és hivatalos eredményjegyzékei, számított szezonrangsor nélkül.`
-        : `A ${year}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása; pontozott rangsor nem készül.`,
+    title: copy.title,
+    description: copy.description,
     alternates: { canonical: canonicalUrl(seasonPath(discipline.slug, year)) },
   };
   if (!discipline.published) {
     metadata.robots = { index: false, follow: true, googleBot: { index: false, follow: true } };
   }
-  if (discipline.analytics === "ipsc") {
-    metadata.openGraph = {
-      title: `${discipline.name} ${year} · divíziórangsorok és statisztikák`,
-      description: "IPSC-eredmények, divíziónkénti szezonrangsorok és hivatalos források.",
-    };
+  if ("openGraph" in copy) {
+    metadata.openGraph = { title: copy.title, description: copy.openGraph };
   }
   return metadata;
 }
@@ -104,6 +124,23 @@ export default async function SeasonPage({ params }: PageProps<"/[discipline]/[y
           resultsFile={data.resultsFile}
           qualityFile={data.qualityFile}
           statistics={buildIpscStatistics(data.competitionsFile.competitions, data.resultsFile.results)}
+        />
+      </>
+    );
+  }
+
+  if (discipline.analytics === "imssu") {
+    return (
+      <>
+        {breadcrumb}
+        <ImssuDashboard
+          key={`${discipline.slug}-${year}`}
+          year={year}
+          availableYears={getAvailableYears(discipline.slug)}
+          competitionsFile={data.competitionsFile}
+          resultsFile={data.resultsFile}
+          qualityFile={data.qualityFile}
+          statistics={buildImssuStatistics(data.competitionsFile.competitions, data.resultsFile.results)}
         />
       </>
     );

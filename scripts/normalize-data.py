@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 
-from common import CLUB_ALIASES_PATH, ensure_dirs, identify_header, load_json, normalize_key, normalize_text, now_iso, parse_pipeline_args, parse_division_code, save_json, validate_payload_scope
+from common import CLUB_ALIASES_PATH, club_match_key, ensure_dirs, identify_header, load_json, normalize_key, normalize_text, now_iso, parse_pipeline_args, parse_division_code, save_json, validate_payload_scope
 
 
 PLACEMENT_PATTERN = re.compile(r"(\d+)")
@@ -22,6 +22,24 @@ def normalize_name(name: str) -> dict:
 def canonical_club(raw_value: str, aliases: dict[str, str]) -> str:
     value = normalize_text(raw_value)
     return aliases.get(value, value)
+
+
+def unify_club_spellings(results: list[dict], aliases: dict[str, str]) -> None:
+    """Sets normalizedClub to the season's most frequent published spelling of each club.
+
+    `club` keeps each row's own spelling; only grouping uses club_match_key."""
+    spellings: dict[str, Counter] = defaultdict(Counter)
+    for result in results:
+        if result.get("club"):
+            aliased = canonical_club(result["club"], aliases)
+            spellings[club_match_key(aliased)][aliased] += 1
+    preferred = {
+        key: min(counts.items(), key=lambda item: (-item[1], item[0]))[0]
+        for key, counts in spellings.items()
+    }
+    for result in results:
+        if result.get("club"):
+            result["normalizedClub"] = preferred[club_match_key(canonical_club(result["club"], aliases))]
 
 
 def parse_notes(value: str | None, discipline: str = "idpa") -> dict:
@@ -50,10 +68,18 @@ def parse_placement(value: str | None) -> int | None:
     return int(match.group(1)) if match else None
 
 
-def split_club_team(value: str | None) -> tuple[str | None, str | None]:
+def is_combined_club_team_header(label: str | None) -> bool:
+    """MDLSZ sheets use a single "Egyesület" column; only an explicit "club / team" header carries a team."""
+    key = normalize_key(label)
+    return "/" in key or "csapat" in key or "team" in key
+
+
+def split_club_team(value: str | None, combined_header: bool = True) -> tuple[str | None, str | None]:
     raw = normalize_text(value)
     if not raw:
         return None, None
+    if not combined_header:
+        return raw, None
     parts = [part.strip() for part in re.split(r"\s*[\/|,-]\s*", raw) if part.strip()]
     if len(parts) >= 2:
         return parts[0], " / ".join(parts[1:])
@@ -122,7 +148,8 @@ def main() -> None:
                 competitor_variants[identity["normalizedName"]].add(identity["displayName"])
                 if "club_team" in header_map and len(padded_row) > header_map["club_team"]:
                     club_raw = padded_row[header_map["club_team"]]
-                    club, team = split_club_team(club_raw)
+                    club_header = header[header_map["club_team"]] if header_map["club_team"] < len(header) else ""
+                    club, team = split_club_team(club_raw, is_combined_club_team_header(club_header))
                 else:
                     club_raw = None
                     club, team = None, None
@@ -137,7 +164,8 @@ def main() -> None:
                 if parsed_notes.get("parseError"):
                     parsing_errors.append({"competitionId": extraction.get("competitionId"), "row": raw_row, "error": "Failed to parse notes"})
                     quality["rowsWithParsingErrors"] += 1
-                if "club_team" in header_map and not team:
+                # Displayed as rows without club data; tables with no club column count too.
+                if not club and not team:
                     quality["rowsWithMissingTeam"] += 1
 
                 raw_division = (
@@ -185,6 +213,8 @@ def main() -> None:
                 }
                 results.append(result)
                 quality["validCompetitorRows"] += 1
+
+    unify_club_spellings(results, aliases)
 
     for normalized_name, variants in competitor_variants.items():
         if len(variants) > 1:

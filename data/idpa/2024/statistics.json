@@ -1,6 +1,9 @@
 {
-  "generatedAt": "2026-10-10T05:51:17.538698+00:00",
+  "generatedAt": "2026-10-10T13:23:45.498664+00:00",
+  "discipline": "idpa",
   "year": 2024,
+  "schemaVersion": 1,
+  "analyticsVersion": "idpa-python-pipeline-v1",
   "statistics": {
     "totalCompetitions": 28,
     "uniqueCompetitors": 694,
@@ -105,7 +108,7 @@
       {
         "competitorName": "Szántó Levente",
         "normalizedCompetitorName": "szanto-levente",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 16,
         "uniqueCompetitions": 16,
         "wins": 3,
@@ -127,7 +130,7 @@
       {
         "competitorName": "Varga Róbert",
         "normalizedCompetitorName": "varga-robert",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 15,
         "uniqueCompetitions": 14,
         "wins": 7,
@@ -150,7 +153,7 @@
       {
         "competitorName": "Géresi János Gábor",
         "normalizedCompetitorName": "geresi-janos-gabor",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 14,
         "uniqueCompetitions": 14,
         "wins": 6,
@@ -219,7 +222,7 @@
       {
         "competitorName": "Szántó Szilárd",
         "normalizedCompetitorName": "szanto-szilard",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 16,
         "uniqueCompetitions": 16,
         "wins": 2,
@@ -331,7 +334,7 @@
       {
         "competitorName": "Dr Lévai Tibor",
         "normalizedCompetitorName": "dr-levai-tibor",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 11,
         "uniqueCompetitions": 11,
         "wins": 3,
@@ -355,7 +358,7 @@
       {
         "competitorName": "Dr. Deák Henrietta",
         "normalizedCompetitorName": "dr.-deak-henrietta",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 19,
         "uniqueCompetitions": 19,
         "wins": 1,
@@ -422,7 +425,7 @@
       {
         "competitorName": "Csik Benjámin",
         "normalizedCompetitorName": "csik-benjamin",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 8,
         "uniqueCompetitions": 8,
         "wins": 2,
@@ -444,7 +447,7 @@
       {
         "competitorName": "Bondor Balázs",
         "normalizedCompetitorName": "bondor-balazs",
-        "club": "Városi Lövészklub Tatabánya (51173",
+        "club": "Városi Lövészklub Tatabánya (51173/2002)",
         "entries": 12,
         "uniqueCompetitions": 11,
         "wins": 2,
@@ -607,7 +610,7 @@
       {
         "competitorName": "Dr. Németh Tamás",
         "normalizedCompetitorName": "dr.-nemeth-tamas",
-        "club": "B",
+        "club": "B-Pro Bellators SE",
         "entries": 11,
         "uniqueCompetitions": 11,
         "wins": 1,
@@ -696,7 +699,7 @@
       {
         "competitorName": "Villám Ferenc",
         "normalizedCompetitorName": "villam-ferenc",
-        "club": "Városi Lövészklub Tatabánya (51173",
+        "club": "Városi Lövészklub Tatabánya (51173/2002)",
         "entries": 12,
         "uniqueCompetitions": 11,
         "wins": 0,
@@ -719,7 +722,7 @@
       {
         "competitorName": "Csaplár Péter András",
         "normalizedCompetitorName": "csaplar-peter-andras",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 9,
         "uniqueCompetitions": 9,
         "wins": 1,
@@ -741,7 +744,7 @@
       {
         "competitorName": "Joó Szabolcs",
         "normalizedCompetitorName": "joo-szabolcs",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 8,
         "uniqueCompetitions": 8,
         "wins": 1,
@@ -764,7 +767,7 @@
       {
         "competitorName": "Komjáthy Barna",
         "normalizedCompetitorName": "komjathy-barna",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 11,
         "uniqueCompetitions": 11,
         "wins": 1,
@@ -786,7 +789,7 @@
       {
         "competitorName": "Jordán Péter",
         "normalizedCompetitorName": "jordan-peter",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 4,
         "uniqueCompetitions": 4,
         "wins": 4,
@@ -902,7 +905,7 @@
       {
         "competitorName": "Mayer Attila",
         "normalizedCompetitorName": "mayer-attila",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 7,
         "uniqueCompetitions": 7,
         "wins": 2,
@@ -970,7 +973,7 @@
       {
         "competitorName": "Csik Marcell",
         "normalizedCompetitorName": "csik-marcell",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 6,
         "uniqueCompetitions": 6,
         "wins": 2,
@@ -1059,7 +1062,7 @@
       {
         "competitorName": "Pődör Attila",
         "normalizedCompetitorName": "podor-attila",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 6,
         "uniqueCompetitions": 6,
         "wins": 3,
@@ -1103,7 +1106,7 @@
       {
         "competitorName": "Pap Lukács",
         "normalizedCompetitorName": "pap-lukacs",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 5,
         "uniqueCompetitions": 5,
         "wins": 1,
@@ -1218,7 +1221,7 @@
       {
         "competitorName": "Balogh László Gábor",
         "normalizedCompetitorName": "balogh-laszlo-gabor",
-        "club": "B",
+        "club": "B-Pro Bellators SE",
         "entries": 11,
         "uniqueCompetitions": 10,
         "wins": 0,
@@ -1241,7 +1244,7 @@
       {
         "competitorName": "Tabódy Zoltán Miklós",
         "normalizedCompetitorName": "tabody-zoltan-miklos",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 6,
         "uniqueCompetitions": 6,
         "wins": 3,
@@ -1355,7 +1358,7 @@
       {
         "competitorName": "Lévai Krisztián",
         "normalizedCompetitorName": "levai-krisztian",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 4,
         "uniqueCompetitions": 4,
         "wins": 2,
@@ -1399,7 +1402,7 @@
       {
         "competitorName": "Rácz Attila",
         "normalizedCompetitorName": "racz-attila",
-        "club": "Városi Lövészklub Tatabánya (51173",
+        "club": "Városi Lövészklub Tatabánya (51173/2002)",
         "entries": 5,
         "uniqueCompetitions": 4,
         "wins": 1,
@@ -1469,7 +1472,7 @@
       {
         "competitorName": "Takács Balázs",
         "normalizedCompetitorName": "takacs-balazs",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 5,
         "uniqueCompetitions": 5,
         "wins": 0,
@@ -1559,7 +1562,7 @@
       {
         "competitorName": "Dr. Hegyi György Péter",
         "normalizedCompetitorName": "dr.-hegyi-gyorgy-peter",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 5,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -2163,7 +2166,7 @@
       {
         "competitorName": "Csomai MIklós",
         "normalizedCompetitorName": "csomai-miklos",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 11,
         "uniqueCompetitions": 11,
         "wins": 0,
@@ -2366,7 +2369,7 @@
       {
         "competitorName": "Bali Zoltán",
         "normalizedCompetitorName": "bali-zoltan",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -2388,7 +2391,7 @@
       {
         "competitorName": "Juhász Dávid",
         "normalizedCompetitorName": "juhasz-david",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 4,
         "uniqueCompetitions": 3,
         "wins": 1,
@@ -2566,7 +2569,7 @@
       {
         "competitorName": "Dobos Gyula Gábor",
         "normalizedCompetitorName": "dobos-gyula-gabor",
-        "club": "Városi Lövészklub Tatabánya (51173",
+        "club": "Városi Lövészklub Tatabánya (51173/2002)",
         "entries": 9,
         "uniqueCompetitions": 9,
         "wins": 0,
@@ -2722,7 +2725,7 @@
       {
         "competitorName": "Takács Tibor",
         "normalizedCompetitorName": "takacs-tibor",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -2767,7 +2770,7 @@
       {
         "competitorName": "Vass Róbert",
         "normalizedCompetitorName": "vass-robert",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -2790,7 +2793,7 @@
       {
         "competitorName": "Zentai Viktor",
         "normalizedCompetitorName": "zentai-viktor",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -2856,7 +2859,7 @@
       {
         "competitorName": "Kiss Dániel",
         "normalizedCompetitorName": "kiss-daniel",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -2922,7 +2925,7 @@
       {
         "competitorName": "Sáhó Ákos",
         "normalizedCompetitorName": "saho-akos",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 4,
         "uniqueCompetitions": 4,
         "wins": 0,
@@ -2944,7 +2947,7 @@
       {
         "competitorName": "Benei Ákos",
         "normalizedCompetitorName": "benei-akos",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 4,
         "uniqueCompetitions": 4,
         "wins": 0,
@@ -2966,7 +2969,7 @@
       {
         "competitorName": "Molnár Zoltán István",
         "normalizedCompetitorName": "molnar-zoltan-istvan",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 5,
         "uniqueCompetitions": 5,
         "wins": 0,
@@ -2989,7 +2992,7 @@
       {
         "competitorName": "Krokker Mihály",
         "normalizedCompetitorName": "krokker-mihaly",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -3099,7 +3102,7 @@
       {
         "competitorName": "Sebők Gábor",
         "normalizedCompetitorName": "sebok-gabor",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 1,
@@ -3407,7 +3410,7 @@
       {
         "competitorName": "Mátyus-Fülöp Gergő",
         "normalizedCompetitorName": "matyus-fulop-gergo",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 1,
@@ -3495,7 +3498,7 @@
       {
         "competitorName": "Erős Patrik",
         "normalizedCompetitorName": "eros-patrik",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -3698,7 +3701,7 @@
       {
         "competitorName": "Gyuris Ernő Tibor",
         "normalizedCompetitorName": "gyuris-erno-tibor",
-        "club": "Police Academy Sport Club",
+        "club": "Police Academy Sport Club - PASC",
         "entries": 3,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -3832,7 +3835,7 @@
       {
         "competitorName": "Szalay Krisztián",
         "normalizedCompetitorName": "szalay-krisztian",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -3965,7 +3968,7 @@
       {
         "competitorName": "Doma Gergely Attila",
         "normalizedCompetitorName": "doma-gergely-attila",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -3987,7 +3990,7 @@
       {
         "competitorName": "Barta Máté",
         "normalizedCompetitorName": "barta-mate",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -4229,7 +4232,7 @@
       {
         "competitorName": "Böde Kristóf",
         "normalizedCompetitorName": "bode-kristof",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -4494,7 +4497,7 @@
       {
         "competitorName": "Juhász József",
         "normalizedCompetitorName": "juhasz-jozsef",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -4561,7 +4564,7 @@
       {
         "competitorName": "Győri Barnabás",
         "normalizedCompetitorName": "gyori-barnabas",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -4605,7 +4608,7 @@
       {
         "competitorName": "Takács Lajos József",
         "normalizedCompetitorName": "takacs-lajos-jozsef",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -4627,7 +4630,7 @@
       {
         "competitorName": "Lakatos Zoltán",
         "normalizedCompetitorName": "lakatos-zoltan",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -4649,7 +4652,7 @@
       {
         "competitorName": "Matisz Attila Mihály",
         "normalizedCompetitorName": "matisz-attila-mihaly",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -4913,7 +4916,7 @@
       {
         "competitorName": "Dr. Balázs Zsolt",
         "normalizedCompetitorName": "dr.-balazs-zsolt",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -5023,7 +5026,7 @@
       {
         "competitorName": "Csőre Bálint",
         "normalizedCompetitorName": "csore-balint",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -5068,7 +5071,7 @@
       {
         "competitorName": "Géresi-Turzó Emese",
         "normalizedCompetitorName": "geresi-turzo-emese",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 12,
         "uniqueCompetitions": 12,
         "wins": 0,
@@ -5223,7 +5226,7 @@
       {
         "competitorName": "Bozó Krisztián",
         "normalizedCompetitorName": "bozo-krisztian",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -5268,7 +5271,7 @@
       {
         "competitorName": "Géresi Janka Judit",
         "normalizedCompetitorName": "geresi-janka-judit",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 10,
         "uniqueCompetitions": 10,
         "wins": 0,
@@ -5312,7 +5315,7 @@
       {
         "competitorName": "Molnárné Bardóczi Anita",
         "normalizedCompetitorName": "molnarne-bardoczi-anita",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 5,
         "uniqueCompetitions": 5,
         "wins": 0,
@@ -5334,7 +5337,7 @@
       {
         "competitorName": "Süle Bendegúz",
         "normalizedCompetitorName": "sule-bendeguz",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 4,
         "uniqueCompetitions": 4,
         "wins": 0,
@@ -5422,7 +5425,7 @@
       {
         "competitorName": "Székely Bálint",
         "normalizedCompetitorName": "szekely-balint",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -5511,7 +5514,7 @@
       {
         "competitorName": "Barta Péter",
         "normalizedCompetitorName": "barta-peter",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -5753,7 +5756,7 @@
       {
         "competitorName": "Bíró Gábor",
         "normalizedCompetitorName": "biro-gabor",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -5775,7 +5778,7 @@
       {
         "competitorName": "Mezei Attila",
         "normalizedCompetitorName": "mezei-attila",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -5842,7 +5845,7 @@
       {
         "competitorName": "Szecskó Martin",
         "normalizedCompetitorName": "szecsko-martin",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -5864,7 +5867,7 @@
       {
         "competitorName": "Filep Zoltán",
         "normalizedCompetitorName": "filep-zoltan",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -5930,7 +5933,7 @@
       {
         "competitorName": "Babka Norbert",
         "normalizedCompetitorName": "babka-norbert",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 5,
         "uniqueCompetitions": 5,
         "wins": 0,
@@ -6086,7 +6089,7 @@
       {
         "competitorName": "Lang Pál Krisztián",
         "normalizedCompetitorName": "lang-pal-krisztian",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -6108,7 +6111,7 @@
       {
         "competitorName": "Keresztély Győrgy Attila",
         "normalizedCompetitorName": "keresztely-gyorgy-attila",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -6351,7 +6354,7 @@
       {
         "competitorName": "Ferencz Roland",
         "normalizedCompetitorName": "ferencz-roland",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -6703,7 +6706,7 @@
       {
         "competitorName": "Kugyela Péter Attila",
         "normalizedCompetitorName": "kugyela-peter-attila",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -6883,7 +6886,7 @@
       {
         "competitorName": "Tóth Krisztián Sándor",
         "normalizedCompetitorName": "toth-krisztian-sandor",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -7633,7 +7636,7 @@
       {
         "competitorName": "Faggyas András",
         "normalizedCompetitorName": "faggyas-andras",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -7787,7 +7790,7 @@
       {
         "competitorName": "Koncz Árpád",
         "normalizedCompetitorName": "koncz-arpad",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -7853,7 +7856,7 @@
       {
         "competitorName": "Pásztor Árpád",
         "normalizedCompetitorName": "pasztor-arpad",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -7897,7 +7900,7 @@
       {
         "competitorName": "Rimár Péter",
         "normalizedCompetitorName": "rimar-peter",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -7942,7 +7945,7 @@
       {
         "competitorName": "Bárdos Patrik",
         "normalizedCompetitorName": "bardos-patrik",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -8030,7 +8033,7 @@
       {
         "competitorName": "Konecsni Róbert",
         "normalizedCompetitorName": "konecsni-robert",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -8184,7 +8187,7 @@
       {
         "competitorName": "Kocsa Richárd",
         "normalizedCompetitorName": "kocsa-richard",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -8206,7 +8209,7 @@
       {
         "competitorName": "Szántó Péter",
         "normalizedCompetitorName": "szanto-peter",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -8383,7 +8386,7 @@
       {
         "competitorName": "Pécsi Szabolcs",
         "normalizedCompetitorName": "pecsi-szabolcs",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -8603,7 +8606,7 @@
       {
         "competitorName": "Anda Béla",
         "normalizedCompetitorName": "anda-bela",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -8713,7 +8716,7 @@
       {
         "competitorName": "Alexovics Gergő",
         "normalizedCompetitorName": "alexovics-gergo",
-        "club": "Városi Lövészklub Tatabánya (51173",
+        "club": "Városi Lövészklub Tatabánya (51173/2002)",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -8735,7 +8738,7 @@
       {
         "competitorName": "Stipsits Ákos",
         "normalizedCompetitorName": "stipsits-akos",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -8889,7 +8892,7 @@
       {
         "competitorName": "Potzmann Arnold",
         "normalizedCompetitorName": "potzmann-arnold",
-        "club": "Polgári Lövészsport Egyesület",
+        "club": "Polgári Lövészsport Egyesület - Szombathely",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -8999,7 +9002,7 @@
       {
         "competitorName": "Csete András",
         "normalizedCompetitorName": "csete-andras",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -9175,7 +9178,7 @@
       {
         "competitorName": "Dr. Beke-Somfai Tamás János",
         "normalizedCompetitorName": "dr.-beke-somfai-tamas-janos",
-        "club": "BKV",
+        "club": "BKV - Metro Lövész és Íjász Egyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -9241,7 +9244,7 @@
       {
         "competitorName": "Heiter Ákos",
         "normalizedCompetitorName": "heiter-akos",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -9285,7 +9288,7 @@
       {
         "competitorName": "Alexovics László",
         "normalizedCompetitorName": "alexovics-laszlo",
-        "club": "Városi Lövészklub Tatabánya (51173",
+        "club": "Városi Lövészklub Tatabánya (51173/2002)",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -9307,7 +9310,7 @@
       {
         "competitorName": "HAUN ULRIKE",
         "normalizedCompetitorName": "haun-ulrike",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -9506,7 +9509,7 @@
       {
         "competitorName": "DR GALAHN SVEN",
         "normalizedCompetitorName": "dr-galahn-sven",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -9528,7 +9531,7 @@
       {
         "competitorName": "Piller Róbert",
         "normalizedCompetitorName": "piller-robert",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -9793,7 +9796,7 @@
       {
         "competitorName": "Galahn Annbritt",
         "normalizedCompetitorName": "galahn-annbritt",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10035,7 +10038,7 @@
       {
         "competitorName": "Meglécz Sándor",
         "normalizedCompetitorName": "meglecz-sandor",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10079,7 +10082,7 @@
       {
         "competitorName": "Nagy Márton",
         "normalizedCompetitorName": "nagy-marton",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10211,7 +10214,7 @@
       {
         "competitorName": "Molnár Dániel",
         "normalizedCompetitorName": "molnar-daniel",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10431,7 +10434,7 @@
       {
         "competitorName": "Völgyi László",
         "normalizedCompetitorName": "volgyi-laszlo",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10453,7 +10456,7 @@
       {
         "competitorName": "Szepesi Marcell",
         "normalizedCompetitorName": "szepesi-marcell",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10607,7 +10610,7 @@
       {
         "competitorName": "Dr Ites István Gergő",
         "normalizedCompetitorName": "dr-ites-istvan-gergo",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10717,7 +10720,7 @@
       {
         "competitorName": "Kiss Emil",
         "normalizedCompetitorName": "kiss-emil",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -10805,7 +10808,7 @@
       {
         "competitorName": "Tamás Győző Zsombor",
         "normalizedCompetitorName": "tamas-gyozo-zsombor",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -15184,7 +15187,7 @@
       {
         "competitorName": "Dér Beáta",
         "normalizedCompetitorName": "der-beata",
-        "club": "B",
+        "club": "B-Pro Bellators SE",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -15251,7 +15254,7 @@
       {
         "competitorName": "Antal Miklós",
         "normalizedCompetitorName": "antal-miklos",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -15296,7 +15299,7 @@
       {
         "competitorName": "Apostolné Farkas Márta",
         "normalizedCompetitorName": "apostolne-farkas-marta",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -15340,7 +15343,7 @@
       {
         "competitorName": "Tóth Tamás",
         "normalizedCompetitorName": "toth-tamas",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -15363,7 +15366,7 @@
       {
         "competitorName": "Vörös Adrienn",
         "normalizedCompetitorName": "voros-adrienn",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 2,
         "uniqueCompetitions": 2,
         "wins": 0,
@@ -15480,7 +15483,7 @@
       {
         "competitorName": "Szántó Levente",
         "normalizedCompetitorName": "szanto-levente",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 16,
         "uniqueCompetitions": 16,
         "wins": 3,
@@ -15504,7 +15507,7 @@
       {
         "competitorName": "Böde Kristóf",
         "normalizedCompetitorName": "bode-kristof",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -15548,7 +15551,7 @@
       {
         "competitorName": "Lang Pál Krisztián",
         "normalizedCompetitorName": "lang-pal-krisztian",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 1,
         "uniqueCompetitions": 1,
         "wins": 0,
@@ -15616,7 +15619,7 @@
       {
         "competitorName": "Dr. Deák Henrietta",
         "normalizedCompetitorName": "dr.-deak-henrietta",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 19,
         "uniqueCompetitions": 19,
         "wins": 1,
@@ -15686,7 +15689,7 @@
       {
         "competitorName": "Szántó Levente",
         "normalizedCompetitorName": "szanto-levente",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 16,
         "uniqueCompetitions": 16,
         "wins": 3,
@@ -15708,7 +15711,7 @@
       {
         "competitorName": "Szántó Szilárd",
         "normalizedCompetitorName": "szanto-szilard",
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "entries": 16,
         "uniqueCompetitions": 16,
         "wins": 2,
@@ -15733,7 +15736,7 @@
       {
         "competitorName": "Jordán Péter",
         "normalizedCompetitorName": "jordan-peter",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 4,
         "uniqueCompetitions": 4,
         "wins": 4,
@@ -15755,7 +15758,7 @@
       {
         "competitorName": "Zentai Viktor",
         "normalizedCompetitorName": "zentai-viktor",
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "entries": 3,
         "uniqueCompetitions": 3,
         "wins": 0,
@@ -15855,7 +15858,7 @@
         "bestDivision": "CDP"
       },
       {
-        "club": "Pandúr Lövész",
+        "club": "Pandúr Lövész-Klub Sportegyesület",
         "members": 46,
         "appearances": 223,
         "wins": 33,
@@ -15891,7 +15894,7 @@
         "bestDivision": "ESP"
       },
       {
-        "club": "T",
+        "club": "T-BODY Fitness Sportegyesület",
         "members": 44,
         "appearances": 109,
         "wins": 14,
@@ -15915,7 +15918,7 @@
         "bestDivision": "ESP"
       },
       {
-        "club": "Városi Lövészklub Tatabánya (51173",
+        "club": "Városi Lövészklub Tatabánya (51173/2002)",
         "members": 6,
         "appearances": 40,
         "wins": 3,
@@ -16011,7 +16014,7 @@
         "bestDivision": "CCP"
       },
       {
-        "club": "B",
+        "club": "B-Pro Bellators SE",
         "members": 3,
         "appearances": 23,
         "wins": 1,
@@ -16287,7 +16290,7 @@
         "bestDivision": "CO"
       },
       {
-        "club": "Police Academy Sport Club",
+        "club": "Police Academy Sport Club - PASC",
         "members": 1,
         "appearances": 3,
         "wins": 0,
@@ -16407,7 +16410,7 @@
         "bestDivision": "SSP"
       },
       {
-        "club": "Polgári Lövészsport Egyesület",
+        "club": "Polgári Lövészsport Egyesület - Szombathely",
         "members": 1,
         "appearances": 1,
         "wins": 0,
@@ -16419,7 +16422,7 @@
         "bestDivision": "SSP"
       },
       {
-        "club": "BKV",
+        "club": "BKV - Metro Lövész és Íjász Egyesület",
         "members": 1,
         "appearances": 1,
         "wins": 0,
@@ -16480,8 +16483,5 @@
       "podiumMachine": "Jordán Péter"
     }
   },
-  "errors": [],
-  "discipline": "idpa",
-  "analyticsVersion": "legacy-unversioned",
-  "schemaVersion": 1
+  "errors": []
 }

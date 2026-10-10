@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T07:44:44.267689+00:00",
+  "generatedAt": "2026-10-10T13:23:46.538658+00:00",
   "discipline": "idpa",
   "year": 2026,
   "schemaVersion": 1,
@@ -10,7 +10,7 @@
     "totalExtractedRows": 797,
     "validCompetitorRows": 797,
     "rowsWithValidTime": 784,
-    "rowsWithMissingTeam": 700,
+    "rowsWithMissingTeam": 176,
     "rowsWithParsingErrors": 9
   },
   "errors": []

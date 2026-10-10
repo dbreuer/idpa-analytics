@@ -2,9 +2,9 @@
 
 Next.js dashboard and Python data pipeline for Hungarian MDLSZ sportlövészeti
 eredmények. Discovery, PDF extraction and result normalization are implemented
-for all seven listed disciplines. IDPA and IPSC have discipline-specific public
-season analytics. Gyorskombinált has a dedicated source-based participation
-dashboard; the other four stop after source-linked normalized ingestion.
+for all seven listed disciplines. IDPA, IPSC and IMSSU have discipline-specific
+public season analytics. Gyorskombinált has a dedicated source-based participation
+dashboard; the other three stop after source-linked normalized ingestion.
 
 The planned canonical domain is `https://statisztika.lovesznaplo.hu`. `/idpa`
 opens the latest available season (currently `/idpa/2026`); older seasons remain
@@ -97,6 +97,19 @@ IDPA score and does not combine divisions. IPSC uses the official competitor
 license ID when available to connect results; otherwise it uses the normalized name.
 `calculate-statistics.py` deliberately rejects non-IDPA scoring requests; IDPA
 retains its existing statistics behavior.
+
+IMSSU (`/imssu/<year>`) ranks metallic-silhouette results per division. `Eredmény`
+is the hit count; hits are compared only within the same competition and
+division, because target counts differ between events. Each competitor's field
+position counts higher scores plus the average position of tied scores, giving
+the percentile `100 × (n − position) / (n − 1)`; the season value is the mean
+of those percentiles. Ties break on more matches, then the higher average share
+of the winner's hits. Wins/podiums and national-championship division winners
+use the official `Sorszám`. `Légpuska - Nemzetközi` and `Légpuska NK (41m)` are
+merged (the 2026 OB PDF publishes the same table under both names); identical
+repeated rows count once. Rows without a division, without integer hits, or with
+an empty `Eredmény` but a numeric `Megjegyzés` (possible column shift) are listed
+under data quality rather than ranked. Methodology: `/imssu/methodology`.
 
 Gyorskombinált (`/gyorskombinalt/<year>`) shows division and club participation,
 monthly calendar activity, searchable source results and competitor histories.

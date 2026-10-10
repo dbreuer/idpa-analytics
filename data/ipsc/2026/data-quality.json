@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-10T11:23:54.093036+00:00",
+  "generatedAt": "2026-10-10T13:23:48.496150+00:00",
   "discipline": "ipsc",
   "year": 2026,
   "schemaVersion": 1,
@@ -10,7 +10,7 @@
     "totalExtractedRows": 3912,
     "validCompetitorRows": 3912,
     "rowsWithValidTime": 0,
-    "rowsWithMissingTeam": 3581,
+    "rowsWithMissingTeam": 2305,
     "rowsWithParsingErrors": 0
   },
   "errors": [

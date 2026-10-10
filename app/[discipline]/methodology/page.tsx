@@ -76,6 +76,39 @@ const ipscSections = [
   },
 ];
 
+const imssuSections = [
+  {
+    title: "A versenymező: azonos verseny, azonos divízió",
+    description:
+      "Az IMSSU-eredményjegyzék Eredmény oszlopa a ledöntött fémsziluettek száma. Mivel a célok száma versenyenként eltérhet, a nyers találatszámokat csak azonos versenyen és azonos divízióban hasonlítjuk össze. A naptár minden szintje (minősítő, kiemelt minősítő, országos bajnokság, szint nélküli) bekerül; a szint külön jelölve marad. Egy mező akkor összehasonlítható, ha legalább két különböző versenyző érvényes, egész számú találatszámát tartalmazza.",
+  },
+  {
+    title: "Találati percentilis",
+    description:
+      "Egy n fős mezőben a versenyző helyezése a nála több találatot elérők száma, plusz az azonos találatszámú versenyzők által elfoglalt helyek átlaga. A percentilis 100 × (n − helyezés) / (n − 1), 0 és 100 közé korlátozva: a legtöbb találat 100%, a legkevesebb 0%. Holtversenyben az azonos találatszám azonos percentilist kap; a szétlövés vagy más hivatalos sorrendképzés a hivatalos sorszámban látható, de a percentilist nem módosítja.",
+  },
+  {
+    title: "Szezonrangsor divíziónként",
+    description:
+      "A versenyző szezonértéke a divízió összehasonlítható mezőiben elért percentilisek számtani átlaga. Holtversenynél előbb a több értékelhető verseny, majd a győztes találatszámához mért magasabb átlagos arány, végül a név szerinti sorrend dönt. A divíziók külön rangsort kapnak. A győzelmek és dobogós helyezések a hivatalos eredményjegyzék 1., illetve 1–3. sorszámát jelentik.",
+  },
+  {
+    title: "A győzteshez mért arány",
+    description:
+      "Kiegészítő mutató: a versenyző találatszáma a mező legtöbb találatának százalékában. A rangsort nem határozza meg, csak holtversenyben dönt. Ha a mezőben senki nem ért el találatot, értéke nem számítható.",
+  },
+  {
+    title: "Divíziómegnevezések",
+    description:
+      "A divíziók nevét a forrás szerint tartjuk meg, egyetlen kivétellel: a „Légpuska - Nemzetközi” és a „Légpuska NK (41m)” ugyanazt a nemzetközi, 41 m-es légpuskás versenyszámot jelöli. Ezt az MDLSZ versenykiírás (Légpuska Hazai 25 m – Légpuska Nemzetközi 41 m) és a 2026. évi országos bajnokság eredményjegyzéke is alátámasztja, amely ugyanazt a táblát mindkét néven közli. A két címke alatt ismétlődő sorokat versenyzőnként egyszer vesszük figyelembe.",
+  },
+  {
+    title: "Azonosítás, megjegyzések és kizárások",
+    description:
+      "A numerikus versenyengedély-azonosító (V.eng.) kapcsolja össze a versenyző eredményeit, a vezető nullák figyelmen kívül hagyásával; hiányában a normalizált név. A korosztályi jelölések (junior, senior, super senior) és az országos csúcs jelölése a Megjegyzés oszlopból származik, a rangsort nem befolyásolja. Nem kerül rangsorba a divízió nélküli sor, a hiányzó találatszámú sor és az a sor, amelyben az Eredmény üres, de a Megjegyzés oszlopban szám áll (lehetséges oszlopeltolódás). Ezeket az adatminőségi részben versenyenként jelezzük.",
+  },
+];
+
 const gyorskombinaltSections = [
   {
     title: "Részvétel, nem teljesítményrangsor",
@@ -99,11 +132,34 @@ const gyorskombinaltSections = [
   },
 ];
 
+const methodologyByAnalytics: Record<string, { title: string; description: string; sections: Array<{ title: string; description: string }> }> = {
+  idpa: {
+    title: "Statisztikai és pontszámítási módszertan",
+    description: "Az IDPA rangsorainak, teljesítménymutatóinak és adatfeldolgozásának módszertana.",
+    sections: idpaSections,
+  },
+  ipsc: {
+    title: "IPSC-rangsorok és statisztikai módszertan",
+    description: "Az IPSC rangsorainak, teljesítménymutatóinak és adatfeldolgozásának módszertana.",
+    sections: ipscSections,
+  },
+  imssu: {
+    title: "IMSSU-rangsorok és statisztikai módszertan",
+    description: "Az IMSSU fémsziluett divíziórangsorainak, találati percentiliseinek és adatfeldolgozásának módszertana.",
+    sections: imssuSections,
+  },
+  gyorskombinalt: {
+    title: "Gyorskombinált: a forrásalapú kimutatás módszertana",
+    description: "A Gyorskombinált részvételi kimutatásainak, forráseredményeinek és versenyzői azonosításának módszertana.",
+    sections: gyorskombinaltSections,
+  },
+};
+
 async function resolveDiscipline(params: Promise<{ discipline: string }>) {
   const { discipline: slug } = await params;
   if (!isDisciplineSlug(slug)) notFound();
   const discipline = getDiscipline(slug);
-  if (!discipline?.published || !["idpa", "ipsc", "gyorskombinalt"].includes(discipline.analytics)) notFound();
+  if (!discipline?.published || !(discipline.analytics in methodologyByAnalytics)) notFound();
   return discipline;
 }
 
@@ -111,15 +167,14 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]/meth
   const discipline = await resolveDiscipline(params);
   return {
     title: `${discipline.name} · módszertan`,
-    description: discipline.analytics === "gyorskombinalt"
-      ? "A Gyorskombinált részvételi kimutatásainak, forráseredményeinek és versenyzői azonosításának módszertana."
-      : `A ${discipline.name} rangsorainak, teljesítménymutatóinak és adatfeldolgozásának módszertana.`,
+    description: methodologyByAnalytics[discipline.analytics].description,
     alternates: { canonical: canonicalUrl(methodologyPath(discipline.slug)) },
   };
 }
 
 export default async function MethodologyPage({ params }: PageProps<"/[discipline]/methodology">) {
   const discipline = await resolveDiscipline(params);
+  const methodology = methodologyByAnalytics[discipline.analytics];
   return (
     <>
       <BreadcrumbJsonLd items={[
@@ -133,18 +188,20 @@ export default async function MethodologyPage({ params }: PageProps<"/[disciplin
             <span className="brand-mark-top">{discipline.slug === "idpa" ? "HERO OF" : "LÖVÉSZNAPLÓ"}</span>
             <span className="brand-mark-bottom">{discipline.name}<span className="brand-period">.</span></span>
           </Link>
-          <Link href={disciplinePath(discipline.slug)} className="source-link">Vissza az {discipline.name}-szezonokhoz</Link>
+          <Link href={disciplinePath(discipline.slug)} className="source-link">
+            Vissza {/^[aáeéiíoóöőuúüű]/i.test(discipline.name) ? "az" : "a"} {discipline.name}-szezonokhoz
+          </Link>
         </div>
       </header>
       <main className="methodology-main">
         <h1 className="font-display text-5xl font-extrabold leading-[0.95] md:text-6xl">
-          {discipline.analytics === "gyorskombinalt" ? "Gyorskombinált: a forrásalapú kimutatás módszertana" : discipline.analytics === "ipsc" ? "IPSC-rangsorok és statisztikai módszertan" : "Statisztikai és pontszámítási módszertan"}
+          {methodology.title}
         </h1>
         <p className="mt-4 max-w-[68ch] text-base leading-7 text-[var(--ink-muted)]">
           A főbb mutatók számítását dokumentáljuk, hogy a szezoneredmények visszakövethetők legyenek a hivatalos forrásokhoz.
         </p>
         <div className="mt-10 space-y-7">
-          {(discipline.analytics === "gyorskombinalt" ? gyorskombinaltSections : discipline.analytics === "ipsc" ? ipscSections : idpaSections).map((section) => (
+          {methodology.sections.map((section) => (
             <Card key={section.title}>
               <CardTitle className="font-display text-2xl font-bold">{section.title}</CardTitle>
               <CardDescription className="mt-2 max-w-[68ch] text-base leading-7">

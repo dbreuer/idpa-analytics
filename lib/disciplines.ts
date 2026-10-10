@@ -12,8 +12,8 @@ export const disciplineDefinitions = [
     slug: "imssu",
     name: "IMSSU",
     aliases: ["IMSSU", "International Metallic Silhouette Shooting Union"],
-    published: false,
-    analytics: "unsupported",
+    published: true,
+    analytics: "imssu",
   },
   {
     slug: "idpa",

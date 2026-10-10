@@ -34,12 +34,16 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]">): 
         ? `${discipline.name} ${latestYear} · szezoneredmények`
         : discipline.analytics === "ipsc"
           ? `${discipline.name} ${latestYear} · divíziórangsorok és statisztikák`
-          : `${discipline.name} ${latestYear} · eredménykimutatás`,
+          : discipline.analytics === "imssu"
+            ? `${discipline.name} ${latestYear} · fémsziluett divíziórangsorok`
+            : `${discipline.name} ${latestYear} · eredménykimutatás`,
       description: discipline.analytics === "idpa"
         ? `A ${latestYear}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái.`
         : discipline.analytics === "ipsc"
           ? `A ${latestYear}. évi IPSC-versenyek divíziónkénti rangsorai és forrásalapú statisztikái.`
-          : `A ${latestYear}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása, rangsorolás nélkül.`,
+          : discipline.analytics === "imssu"
+            ? `A ${latestYear}. évi IMSSU fémsziluett-versenyek divíziónkénti rangsorai és forrásalapú statisztikái.`
+            : `A ${latestYear}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása, rangsorolás nélkül.`,
       alternates: { canonical: canonicalUrl(seasonPath(discipline.slug, latestYear)) },
     };
     if (!discipline.published) {
