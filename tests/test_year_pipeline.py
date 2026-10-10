@@ -121,6 +121,12 @@ class YearPipelineTests(unittest.TestCase):
         self.assertEqual(tables[0]["headerMap"]["name"], 1)
         self.assertEqual(tables[0]["rows"], [["1", "Test Competitor", "Test Club", "100"]])
 
+    def test_ipsc_license_ids_are_numeric_and_keep_valid_zero_padding(self):
+        normalize = script_module("normalize-data")
+        self.assertEqual(normalize.normalize_license_id(" 01234 "), "01234")
+        self.assertIsNone(normalize.normalize_license_id("00000"))
+        self.assertIsNone(normalize.normalize_license_id("A001"))
+
     def test_ipsc_pdf_adapter_tracks_division_headings_across_continuation_pages(self):
         extract = script_module("extract-pdfs")
 
@@ -161,6 +167,55 @@ class YearPipelineTests(unittest.TestCase):
         self.assertEqual(tables[0]["headerMap"]["classification"], 4)
         self.assertEqual(tables[0]["headerMap"]["powerFactor"], 5)
         self.assertEqual(tables[0]["headerMap"]["result"], 7)
+        self.assertEqual(tables[0]["headerMap"]["license"], 2)
+
+    def test_ipsc_extractor_parses_hungarian_metadata_tables_and_continuation_pages(self):
+        extract = script_module("extract-pdfs")
+        header = ["Sorszám", "Név", "V.eng.", "Egyesület", "Eredmény", "Találatok száma", "%", "Megjegyzés"]
+
+        class Page:
+            def __init__(self, text, tables):
+                self._text = text
+                self._tables = tables
+
+            def extract_text(self):
+                return self._text
+
+            def extract_tables(self):
+                return self._tables
+
+        pages = [
+            Page("Globus match", [[
+                ["Szervező:", "Club", "Szakág:", "IPSC"],
+                ["Helyszín:", "Budapest", "Verseny típus:", "Pisztoly"],
+                ["Dátum:", "2026-03-15", "Divízió:", "Production"],
+                header,
+                ["1", "Athlete One", "01234", "Club A", "100.0000", "", "", ""],
+            ]]),
+            Page("Continued", [[
+                ["2", "Athlete Two", "05678", "Club B", "92.5000", "", "", ""],
+            ]]),
+            Page("New division", [[
+                ["Dátum:", "2026-03-15", "Divízió:", "Standard"],
+                header,
+                ["1", "Athlete Three", "07890", "Club C", "100.0000", "", "", ""],
+            ]]),
+        ]
+        pdf = Mock()
+        pdf.__enter__ = Mock(return_value=Mock(pages=pages))
+        pdf.__exit__ = Mock(return_value=False)
+        with patch.object(extract.pdfplumber, "open", return_value=pdf):
+            tables, errors = extract.extract_ipsc_with_pdfplumber(self.root / "ipsc-mdlsz.pdf")
+
+        self.assertEqual(errors, [])
+        self.assertEqual([table["metadata"]["division"] for table in tables], [
+            "Production", "Production", "Standard",
+        ])
+        self.assertEqual(tables[0]["strategy"], "ipsc-mdlsz-table")
+        self.assertEqual(tables[0]["rows"][0][1], "Athlete One")
+        self.assertEqual(tables[1]["rows"][0][1], "Athlete Two")
+        self.assertEqual(tables[0]["headerMap"]["license"], 2)
+        self.assertEqual(tables[0]["headerMap"]["percentage"], 6)
 
     def test_normalization_ingests_all_disciplines_without_inventing_idpa_metrics(self):
         normalize = script_module("normalize-data")
@@ -179,6 +234,7 @@ class YearPipelineTests(unittest.TestCase):
                     "name": "Sample discipline event",
                     "date": "2026-05-12",
                     "discipline": official_name,
+                    "level": "Level 2",
                     "resultPdfUrl": f"https://example.invalid/{discipline}.pdf",
                     "downloadStatus": "downloaded",
                 }
@@ -192,7 +248,7 @@ class YearPipelineTests(unittest.TestCase):
                         "header": extract.IPSC_HEADER,
                         "headerMap": extract.IPSC_HEADER_MAP,
                         "metadata": {"division": "Production"},
-                        "rows": [["1", "Competitor, Alex", "A001", "", "B", "Minor", "Senior", "500.00", "100.00%"]],
+                        "rows": [["1", "Competitor, Alex", "00123", "", "B", "Minor", "Senior", "500.00", "100.00%"]],
                     }
                 else:
                     raw_table = {
@@ -225,6 +281,7 @@ class YearPipelineTests(unittest.TestCase):
                     self.assertEqual(result["powerFactor"], "Minor")
                     self.assertEqual(result["category"], "Senior")
                     self.assertEqual(result["rawResult"], "500.00")
+                    self.assertEqual(result["competitorLicenseId"], "00123")
                     self.assertIsNone(result["club"])
                 else:
                     self.assertEqual(result["club"], "Sample Club")

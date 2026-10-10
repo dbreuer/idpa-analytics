@@ -2,13 +2,13 @@
 
 Next.js dashboard and Python data pipeline for Hungarian MDLSZ sportlövészeti
 eredmények. Discovery, PDF extraction and result normalization are implemented
-for all seven listed disciplines. IDPA alone has validated season scoring and
-public rankings; the other six stop after source-linked normalized ingestion.
+for all seven listed disciplines. IDPA and IPSC have discipline-specific public
+season analytics; the other five stop after source-linked normalized ingestion.
 
 The planned canonical domain is `https://statisztika.lovesznaplo.hu`. `/idpa`
 opens the latest available season (currently `/idpa/2026`); older seasons remain
 available in that season page's selector. Each season has a stable URL such as
-`/idpa/2026`. The root page introduces the platform and links to every discipline;
+`/idpa/2026` or `/ipsc/2026`. The root page introduces the platform and links to every discipline;
 disciplines without validated analytics lead to noindex “coming soon” pages. Existing
 `hero-of-idpa.hu/<year>` URLs permanently redirect to their `/idpa/<year>`
 counterparts. DNS and Vercel domain configuration are not changed by this repository.
@@ -88,10 +88,14 @@ python3 scripts/validate-ingestion.py --discipline ipsc --year 2026
 ```
 
 The non-IDPA runner stops after normalized source records and the ingestion
-validation gate. It does not produce `statistics.json`, calculate placements as a
-universal ranking, publish a season page, or enable that discipline for indexing.
-`calculate-statistics.py` deliberately rejects every discipline without a validated
-scoring adapter; IDPA retains its existing statistics behavior.
+validation gate. IPSC season ranks are calculated separately by the Next.js
+application: only Level 1–3 matches with at least two competitors in a division
+are included, and each competitor's season rank is the average of their official
+within-match placement percentiles for that division. The calculation is not an
+IDPA score and does not combine divisions. IPSC uses the official competitor
+license ID when available to connect results; otherwise it uses the normalized name.
+`calculate-statistics.py` deliberately rejects non-IDPA scoring requests; IDPA
+retains its existing statistics behavior.
 
 ### Pipeline Outputs
 
@@ -104,10 +108,11 @@ scoring adapter; IDPA retains its existing statistics behavior.
 - `data/club-aliases.json` (shared across seasons)
 
 Each artifact records its discipline, season, and schema version. Only complete
-seasons with complete ingestion data are prerendered. IDPA has validated scored
-rankings; disciplines with source data show noindex descriptive reports without
-calculated rankings. Disciplines without season data show a noindex “coming soon”
-page; unsupported season and methodology routes return 404.
+seasons with complete ingestion data are prerendered. IDPA and IPSC have
+discipline-specific ranking methods; other disciplines with source data show
+noindex descriptive reports without calculated rankings. Disciplines without
+season data show a noindex “coming soon” page; unsupported season and methodology
+routes return 404.
 Malformed JSON, mixed seasons, mixed disciplines, and unsupported schemas fail
 instead of producing misleading empty statistics.
 

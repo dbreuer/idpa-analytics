@@ -54,7 +54,9 @@ export default function HomePage() {
                           <CardTitle>{discipline.name}</CardTitle>
                           <CardDescription className="mt-1">
                             {isPublished
-                              ? "Eredmények és szezonranglisták"
+                              ? discipline.analytics === "ipsc"
+                                ? "Divíziórangsorok és szezonstatisztikák"
+                                : "Eredmények és szezonranglisták"
                               : withSeasonData.has(discipline.slug)
                                 ? "Forrásalapú eredménykimutatás"
                                 : "Az adatfeldolgozás előkészítés alatt áll"}

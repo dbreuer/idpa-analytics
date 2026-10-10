@@ -5,8 +5,8 @@ export const disciplineDefinitions = [
     slug: "ipsc",
     name: "IPSC",
     aliases: ["IPSC", "International Practical Shooting Confederation"],
-    published: false,
-    analytics: "unsupported",
+    published: true,
+    analytics: "ipsc",
   },
   {
     slug: "imssu",

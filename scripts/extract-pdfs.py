@@ -22,6 +22,7 @@ IPSC_HEADER = [
 IPSC_HEADER_MAP = {
     "placement": 0,
     "name": 1,
+    "license": 2,
     "classification": 4,
     "powerFactor": 5,
     "category": 6,
@@ -34,6 +35,9 @@ def extract_ipsc_with_pdfplumber(pdf_path: Path) -> tuple[list[dict], list[str]]
     tables: list[dict] = []
     errors: list[str] = []
     last_division: str | None = None
+    last_header: list[str] = []
+    last_header_map: dict[str, int] = {}
+    last_strategy: str | None = None
     with pdfplumber.open(pdf_path) as pdf:
         for page_index, page in enumerate(pdf.pages, start=1):
             extracted_tables = page.extract_tables() or []
@@ -46,37 +50,74 @@ def extract_ipsc_with_pdfplumber(pdf_path: Path) -> tuple[list[dict], list[str]]
             ]
             if len(divisions) == len(extracted_tables):
                 table_divisions: list[str | None] = divisions
-            elif not divisions and last_division:
-                table_divisions = [last_division] * len(extracted_tables)
-            elif last_division and len(divisions) == len(extracted_tables) - 1:
+            elif divisions and last_division and len(divisions) == len(extracted_tables) - 1:
                 table_divisions = [last_division, *divisions]
-            else:
+            elif divisions:
                 errors.append(
                     f"Page {page_index}: could not map {len(divisions)} division headings "
                     f"to {len(extracted_tables)} extracted match tables"
                 )
                 table_divisions = [None] * len(extracted_tables)
+            elif last_strategy == "ipsc-match-results" and last_division:
+                table_divisions = [last_division] * len(extracted_tables)
+            else:
+                table_divisions = []
 
-            for table_index, (raw_table, division) in enumerate(
-                zip(extracted_tables, table_divisions, strict=True),
-                start=1,
-            ):
+            for table_index, raw_table in enumerate(extracted_tables, start=1):
                 rows = [[(cell or "").strip() for cell in row] for row in raw_table if row]
-                if division:
-                    last_division = division
                 if not rows:
                     continue
-                tables.append(
-                    {
-                        "page": page_index,
-                        "table": table_index,
-                        "strategy": "ipsc-match-results",
-                        "metadata": {"division": division} if division else {},
-                        "header": IPSC_HEADER,
-                        "headerMap": IPSC_HEADER_MAP,
-                        "rows": rows,
-                    }
-                )
+
+                if table_divisions:
+                    division = table_divisions[table_index - 1]
+                    if division:
+                        last_division = division
+                    last_header, last_header_map = IPSC_HEADER, IPSC_HEADER_MAP
+                    last_strategy = "ipsc-match-results"
+                    tables.append(
+                        {
+                            "page": page_index,
+                            "table": table_index,
+                            "strategy": last_strategy,
+                            "metadata": {"division": division} if division else {},
+                            "header": last_header,
+                            "headerMap": last_header_map,
+                            "rows": rows,
+                        }
+                    )
+                    continue
+
+                metadata, header, header_map, data_rows = split_table_rows(rows)
+                if header:
+                    last_header, last_header_map = header, header_map
+                    last_strategy = "ipsc-mdlsz-table"
+                    last_division = metadata.get("division") or last_division
+                    division = metadata.get("division") or last_division
+                    tables.append(
+                        {
+                            "page": page_index,
+                            "table": table_index,
+                            "strategy": last_strategy,
+                            "metadata": metadata | ({"division": division} if division else {}),
+                            "header": header,
+                            "headerMap": header_map,
+                            "rows": data_rows,
+                        }
+                    )
+                elif last_strategy and last_header:
+                    tables.append(
+                        {
+                            "page": page_index,
+                            "table": table_index,
+                            "strategy": last_strategy,
+                            "metadata": {"division": last_division} if last_division else {},
+                            "header": last_header,
+                            "headerMap": last_header_map,
+                            "rows": rows,
+                        }
+                    )
+                else:
+                    errors.append(f"Page {page_index}, table {table_index}: no supported IPSC result header found")
     return tables, errors
 
 

@@ -15,7 +15,7 @@ export function generateStaticParams() {
   return getPublishedDisciplines().map((discipline) => ({ discipline: discipline.slug }));
 }
 
-const sections = [
+const idpaSections = [
   {
     title: "Összesített teljesítménypontszám",
     description:
@@ -48,11 +48,39 @@ const sections = [
   },
 ];
 
+const ipscSections = [
+  {
+    title: "A versenymező értékelhető helyezése",
+    description:
+      "A rangsorba csak a versenynaptárban Level 1, Level 2 vagy Level 3 szinttel jelölt versenyek kerülhetnek. A licencvizsgák és a más szinttel jelölt események forrásadatai megmaradnak, de nem számítanak bele.",
+  },
+  {
+    title: "Helyezési percentilis",
+    description:
+      "Minden versenyen és divízióban az indulók száma n. Egy r helyezés percentilise 100 × (n − r) / (n − 1), 0 és 100 közé korlátozva; az első helyezés 100%, az utolsó 0%. Holtversenyben az elfoglalt helyek átlagos pozíciója számít. Két vagy több egyedi versenyzői rekord szükséges az összehasonlítható mezőhöz.",
+  },
+  {
+    title: "Szezonrangsor divíziónként",
+    description:
+      "A versenyző szezonértéke az összehasonlítható verseny-divízió mezőkben elért percentiliseinek számtani átlaga. Minden divízió külön rangsort kap; a különböző divíziók eredményei nem kerülnek közös listába. Holtversenynél előbb a több értékelhető verseny, majd az alacsonyabb átlagos helyezés, végül a név szerinti sorrend dönt.",
+  },
+  {
+    title: "Versenyző-azonosítás és egyesületi adatok",
+    description:
+      "Ha rendelkezésre áll, a rangsor a hivatalos versenyzői engedélyazonosítót használja az indulások összekapcsolásához; ennek hiányában a normalizált név alapján kapcsol. Az egyesületi adat megjelenítési és szűrési célú, nem módosítja a helyezési percentilist.",
+  },
+  {
+    title: "Forrásértékek és adatminőség",
+    description:
+      "A nyers eredményérték, az eredményjegyzékben közölt százalék, a kategória, az osztály és az erőfaktor külön forrásmezőként marad meg. A rangsor nem hasonlítja közvetlenül össze a különböző versenyeken kapott pontokat. Hiányzó divíziójú, helyezésű vagy azonosítható versenyzőjű sorok nem kerülnek a rangsorba; a kizárások a szezonoldal adatminőségi részében láthatók.",
+  },
+];
+
 async function resolveDiscipline(params: Promise<{ discipline: string }>) {
   const { discipline: slug } = await params;
   if (!isDisciplineSlug(slug)) notFound();
   const discipline = getDiscipline(slug);
-  if (!discipline?.published || discipline.analytics !== "idpa") notFound();
+  if (!discipline?.published || !["idpa", "ipsc"].includes(discipline.analytics)) notFound();
   return discipline;
 }
 
@@ -77,7 +105,7 @@ export default async function MethodologyPage({ params }: PageProps<"/[disciplin
       <header className="methodology-nav">
         <div className="methodology-nav-inner">
           <Link href={disciplinePath(discipline.slug)} className="brand-mark" aria-label={`${discipline.name} kezdőlap`}>
-            <span className="brand-mark-top">HERO OF</span>
+            <span className="brand-mark-top">{discipline.slug === "idpa" ? "HERO OF" : "LÖVÉSZNAPLÓ"}</span>
             <span className="brand-mark-bottom">{discipline.name}<span className="brand-period">.</span></span>
           </Link>
           <Link href={disciplinePath(discipline.slug)} className="source-link">Vissza az {discipline.name}-szezonokhoz</Link>
@@ -85,13 +113,13 @@ export default async function MethodologyPage({ params }: PageProps<"/[disciplin
       </header>
       <main className="methodology-main">
         <h1 className="font-display text-5xl font-extrabold leading-[0.95] md:text-6xl">
-          Statisztikai és pontszámítási módszertan
+          {discipline.analytics === "ipsc" ? "IPSC-rangsorok és statisztikai módszertan" : "Statisztikai és pontszámítási módszertan"}
         </h1>
         <p className="mt-4 max-w-[68ch] text-base leading-7 text-[var(--ink-muted)]">
           A főbb mutatók számítását dokumentáljuk, hogy a szezoneredmények visszakövethetők legyenek a hivatalos forrásokhoz.
         </p>
         <div className="mt-10 space-y-7">
-          {sections.map((section) => (
+          {(discipline.analytics === "ipsc" ? ipscSections : idpaSections).map((section) => (
             <Card key={section.title}>
               <CardTitle className="font-display text-2xl font-bold">{section.title}</CardTitle>
               <CardDescription className="mt-2 max-w-[68ch] text-base leading-7">

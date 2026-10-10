@@ -107,12 +107,13 @@ def validate_payload_scope(payload: dict[str, Any], paths: PipelinePaths, label:
 HEADER_ALIASES = {
     "placement": ["helyezes", "helyezés", "sorszam", "sorszám", "rank", "place"],
     "name": ["nev", "név", "competitor", "versenyzo", "versenyző"],
+    "license": ["license", "v.eng", "versenyengedely", "versenyengedély", "competitor no", "no."],
     "club_team": ["egyesulet / csapat", "egyesület / csapat", "club / team", "csapat", "egyesulet", "egyesület"],
     "category": ["kategoria", "kategória", "category"],
     "classification": ["classification", "class"],
     "division": ["divizio", "divízió", "division"],
     "result": ["match points", "match pts", "points", "score", "result", "eredmeny", "eredmény"],
-    "percentage": ["match %", "match percentage", "percentage"],
+    "percentage": ["match %", "match percentage", "percentage", "%"],
     "powerFactor": ["power factor", "pf"],
     "notes": ["megjegyzesek", "megjegyzések", "megjegyzes", "megjegyzés", "notes"],
 }

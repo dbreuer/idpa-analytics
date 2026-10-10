@@ -32,18 +32,27 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]">): 
     const metadata: Metadata = {
       title: discipline.analytics === "idpa"
         ? `${discipline.name} ${latestYear} · szezoneredmények`
-        : `${discipline.name} ${latestYear} · eredménykimutatás`,
+        : discipline.analytics === "ipsc"
+          ? `${discipline.name} ${latestYear} · divíziórangsorok és statisztikák`
+          : `${discipline.name} ${latestYear} · eredménykimutatás`,
       description: discipline.analytics === "idpa"
         ? `A ${latestYear}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái.`
-        : `A ${latestYear}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása, rangsorolás nélkül.`,
+        : discipline.analytics === "ipsc"
+          ? `A ${latestYear}. évi IPSC-versenyek divíziónkénti rangsorai és forrásalapú statisztikái.`
+          : `A ${latestYear}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása, rangsorolás nélkül.`,
       alternates: { canonical: canonicalUrl(seasonPath(discipline.slug, latestYear)) },
     };
-    if (discipline.analytics !== "idpa") {
+    if (!discipline.published) {
       metadata.robots = { index: false, follow: true, googleBot: { index: false, follow: true } };
-    } else {
+    } else if (discipline.analytics === "idpa") {
       metadata.openGraph = {
         title: `${discipline.name} ${latestYear} · szezonstatisztikák`,
         description: `Versenyzői rangsorok, szezonadatok és hivatalos eredményforrások.`,
+      };
+    } else if (discipline.analytics === "ipsc") {
+      metadata.openGraph = {
+        title: `${discipline.name} ${latestYear} · divíziórangsorok és statisztikák`,
+        description: "IPSC-eredmények, divíziónkénti szezonrangsorok és hivatalos források.",
       };
     }
     return metadata;

@@ -60,6 +60,11 @@ def split_club_team(value: str | None) -> tuple[str | None, str | None]:
     return raw, None
 
 
+def normalize_license_id(value: str | None) -> str | None:
+    raw = normalize_text(value)
+    return raw if raw.isdigit() and raw.strip("0") else None
+
+
 def main() -> None:
     paths = parse_pipeline_args("Normalize competitor results for one discipline and season.")
     ensure_dirs(paths)
@@ -159,6 +164,11 @@ def main() -> None:
                     "competitorName": identity["displayName"],
                     "normalizedCompetitorName": identity["normalizedName"],
                     "competitorIdentity": identity,
+                    "competitorLicenseId": normalize_license_id(
+                        padded_row[header_map["license"]]
+                        if "license" in header_map and len(padded_row) > header_map["license"]
+                        else None
+                    ),
                     "team": team,
                     "normalizedTeam": normalize_text(team),
                     "club": club,

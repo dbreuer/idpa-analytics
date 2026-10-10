@@ -45,6 +45,7 @@ export interface CompetitionResult extends ParsedNotes {
   competitorName: string;
   normalizedCompetitorName: string;
   competitorIdentity: CompetitorIdentity;
+  competitorLicenseId?: string;
   team?: string;
   normalizedTeam?: string;
   club?: string;

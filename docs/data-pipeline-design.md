@@ -24,8 +24,8 @@ Every generated JSON payload includes top-level `discipline`, `year`, and
 `schemaVersion`. Stage inputs must match the selected discipline/year and supported
 schema before processing.
 
-The public dashboard and `scripts/validate-season.py` have a validated IDPA analytics
-adapter only. `validate-season.py` is the publication gate for refreshed IDPA data:
+The public dashboard has discipline-specific IDPA and IPSC analytics; only IDPA
+uses the `statistics.json` scoring artifact. `validate-season.py` is the publication gate for refreshed IDPA data:
 it checks source errors, valid matching
 discipline/year metadata, non-empty competitions/results, result-to-competition
 references, quality counters, and the pipeline summary before a staged snapshot can
@@ -33,9 +33,10 @@ replace the build's copy. Parsing errors and individual missing/failed result PD
 remain in the quality data for review; an empty or mis-scoped snapshot cannot replace
 the published season.
 
-For other disciplines, `scripts/validate-ingestion.py` checks source, extraction,
-normalized result, and quality payload scope and references. It does not calculate
-rankings or write a `statistics.json`. No provisional cross-sport score is inferred.
+For non-IDPA disciplines, `scripts/validate-ingestion.py` checks source, extraction,
+normalized result, and quality payload scope and references. It does not write a
+`statistics.json`. IPSC standings are computed separately from normalized source
+rows at page generation; no IDPA or cross-sport score is inferred.
 
 Historical IDPA files live in `data/idpa/<year>/`. Run
 `scripts/migrate-discipline-data.py --dry-run` before repeating the scoped layout
@@ -72,13 +73,22 @@ Sorszám  Név  V.eng.  Egyesület  Eredmény  Találatok száma  %  Megjegyzés
 2        ...
 ```
 
-IPSC PDFs use a distinct `Match Results - <division>` format rather than this
-Hungarian metadata table. `extract_ipsc_with_pdfplumber()` maps each result table to
-the visible division heading, carries the last division across continuation pages,
-and records an extraction diagnostic instead of guessing if the heading/table counts
-cannot be reconciled. The normalized row preserves match points, percentage,
-classification, power factor and raw columns; it does not turn them into IDPA score
-components.
+IPSC PDFs may use either `Match Results - <division>` tables or the Hungarian
+metadata/header layout. `extract_ipsc_with_pdfplumber()` detects the relevant header,
+maps divisions from the heading or metadata, carries them across continuation pages,
+and records a diagnostic rather than treating metadata rows as competitor results.
+Normalized records preserve official placements, license identifiers, match points,
+percentage, classification, power factor and raw columns; these values do not become
+IDPA score components.
+
+The IPSC page ranks each competitor separately in each division. It uses only
+Level 1–3 matches with at least two unique competitor identities and an official
+placement. For a field of `n` competitors, a placement `r` receives
+`100 × (n − r) / (n − 1)`, clamped to 0–100; tied positions use their average
+rank. A season value is the arithmetic mean of these match percentiles. Official
+license IDs are preferred for identity matching, with normalized names as fallback.
+License exams, missing divisions/placements, and single-competitor fields are
+excluded from standings and reported separately.
 
 The division only appears in that metadata block — there is no per-row division column.
 `common.split_table_rows()` splits a raw extracted table into:

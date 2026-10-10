@@ -32,6 +32,7 @@ const disciplines = loadModule(
 );
 const paths = loadModule(fs.readFileSync(new URL("../lib/discipline-paths.ts", import.meta.url), "utf8"));
 const sourceSummary = loadModule(fs.readFileSync(new URL("../lib/discipline-summary.ts", import.meta.url), "utf8"));
+const ipscStatistics = loadModule(fs.readFileSync(new URL("../lib/ipsc-statistics.ts", import.meta.url), "utf8"));
 const utils = loadModule(fs.readFileSync(new URL("../lib/utils.ts", import.meta.url), "utf8"));
 
 test("Hungarian labels preserve section identifiers and cover desktop and mobile filters", () => {
@@ -90,14 +91,15 @@ test("navigation destinations and dashboard anchors remain in lockstep", () => {
   }
 });
 
-test("discipline registry exposes seven source-linked sports but publishes validated IDPA only", () => {
+test("discipline registry exposes seven source-linked sports and publishes validated IDPA and IPSC", () => {
   const records = Array.from(disciplines.disciplineDefinitions);
   assert.equal(records.length, 7);
   assert.deepEqual(records.map(({ slug }) => slug), [
     "ipsc", "imssu", "idpa", "gyorskombinalt", "steel-challenge",
     "gyorspont-es-hazai-versenyszamok", "iprf",
   ]);
-  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["idpa"]);
+  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["ipsc", "idpa"]);
+  assert.equal(disciplines.getDiscipline("ipsc").analytics, "ipsc");
   for (const record of records) {
     assert.ok(disciplines.getDisciplineMark(record.slug));
     assert.ok(record.aliases.length > 0);
@@ -117,6 +119,8 @@ test("discipline landing pages open the newest season and the footer links every
   assert.match(platformPage, /disciplineDefinitions\.map/);
   assert.doesNotMatch(platformPage, /opacity-65|<div aria-label=\{`/);
   assert.match(disciplinePage, /disciplineDefinitions\.map/);
+  assert.match(seasonPage, /<IpscDashboard/);
+  assert.match(seasonPage, /buildIpscStatistics/);
   assert.match(seasonPage, /discipline:\s*discipline\.slug/);
   assert.match(seasonPage, /year:\s*String\(year\)/);
   assert.match(disciplineLayout, /return children/);
@@ -128,6 +132,7 @@ test("discipline URLs centralize season and canonical paths on the chosen produc
   assert.equal(paths.seasonPath("idpa", 2026), "/idpa/2026");
   assert.equal(paths.seasonPath("steel-challenge", 2026), "/steel-challenge/2026");
   assert.equal(paths.methodologyPath("idpa"), "/idpa/methodology");
+  assert.equal(paths.methodologyPath("ipsc"), "/ipsc/methodology");
   assert.equal(paths.canonicalUrl("/"), "https://statisztika.lovesznaplo.hu");
   assert.equal(paths.canonicalUrl("/idpa/2026"), "https://statisztika.lovesznaplo.hu/idpa/2026");
 });
@@ -149,6 +154,68 @@ test("descriptive summaries count source rows, names, clubs, and divisions witho
   ]);
   assert.equal("rankings" in summary, false);
   assert.equal("scores" in summary, false);
+});
+
+test("IPSC standings compare official placements within each match and division", () => {
+  const competitions = [
+    { id: "match-a", name: "Match A", date: "2026-03-01", level: "Level 2", sourceUrl: "/a", resultPdfUrl: "/a.pdf" },
+    { id: "match-b", name: "Match B", date: "2026-04-01", level: "Level 1", sourceUrl: "/b" },
+    { id: "exam", name: "Licence vizsga", date: "2026-05-01", level: "Licenc", sourceUrl: "/exam" },
+  ];
+  const result = (competitionId, division, name, licenseId, placement, club = "Club A") => ({
+    competitionId,
+    competitionName: competitionId,
+    competitionDate: "2026-03-01",
+    competitorName: name,
+    normalizedCompetitorName: name.toLowerCase().replaceAll(" ", "-"),
+    competitorLicenseId: licenseId,
+    division,
+    placement,
+    club,
+    normalizedClub: club,
+    resultPercentage: placement === 1 ? "100.0000%" : undefined,
+  });
+  const statistics = ipscStatistics.buildIpscStatistics(competitions, [
+    result("match-a", "Production", "Alex Shooter", "01234", 1),
+    result("match-a", "Production", "Bea Shooter", "05678", 2, "Club B"),
+    result("match-a", "Production", "Cy Shooter", "09012", 3),
+    result("match-a", "Open", "Alex Shooter", "01234", 1),
+    result("match-a", "Open", "Dee Shooter", "03456", 2),
+    result("match-b", "Production", "A. Shooter", "1234", 2),
+    result("match-b", "Production", "Bea Shooter", "05678", 1, "Club B"),
+    result("exam", "Production", "Alex Shooter", "01234", 1),
+    { ...result("match-b", undefined, "Unmapped Shooter", "07890", 1) },
+    { ...result("match-b", "Production", "No Placement", "07891", undefined) },
+  ]);
+
+  const production = statistics.leaderboard.filter((entry) => entry.division === "Production");
+  assert.deepEqual(Array.from(production, ({ competitorName, averagePercentile, matchCount }) => [
+    competitorName, averagePercentile, matchCount,
+  ]), [
+    ["Bea Shooter", 75, 2],
+    ["Alex Shooter", 50, 2],
+    ["Cy Shooter", 0, 1],
+  ]);
+  assert.equal(statistics.levelMatchCount, 2);
+  assert.equal(statistics.comparableMatchDivisions, 3);
+  assert.equal(statistics.rowsOutsideLevelMatches, 1);
+  assert.equal(statistics.resultsWithoutDivision, 1);
+  assert.equal(statistics.resultsWithoutPlacement, 1);
+  assert.equal(statistics.resultPercentagesAvailable, 5);
+  assert.equal(statistics.competitions[2].eligibleRows, 0);
+  assert.equal(statistics.leaderboard.some((entry) => entry.division !== "Production" && entry.competitorName === "Alex Shooter"), true);
+});
+
+test("IPSC standings merge equivalent official division labels", () => {
+  const statistics = ipscStatistics.buildIpscStatistics(
+    [{ id: "match", name: "Match", date: "2026-03-01", level: "Level 2", sourceUrl: "/match" }],
+    [
+      { competitionId: "match", competitionName: "Match", competitionDate: "2026-03-01", competitorName: "A", normalizedCompetitorName: "a", division: "Pisztoly-Production Optic", placement: 1 },
+      { competitionId: "match", competitionName: "Match", competitionDate: "2026-03-01", competitorName: "B", normalizedCompetitorName: "b", division: "Production Optics", placement: 2 },
+    ],
+  );
+  assert.deepEqual(Array.from(statistics.divisions, (division) => division.value), ["Production Optics"]);
+  assert.equal(statistics.comparableResultRows, 2);
 });
 
 test("legacy host and old root year URLs redirect directly to the discipline path", () => {
