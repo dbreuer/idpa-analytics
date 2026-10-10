@@ -132,6 +132,29 @@ const gyorskombinaltSections = [
   },
 ];
 
+const steelChallengeSections = [
+  {
+    title: "A versenymező: azonos verseny, azonos divízió",
+    description: "A Steel Challenge szezonértékelés kizárólag azonos versenyen és azonos divízióban közölt hivatalos helyezéseket hasonlít össze. A különböző versenyek eltérő mezőnymérete miatt közvetlen helyezési pontszámot nem összesítünk versenyek között.",
+  },
+  {
+    title: "Helyezési percentilis",
+    description: "Egy n fős mezőben az r hivatalos helyezés percentilise 100 × (n − r) / (n − 1), 0 és 100 közé korlátozva. Holtverseny esetén az elfoglalt helyek átlagos pozíciója számít. Így az első hely 100%, az utolsó 0%, és a különböző mezőnyméretek összehasonlíthatók.",
+  },
+  {
+    title: "Szezonrangsor divíziónként",
+    description: "A versenyző szezonértéke a divíziójában elért percentilisek számtani átlaga. Holtversenynél a több értékelhető verseny, majd az alacsonyabb átlagos helyezés, végül a győzteshez mért átlagos nyerseredmény-arány dönt. A divíziók külön rangsort kapnak.",
+  },
+  {
+    title: "Nyers eredményérték kezelése",
+    description: "A közölt nyers eredményt (Eredmény) megjelenítjük és a győzteshez mért arány számítására használjuk, ha numerikusan értelmezhető. A rangsor elsődleges mutatója továbbra is a hivatalos helyezésből számított percentilis.",
+  },
+  {
+    title: "Azonosítás és kizárások",
+    description: "A versenyzők összekapcsolásához numerikus versenyengedély-azonosítót (V.eng.) használunk; ennek hiányában normalizált nevet. Nem kerül rangsorba a versenyhez nem kapcsolható sor, a divízió nélküli sor és az érvénytelen helyezésű sor. Ezek az adatminőségi szakaszban külön jelennek meg.",
+  },
+];
+
 const methodologyByAnalytics: Record<string, { title: string; description: string; sections: Array<{ title: string; description: string }> }> = {
   idpa: {
     title: "Statisztikai és pontszámítási módszertan",
@@ -152,6 +175,11 @@ const methodologyByAnalytics: Record<string, { title: string; description: strin
     title: "Gyorskombinált: a forrásalapú kimutatás módszertana",
     description: "A Gyorskombinált részvételi kimutatásainak, forráseredményeinek és versenyzői azonosításának módszertana.",
     sections: gyorskombinaltSections,
+  },
+  "steel-challenge": {
+    title: "Steel Challenge-rangsorok és statisztikai módszertan",
+    description: "A Steel Challenge divíziórangsorainak, helyezési percentiliseinek és adatfeldolgozásának módszertana.",
+    sections: steelChallengeSections,
   },
 };
 

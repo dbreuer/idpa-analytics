@@ -4,12 +4,13 @@ Next.js dashboard and Python data pipeline for Hungarian MDLSZ sportlövészeti
 eredmények. Discovery, PDF extraction and result normalization are implemented
 for all seven listed disciplines. IDPA, IPSC and IMSSU have discipline-specific
 public season analytics. Gyorskombinált has a dedicated source-based participation
-dashboard; the other three stop after source-linked normalized ingestion.
+dashboard, and Steel Challenge has a dedicated placement-percentile based season
+analytics page; the remaining two disciplines stop after source-linked normalized ingestion.
 
 The planned canonical domain is `https://statisztika.lovesznaplo.hu`. `/idpa`
 opens the latest available season (currently `/idpa/2026`); older seasons remain
 available in that season page's selector. Each season has a stable URL such as
-`/idpa/2026` or `/ipsc/2026`. The root page introduces the platform and links to every discipline;
+`/idpa/2026`, `/ipsc/2026`, or `/steel-challenge/2026`. The root page introduces the platform and links to every discipline;
 disciplines without validated analytics lead to noindex “coming soon” pages. Existing
 `hero-of-idpa.hu/<year>` URLs permanently redirect to their `/idpa/<year>`
 counterparts. DNS and Vercel domain configuration are not changed by this repository.
@@ -122,6 +123,15 @@ published. Top filters apply to participation, histories, results and competitio
 counts; season charts and highlights remain unfiltered. Methodology is documented
 at `/gyorskombinalt/methodology`. No new Python scoring stage is required.
 
+Steel Challenge (`/steel-challenge/<year>`) ranks competitors per division using
+official placements. Within each competition/division field, the ranking converts
+placement to percentile (`100 × (n − r) / (n − 1)`) so different field sizes are
+comparable across the season. Season ranking is the average percentile; ties break
+on more ranked matches, then lower average placement, then higher average share
+of the winner's raw result where numeric source values are available. Rows with
+missing division or invalid placement are excluded from ranking and listed in the
+data-quality section. Methodology: `/steel-challenge/methodology`.
+
 ### Pipeline Outputs
 
 - `data/<discipline>/<year>/competitions.json`
@@ -133,11 +143,12 @@ at `/gyorskombinalt/methodology`. No new Python scoring stage is required.
 - `data/club-aliases.json` (shared across seasons)
 
 Each artifact records its discipline, season, and schema version. Only complete
-seasons with complete ingestion data are prerendered. IDPA and IPSC have
-discipline-specific ranking methods; other disciplines with source data show
-noindex descriptive reports without calculated rankings. Disciplines without
-season data show a noindex “coming soon” page; unsupported season and methodology
-routes return 404.
+seasons with complete ingestion data are prerendered. IDPA, IPSC, IMSSU and
+Steel Challenge have discipline-specific ranking methods; Gyorskombinált has a
+source-oriented participation dashboard without computed season scoring.
+Disciplines without validated analytics still show noindex descriptive reports.
+Disciplines without season data show a noindex “coming soon” page; unsupported
+season and methodology routes return 404.
 Malformed JSON, mixed seasons, mixed disciplines, and unsupported schemas fail
 instead of producing misleading empty statistics.
 

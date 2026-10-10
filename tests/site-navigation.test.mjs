@@ -34,6 +34,10 @@ const paths = loadModule(fs.readFileSync(new URL("../lib/discipline-paths.ts", i
 const sourceSummary = loadModule(fs.readFileSync(new URL("../lib/discipline-summary.ts", import.meta.url), "utf8"));
 const ipscStatistics = loadModule(fs.readFileSync(new URL("../lib/ipsc-statistics.ts", import.meta.url), "utf8"));
 const competitorIdentity = loadModule(fs.readFileSync(new URL("../lib/competitor-identity.ts", import.meta.url), "utf8"));
+const steelChallengeStatistics = loadModule(
+  fs.readFileSync(new URL("../lib/steel-challenge-statistics.ts", import.meta.url), "utf8"),
+  { "@/lib/competitor-identity": competitorIdentity },
+);
 const gyorskombinaltStatistics = loadModule(
   fs.readFileSync(new URL("../lib/gyorskombinalt-statistics.ts", import.meta.url), "utf8"),
   { "@/lib/competitor-identity": competitorIdentity },
@@ -100,17 +104,18 @@ test("navigation destinations and dashboard anchors remain in lockstep", () => {
   }
 });
 
-test("discipline registry exposes seven source-linked sports and four custom public dashboards", () => {
+test("discipline registry exposes seven source-linked sports and five custom public dashboards", () => {
   const records = Array.from(disciplines.disciplineDefinitions);
   assert.equal(records.length, 7);
   assert.deepEqual(records.map(({ slug }) => slug), [
     "ipsc", "imssu", "idpa", "gyorskombinalt", "steel-challenge",
     "gyorspont-es-hazai-versenyszamok", "iprf",
   ]);
-  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["ipsc", "imssu", "idpa", "gyorskombinalt"]);
+  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["ipsc", "imssu", "idpa", "gyorskombinalt", "steel-challenge"]);
   assert.equal(disciplines.getDiscipline("imssu").analytics, "imssu");
   assert.equal(disciplines.getDiscipline("ipsc").analytics, "ipsc");
   assert.equal(disciplines.getDiscipline("gyorskombinalt").analytics, "gyorskombinalt");
+  assert.equal(disciplines.getDiscipline("steel-challenge").analytics, "steel-challenge");
   for (const record of records) {
     assert.ok(disciplines.getDisciplineMark(record.slug));
     assert.ok(record.aliases.length > 0);
@@ -188,12 +193,57 @@ test("discipline landing pages open the newest season and the footer links every
   assert.doesNotMatch(platformPage, /opacity-65|<div aria-label=\{`/);
   assert.match(disciplinePage, /disciplineDefinitions\.map/);
   assert.match(seasonPage, /<IpscDashboard/);
+  assert.match(seasonPage, /<SteelChallengeDashboard/);
   assert.match(seasonPage, /buildIpscStatistics/);
+  assert.match(seasonPage, /buildSteelChallengeStatistics/);
   assert.match(seasonPage, /discipline:\s*discipline\.slug/);
   assert.match(seasonPage, /year:\s*String\(year\)/);
   assert.match(disciplineLayout, /return children/);
   assert.match(disciplinePage, /robots:\s*\{\s*index:\s*false,\s*follow:\s*true,\s*googleBot:/);
   assert.match(footer, /href=\{disciplinePath\(definition\.slug\)\}/);
+});
+
+test("Steel Challenge standings rank by within-field placement percentiles", () => {
+  const competitions = [
+    { id: "sc-1", name: "Steel 1", date: "2026-03-01", level: "Minősítő verseny", sourceUrl: "/sc-1", resultPdfUrl: "/sc-1.pdf" },
+    { id: "sc-2", name: "Steel 2", date: "2026-04-01", level: "Minősítő verseny", sourceUrl: "/sc-2" },
+  ];
+  const row = (competitionId, division, name, licenseId, placement, rawResult, club = "Club A") => ({
+    competitionId,
+    competitionName: competitionId,
+    competitionDate: "2026-03-01",
+    competitorName: name,
+    normalizedCompetitorName: name.toLowerCase().replaceAll(" ", "-"),
+    competitorLicenseId: licenseId,
+    division,
+    placement,
+    rawResult,
+    club,
+    normalizedClub: club,
+  });
+  const statistics = steelChallengeStatistics.buildSteelChallengeStatistics(competitions, [
+    row("sc-1", "Open", "Alex Shooter", "000123", 1, "100"),
+    row("sc-1", "Open", "Bea Shooter", "000124", 2, "95", "Club B"),
+    row("sc-1", "Open", "Cy Shooter", "000125", 3, "80"),
+    row("sc-2", "Open", "Alex Shooter", "123", 2, "95"),
+    row("sc-2", "Open", "Bea Shooter", "124", 1, "100", "Club B"),
+    row("sc-2", "Open", "Cy Shooter", "125", 3, "65"),
+  ]);
+
+  const leaderboard = statistics.leaderboard.filter((entry) => entry.division === "Open");
+  assert.deepEqual(Array.from(leaderboard, ({ competitorName, averagePercentile, matchCount }) => [
+    competitorName, averagePercentile, matchCount,
+  ]), [
+    ["Alex Shooter", 75, 2],
+    ["Bea Shooter", 75, 2],
+    ["Cy Shooter", 0, 2],
+  ]);
+  assert.equal(leaderboard[0].averagePlacement, 1.5);
+  assert.equal(leaderboard[1].averagePlacement, 1.5);
+  assert.equal(statistics.rankedFields, 2);
+  assert.equal(statistics.rankedRows, 6);
+  assert.equal(statistics.excludedRows.length, 0);
+  assert.equal(statistics.resultsWithRawValue, 6);
 });
 
 test("discipline URLs centralize season and canonical paths on the chosen production host", () => {

@@ -54,7 +54,7 @@ export default function HomePage() {
                           <CardTitle>{discipline.name}</CardTitle>
                           <CardDescription className="mt-1">
                             {isPublished
-                              ? discipline.analytics === "ipsc" || discipline.analytics === "imssu"
+                              ? discipline.analytics === "ipsc" || discipline.analytics === "imssu" || discipline.analytics === "steel-challenge"
                                 ? "Divíziórangsorok és szezonstatisztikák"
                                 : discipline.analytics === "gyorskombinalt"
                                   ? "Részvételi statisztikák és forráseredmények"

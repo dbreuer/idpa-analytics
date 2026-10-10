@@ -7,11 +7,13 @@ import { DescriptiveDisciplineReport } from "@/components/dashboard/descriptive-
 import { IpscDashboard } from "@/components/dashboard/ipsc-dashboard";
 import { GyorskombinaltDashboard } from "@/components/dashboard/gyorskombinalt-dashboard";
 import { ImssuDashboard } from "@/components/dashboard/imssu-dashboard";
+import { SteelChallengeDashboard } from "@/components/dashboard/steel-challenge-dashboard";
 import { canonicalUrl, disciplinePath, seasonPath } from "@/lib/discipline-paths";
 import { getDiscipline, isDisciplineSlug } from "@/lib/disciplines";
 import { getAvailableYears, getDisciplinesWithData, loadDashboardData } from "@/lib/data";
 import { buildImssuStatistics } from "@/lib/imssu-statistics";
 import { buildIpscStatistics } from "@/lib/ipsc-statistics";
+import { buildSteelChallengeStatistics } from "@/lib/steel-challenge-statistics";
 
 export const dynamicParams = false;
 
@@ -55,6 +57,12 @@ function seasonCopy(analytics: string, name: string, year: number) {
       return {
         title: `${name} ${year} · részvételi statisztikák és eredmények`,
         description: `A ${year}. évi Gyorskombinált és Precíziós szakági versenyek részvételi statisztikái, versenyzői előzményei és hivatalos eredményjegyzékei, számított szezonrangsor nélkül.`,
+      };
+    case "steel-challenge":
+      return {
+        title: `${name} ${year} · divíziórangsorok és szezonstatisztikák`,
+        description: `A ${year}. évi Steel Challenge versenyek divíziónkénti rangsorai, szezonstatisztikái és hivatalos eredményforrásai.`,
+        openGraph: "Steel Challenge eredmények, divíziórangsorok, szezonkiemelések és hivatalos források.",
       };
     default:
       return {
@@ -157,6 +165,23 @@ export default async function SeasonPage({ params }: PageProps<"/[discipline]/[y
           competitionsFile={data.competitionsFile}
           resultsFile={data.resultsFile}
           qualityFile={data.qualityFile}
+        />
+      </>
+    );
+  }
+
+  if (discipline.analytics === "steel-challenge") {
+    return (
+      <>
+        {breadcrumb}
+        <SteelChallengeDashboard
+          key={`${discipline.slug}-${year}`}
+          year={year}
+          availableYears={getAvailableYears(discipline.slug)}
+          competitionsFile={data.competitionsFile}
+          resultsFile={data.resultsFile}
+          qualityFile={data.qualityFile}
+          statistics={buildSteelChallengeStatistics(data.competitionsFile.competitions, data.resultsFile.results)}
         />
       </>
     );

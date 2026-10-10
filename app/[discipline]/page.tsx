@@ -36,6 +36,8 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]">): 
           ? `${discipline.name} ${latestYear} · divíziórangsorok és statisztikák`
           : discipline.analytics === "imssu"
             ? `${discipline.name} ${latestYear} · fémsziluett divíziórangsorok`
+            : discipline.analytics === "steel-challenge"
+              ? `${discipline.name} ${latestYear} · divíziórangsorok és szezonstatisztikák`
             : `${discipline.name} ${latestYear} · eredménykimutatás`,
       description: discipline.analytics === "idpa"
         ? `A ${latestYear}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái.`
@@ -43,6 +45,8 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]">): 
           ? `A ${latestYear}. évi IPSC-versenyek divíziónkénti rangsorai és forrásalapú statisztikái.`
           : discipline.analytics === "imssu"
             ? `A ${latestYear}. évi IMSSU fémsziluett-versenyek divíziónkénti rangsorai és forrásalapú statisztikái.`
+            : discipline.analytics === "steel-challenge"
+              ? `A ${latestYear}. évi Steel Challenge versenyek divíziónkénti rangsorai és forrásalapú statisztikái.`
             : `A ${latestYear}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása, rangsorolás nélkül.`,
       alternates: { canonical: canonicalUrl(seasonPath(discipline.slug, latestYear)) },
     };
@@ -57,6 +61,11 @@ export async function generateMetadata({ params }: PageProps<"/[discipline]">): 
       metadata.openGraph = {
         title: `${discipline.name} ${latestYear} · divíziórangsorok és statisztikák`,
         description: "IPSC-eredmények, divíziónkénti szezonrangsorok és hivatalos források.",
+      };
+    } else if (discipline.analytics === "steel-challenge") {
+      metadata.openGraph = {
+        title: `${discipline.name} ${latestYear} · divíziórangsorok és szezonstatisztikák`,
+        description: "Steel Challenge eredmények, divíziórangsorok, szezonkiemelések és hivatalos források.",
       };
     }
     return metadata;

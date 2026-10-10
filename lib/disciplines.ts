@@ -33,8 +33,8 @@ export const disciplineDefinitions = [
     slug: "steel-challenge",
     name: "Steel Challenge",
     aliases: ["Steel Challenge"],
-    published: false,
-    analytics: "unsupported",
+    published: true,
+    analytics: "steel-challenge",
   },
   {
     slug: "gyorspont-es-hazai-versenyszamok",
