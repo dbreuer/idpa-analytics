@@ -44,6 +44,21 @@ test("every navigation href targets the shared section registry", () => {
   assert.equal(navigation.isDashboardSectionId("missing"), false);
 });
 
+test("dashboard filters are limited to competition, division, and club", () => {
+  for (const id of [
+    "competition-filter",
+    "division-filter",
+    "club-filter",
+    "mobile-competition-filter",
+    "mobile-division-filter",
+    "mobile-club-filter",
+  ]) {
+    assert.ok(headerSource.includes(`id="${id}"`), `missing filter control ${id}`);
+  }
+  assert.doesNotMatch(headerSource, /Minimum participation|participation-filter|minimumParticipation/);
+  assert.doesNotMatch(dashboardSource, /minimumParticipation/);
+});
+
 test("footer organization and discipline records include accessible local logos and official links", () => {
   const organizations = Array.from(associations.governingOrganizations);
   const disciplines = Array.from(associations.mdlszDisciplines);

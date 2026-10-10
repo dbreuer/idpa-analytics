@@ -87,7 +87,6 @@ export function DashboardApp({
   const [competitionFilter, setCompetitionFilter] = useState("all");
   const [divisionFilter, setDivisionFilter] = useState("all");
   const [clubFilter, setClubFilter] = useState("all");
-  const [minimumParticipation, setMinimumParticipation] = useState(1);
   const [selectedCompetitor, setSelectedCompetitor] = useState<CompetitorStanding | null>(statistics.overallTop5[0] ?? null);
   const [selectedClub, setSelectedClub] = useState<ClubStanding | null>(statistics.clubsRanking[0] ?? null);
 
@@ -102,13 +101,12 @@ export function DashboardApp({
 
   const filteredCompetitors = useMemo(() => {
     return statistics.competitors.filter((competitor) => {
-      if (competitor.uniqueCompetitions < minimumParticipation) return false;
       if (clubFilter !== "all" && competitor.club !== clubFilter) return false;
       if (divisionFilter !== "all" && !competitor.divisionSet.includes(divisionFilter)) return false;
       if (competitionFilter !== "all" && !competitor.competitionIds.includes(competitionFilter)) return false;
       return true;
     });
-  }, [statistics.competitors, minimumParticipation, clubFilter, divisionFilter, competitionFilter]);
+  }, [statistics.competitors, clubFilter, divisionFilter, competitionFilter]);
 
   const filteredTop5 = filteredCompetitors
     .slice()
@@ -154,11 +152,9 @@ export function DashboardApp({
         competition={competitionFilter}
         division={divisionFilter}
         club={clubFilter}
-        minimumParticipation={minimumParticipation}
         onCompetitionChange={setCompetitionFilter}
         onDivisionChange={setDivisionFilter}
         onClubChange={setClubFilter}
-        onMinimumParticipationChange={setMinimumParticipation}
       />
 
       <div className="dashboard-main">
@@ -199,7 +195,7 @@ export function DashboardApp({
             <SectionHeading
               id="rankings-title"
               title="Season rankings"
-              description="The competitor table responds to all four filters. Club rankings respond to the club selection; charts show full-season aggregates."
+              description="Competitor standings respond to the competition, division, and club filters. Club rankings respond to the club selection; charts show full-season aggregates."
             />
             <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
               <TopCompetitors year={year} competitors={filteredTop5} onSelect={setSelectedCompetitor} />

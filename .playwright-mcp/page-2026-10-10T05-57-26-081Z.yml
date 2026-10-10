@@ -1,0 +1,1242 @@
+- generic [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#content"
+  - banner [ref=e3]:
+    - generic [ref=e1781]:
+      - button "Filters 0 All competitions" [expanded] [active] [ref=e1782]:
+        - generic [ref=e1783]:
+          - text: Filters
+          - generic [ref=e1785]: "0"
+        - generic [ref=e1786]: All competitions
+      - generic [ref=e2188]:
+        - generic [ref=e2189]:
+          - text: Competition
+          - combobox "Competition" [ref=e2191]:
+            - option "All competitions" [selected]
+            - option "IDPA Carnival Cup"
+            - option "Underground IDPA Series 2026 - Breaking Ice"
+            - option "IDPA Birthday Cup"
+            - option "IDPA First Shots Match"
+            - option "IDPA HÉT VEZÉR 72"
+            - option "SPEED LANE 5x5 IDPA Osztályozó Minősítő Verseny"
+            - option "Underground IDPA Series 2026 - Time to spring"
+            - option "IDPA HÉT VEZÉR 72"
+            - option "IDPA Into the Green Match & Classifier 72"
+            - option "5 FK Csapatépítő IDPA 5X5"
+            - option "AGRIA IDPA • Clint Eastwood Kupa"
+            - option "IDPA HÉT VEZÉR 5X5"
+            - option "Speed Lane Cup 2026"
+            - option "IDPA HÉT VEZÉR 72"
+            - option "Underground IDPA Series 2026 - Prep for the European"
+            - option "IDPA HÉT VEZÉR Crazy Game"
+            - option "IDPA Operation Heatwave"
+            - option "Underground IDPA Series 2026 - Still hot to shoot"
+            - option "IDPA Balkan Cup 2026"
+            - option "IDPA Stay'in Alive 2026"
+            - option "IDPA HÉT VEZÉR Halloween"
+            - option "Underground IDPA Series 2026 - Almost HALLOWEEN"
+            - option "IDPA Winter is coming 2026"
+            - option "IDPA Central European championship 4th round"
+        - generic [ref=e2192]:
+          - text: Division
+          - combobox "Division" [ref=e2194]:
+            - option "All divisions" [selected]
+            - option "SSP"
+            - option "CO"
+            - option "ESP"
+            - option "CCP"
+            - option "PCC"
+            - option "CDP"
+            - option "REV"
+            - option "BUG"
+            - option "NFC (SPD)"
+        - generic [ref=e2195]:
+          - text: Club
+          - combobox "Club" [ref=e2197]:
+            - option "All clubs" [selected]
+            - option "SPEED LANE LSE."
+            - option "Pandúr Lövész"
+            - option "Globus Lövész Klub SE"
+            - option "Fekete Sólyom Lövész Sportklub"
+            - option "5 FK SE"
+            - option "Mecsek Lőklub"
+            - option "Underground Polgári Sportlövész Egyesület"
+            - option "T.L.E."
+            - option "LUDOVIKA Sportegyesület"
+            - option "T"
+            - option "Göcsej Sportlövész Egyesület"
+            - option "Celeritas Sportlövész Egyesület"
+            - option "Long Colt Sport Egyesület"
+            - option "Rendvédelmi LE"
+            - option "Egy a csapat SE."
+            - option "Hét Vezér Dinamikus Lövész Sportegyesület"
+            - option "Bel Sport Egyesület"
+            - option "MARKSMAN LK."
+            - option "Alpokalja Lövész Sportegyesület"
+            - option "Városi Lövészklub Tatabánya (51173"
+            - option "Bakony Dinamikus Lövész Egyesület"
+            - option "Rapid Sportlövész és Hagyományőrző Egyesület"
+            - option "ARZENÁL LSE"
+            - option "Magyar Utánpótlás Neveléséért Sport Egyesület"
+            - option "Első Pécsi Polgári Lőegylet"
+            - option "Csikóvári Para Sport Egyesület"
+            - option "B.T.K. Szituációs Lövész és Szabadidős Sportegyesület"
+            - option "PRIMO Lövész SE"
+            - option "B"
+            - option "WB Shooting LSE."
+            - option "Turul Lövészei SE"
+            - option "Szászvári Lövész Egylet"
+            - option "Police Academy Sport Club"
+            - option "Lőszerelem SE"
+            - option "Elit Lövész Egyesület"
+            - option "Mester Lövész Sportegyesület"
+            - option "Soproni polgári Lövész Egyesület"
+            - option "ATTE"
+            - option "Üllői Lövész Klub"
+            - option "KEMRSE"
+            - option "INRIMAS SLE"
+            - option "Kisbéri Sportlövő Sportegyesület"
+            - option "Lövészklub Jászfelsőszentgyörgy"
+            - option "Nagymányoki Lőegylet"
+    - generic [ref=e17]:
+      - link "Hero of IDPA 2026, overview" [ref=e18] [cursor=pointer]:
+        - /url: /2026#overview
+        - generic [ref=e19]: HERO OF
+        - generic [ref=e20]: IDPA.
+      - generic [ref=e21]:
+        - button "Open sections" [ref=e22]
+        - generic [ref=e25]:
+          - text: Season
+          - combobox "Season" [ref=e26] [cursor=pointer]:
+            - option "2026" [selected]
+            - option "2025"
+            - option "2024"
+            - option "2023"
+            - option "2022"
+            - option "2021"
+            - option "2020"
+  - generic [ref=e27]:
+    - region [ref=e28]:
+      - generic [ref=e29]:
+        - generic [ref=e30]:
+          - heading "IDPA 2026 season" [level=1] [ref=e31]:
+            - text: IDPA
+            - generic [ref=e32]: 2026 season
+          - paragraph [ref=e33]: Season results and performance comparisons, grounded in official Hungarian MDLSZ competition records.
+          - generic [ref=e34]:
+            - generic [ref=e35]: Generated 2026. okt. 10.
+            - generic [ref=e36]: Result PDFs 19/19 processed
+            - generic [ref=e37]: 9 rows with parsing issues
+        - generic "2026 season summary" [ref=e38]:
+          - generic [ref=e39]:
+            - term [ref=e40]: Competitions
+            - definition [ref=e41]: "24"
+          - generic [ref=e42]:
+            - term [ref=e43]: Competitors
+            - definition [ref=e44]: "462"
+          - generic [ref=e45]:
+            - term [ref=e46]: Clubs represented
+            - definition [ref=e47]: "44"
+          - generic [ref=e48]:
+            - term [ref=e49]: Result entries
+            - definition [ref=e50]: "797"
+          - generic [ref=e51]:
+            - term [ref=e52]: Fastest recorded time
+            - definition [ref=e53]: 0,00
+          - generic [ref=e54]:
+            - term [ref=e55]: Most active competitor
+            - definition [ref=e56]: Kató Péter
+    - main [ref=e57]:
+      - region [ref=e58]:
+        - generic [ref=e60]:
+          - heading "Season rankings" [level=2] [ref=e61]
+          - paragraph [ref=e62]: Competitor standings respond to the competition, division, and club filters. Club rankings respond to the club selection; charts show full-season aggregates.
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - generic [ref=e66]:
+              - heading "Top competitors" [level=3] [ref=e67]
+              - paragraph [ref=e68]: IDPA Hungary · 2026
+            - list [ref=e70]:
+              - listitem [ref=e71]:
+                - 'button "View Kató Péter: 1131 performance points" [ref=e72]':
+                  - generic [ref=e73]:
+                    - generic [ref=e74]:
+                      - generic [ref=e75]: "01"
+                      - generic [ref=e76]:
+                        - paragraph [ref=e77]: Kató Péter
+                        - paragraph [ref=e78]: SPEED LANE LSE.
+                    - generic [ref=e79]:
+                      - paragraph [ref=e80]: "1131"
+                      - paragraph [ref=e81]: Points
+                  - generic [ref=e84]:
+                    - generic [ref=e85]:
+                      - text: Wins
+                      - strong [ref=e86]: "6"
+                    - generic [ref=e87]:
+                      - text: Podiums
+                      - strong [ref=e88]: "10"
+                    - generic [ref=e89]:
+                      - text: Matches
+                      - strong [ref=e90]: "9"
+                    - generic [ref=e91]:
+                      - text: Fastest
+                      - strong [ref=e92]: 13,22
+              - listitem [ref=e93]:
+                - 'button "View Máté Attila: 700 performance points" [ref=e94]':
+                  - generic [ref=e95]:
+                    - generic [ref=e96]:
+                      - generic [ref=e97]: "02"
+                      - generic [ref=e98]:
+                        - paragraph [ref=e99]: Máté Attila
+                        - paragraph [ref=e100]: Fekete Sólyom Lövész Sportklub
+                    - generic [ref=e101]:
+                      - paragraph [ref=e102]: "700"
+                      - paragraph [ref=e103]: Points
+                  - generic [ref=e106]:
+                    - generic [ref=e107]:
+                      - text: Wins
+                      - strong [ref=e108]: "1"
+                    - generic [ref=e109]:
+                      - text: Podiums
+                      - strong [ref=e110]: "6"
+                    - generic [ref=e111]:
+                      - text: Matches
+                      - strong [ref=e112]: "4"
+                    - generic [ref=e113]:
+                      - text: Fastest
+                      - strong [ref=e114]: 1 026 028,00
+              - listitem [ref=e115]:
+                - 'button "View Szikszai Tamás: 668 performance points" [ref=e116]':
+                  - generic [ref=e117]:
+                    - generic [ref=e118]:
+                      - generic [ref=e119]: "03"
+                      - generic [ref=e120]:
+                        - paragraph [ref=e121]: Szikszai Tamás
+                        - paragraph [ref=e122]: 5 FK SE
+                    - generic [ref=e123]:
+                      - paragraph [ref=e124]: "668"
+                      - paragraph [ref=e125]: Points
+                  - generic [ref=e128]:
+                    - generic [ref=e129]:
+                      - text: Wins
+                      - strong [ref=e130]: "4"
+                    - generic [ref=e131]:
+                      - text: Podiums
+                      - strong [ref=e132]: "5"
+                    - generic [ref=e133]:
+                      - text: Matches
+                      - strong [ref=e134]: "4"
+                    - generic [ref=e135]:
+                      - text: Fastest
+                      - strong [ref=e136]: 30,03
+              - listitem [ref=e137]:
+                - 'button "View Lakatos Levente: 666 performance points" [ref=e138]':
+                  - generic [ref=e139]:
+                    - generic [ref=e140]:
+                      - generic [ref=e141]: "04"
+                      - generic [ref=e142]:
+                        - paragraph [ref=e143]: Lakatos Levente
+                        - paragraph [ref=e144]: SPEED LANE LSE.
+                    - generic [ref=e145]:
+                      - paragraph [ref=e146]: "666"
+                      - paragraph [ref=e147]: Points
+                  - generic [ref=e150]:
+                    - generic [ref=e151]:
+                      - text: Wins
+                      - strong [ref=e152]: "2"
+                    - generic [ref=e153]:
+                      - text: Podiums
+                      - strong [ref=e154]: "6"
+                    - generic [ref=e155]:
+                      - text: Matches
+                      - strong [ref=e156]: "9"
+                    - generic [ref=e157]:
+                      - text: Fastest
+                      - strong [ref=e158]: 17,72
+              - listitem [ref=e159]:
+                - 'button "View Dobos Tamás: 633 performance points" [ref=e160]':
+                  - generic [ref=e161]:
+                    - generic [ref=e162]:
+                      - generic [ref=e163]: "05"
+                      - generic [ref=e164]:
+                        - paragraph [ref=e165]: Dobos Tamás
+                        - paragraph [ref=e166]: Fekete Sólyom Lövész Sportklub
+                    - generic [ref=e167]:
+                      - paragraph [ref=e168]: "633"
+                      - paragraph [ref=e169]: Points
+                  - generic [ref=e172]:
+                    - generic [ref=e173]:
+                      - text: Wins
+                      - strong [ref=e174]: "3"
+                    - generic [ref=e175]:
+                      - text: Podiums
+                      - strong [ref=e176]: "5"
+                    - generic [ref=e177]:
+                      - text: Matches
+                      - strong [ref=e178]: "6"
+                    - generic [ref=e179]:
+                      - text: Fastest
+                      - strong [ref=e180]: 142,04
+          - generic [ref=e181]:
+            - heading "Leading clubs" [level=3] [ref=e182]
+            - paragraph [ref=e183]: Power totals the top five member scores; strength compares average member performance.
+            - list [ref=e184]:
+              - listitem [ref=e185]:
+                - button "View details for SPEED LANE LSE." [pressed] [ref=e186]:
+                  - generic [ref=e187]:
+                    - generic [ref=e188]:
+                      - generic [ref=e189]: "01"
+                      - generic [ref=e190]:
+                        - generic [ref=e191]: SPEED LANE LSE.
+                        - generic [ref=e192]: 10 members · 45 appearances
+                    - generic [ref=e193]:
+                      - generic [ref=e194]: "2721"
+                      - generic [ref=e195]: Power
+              - listitem [ref=e198]:
+                - button "View details for Pandúr Lövész" [ref=e199]:
+                  - generic [ref=e200]:
+                    - generic [ref=e201]:
+                      - generic [ref=e202]: "02"
+                      - generic [ref=e203]:
+                        - generic [ref=e204]: Pandúr Lövész
+                        - generic [ref=e205]: 22 members · 63 appearances
+                    - generic [ref=e206]:
+                      - generic [ref=e207]: "2452"
+                      - generic [ref=e208]: Power
+              - listitem [ref=e211]:
+                - button "View details for Globus Lövész Klub SE" [ref=e212]:
+                  - generic [ref=e213]:
+                    - generic [ref=e214]:
+                      - generic [ref=e215]: "03"
+                      - generic [ref=e216]:
+                        - generic [ref=e217]: Globus Lövész Klub SE
+                        - generic [ref=e218]: 36 members · 102 appearances
+                    - generic [ref=e219]:
+                      - generic [ref=e220]: "2411"
+                      - generic [ref=e221]: Power
+              - listitem [ref=e224]:
+                - button "View details for Fekete Sólyom Lövész Sportklub" [ref=e225]:
+                  - generic [ref=e226]:
+                    - generic [ref=e227]:
+                      - generic [ref=e228]: "04"
+                      - generic [ref=e229]:
+                        - generic [ref=e230]: Fekete Sólyom Lövész Sportklub
+                        - generic [ref=e231]: 13 members · 36 appearances
+                    - generic [ref=e232]:
+                      - generic [ref=e233]: "2201"
+                      - generic [ref=e234]: Power
+              - listitem [ref=e237]:
+                - button "View details for 5 FK SE" [ref=e238]:
+                  - generic [ref=e239]:
+                    - generic [ref=e240]:
+                      - generic [ref=e241]: "05"
+                      - generic [ref=e242]:
+                        - generic [ref=e243]: 5 FK SE
+                        - generic [ref=e244]: 100 members · 129 appearances
+                    - generic [ref=e245]:
+                      - generic [ref=e246]: "1703"
+                      - generic [ref=e247]: Power
+      - region [ref=e250]:
+        - generic [ref=e252]:
+          - heading "Season analytics" [level=2] [ref=e253]
+          - paragraph [ref=e254]: Plots and comparisons show the complete season rather than changing with the ranking filters.
+        - generic [ref=e255]:
+          - generic [ref=e256]:
+            - generic [ref=e257]:
+              - heading "Competitor performance matrix" [level=3] [ref=e258]
+              - paragraph [ref=e259]: Participation compared with performance score; podium count is represented by the plotted point size.
+            - application [ref=e1250]:
+              - generic [ref=e1386]:
+                - generic [ref=e1387]:
+                  - generic [ref=e1388]: "0"
+                  - generic [ref=e1908]: "3"
+                  - generic [ref=e1910]: "6"
+                  - generic [ref=e1912]: "9"
+                  - generic [ref=e1914]: "12"
+                - generic [ref=e1398]:
+                  - generic [ref=e1916]: "0"
+                  - generic [ref=e1918]: "300"
+                  - generic [ref=e1920]: "600"
+                  - generic [ref=e1922]: "900"
+                  - generic [ref=e1407]: "1200"
+          - generic [ref=e262]:
+            - generic [ref=e263]:
+              - heading "Speed and consistency" [level=3] [ref=e264]
+              - paragraph [ref=e265]: Normalized speed score compared with consistency score for season competitors.
+            - application [ref=e1410]:
+              - generic [ref=e1546]:
+                - generic [ref=e1547]:
+                  - generic [ref=e1548]: "0"
+                  - generic [ref=e2045]: "25"
+                  - generic [ref=e2047]: "50"
+                  - generic [ref=e2049]: "75"
+                  - generic [ref=e2051]: "100"
+                - generic [ref=e1558]:
+                  - generic [ref=e2053]: "0"
+                  - generic [ref=e2055]: "0.2"
+                  - generic [ref=e2057]: "0.4"
+                  - generic [ref=e2059]: "0.6"
+                  - generic [ref=e1567]: "0.8"
+          - generic [ref=e268]:
+            - generic [ref=e269]:
+              - heading "Division distribution" [level=3] [ref=e270]
+              - paragraph [ref=e271]: Competitor appearances by division, from normalized official results.
+            - application [ref=e1570]:
+              - generic [ref=e1609]:
+                - generic [ref=e1610]:
+                  - generic [ref=e2086]: SSP
+                  - generic [ref=e2088]: CO
+                  - generic [ref=e2090]: ESP
+                  - generic [ref=e2092]: CCP
+                  - generic [ref=e2094]: PCC
+                  - generic [ref=e2096]: CDP
+                  - generic [ref=e2098]: REV
+                  - generic [ref=e2100]: BUG
+                - generic [ref=e1627]:
+                  - generic [ref=e2102]: "0"
+                  - generic [ref=e2104]: "70"
+                  - generic [ref=e2106]: "140"
+                  - generic [ref=e2108]: "210"
+                  - generic [ref=e1636]: "280"
+          - generic [ref=e274]:
+            - generic [ref=e275]:
+              - heading "Club strength comparison" [level=3] [ref=e276]
+              - paragraph [ref=e277]: Club power compared with average member strength.
+            - generic [ref=e1638]:
+              - list [ref=e1640]:
+                - listitem [ref=e1641]:
+                  - img "Club power legend icon" [ref=e1642]
+                  - text: Club power
+                - listitem [ref=e1644]:
+                  - img "Club strength legend icon" [ref=e1645]
+                  - text: Club strength
+              - application [ref=e1647]:
+                - generic [ref=e1701]:
+                  - generic [ref=e1702]:
+                    - generic [ref=e1703]: "0"
+                    - generic [ref=e2148]: "700"
+                    - generic [ref=e2150]: "1400"
+                    - generic [ref=e2152]: "2100"
+                    - generic [ref=e2154]: "2800"
+                  - generic [ref=e1713]:
+                    - generic [ref=e2156]: SPEED LANELSE.
+                    - generic [ref=e2158]: Pandúr Lövész
+                    - generic [ref=e2160]: Globus LövészKlub SE
+                    - generic [ref=e2162]: Fekete SólyomLövészSportklub
+                    - generic [ref=e2164]: 5 FK SE
+                    - generic [ref=e2166]: Mecsek Lőklub
+      - region [ref=e280]:
+        - generic [ref=e282]:
+          - heading "Competitor and club detail" [level=2] [ref=e283]
+          - paragraph [ref=e284]: Select a name in the season rankings to inspect its season record.
+        - generic [ref=e285]:
+          - generic [ref=e286]:
+            - heading "Kató Péter" [level=3] [ref=e287]
+            - paragraph [ref=e288]: SPEED LANE LSE.
+            - generic [ref=e289]:
+              - generic [ref=e290]:
+                - term [ref=e291]: Overall score
+                - definition [ref=e292]: "1131"
+              - generic [ref=e293]:
+                - term [ref=e294]: Wins
+                - definition [ref=e295]: "6"
+              - generic [ref=e296]:
+                - term [ref=e297]: Podiums
+                - definition [ref=e298]: "10"
+              - generic [ref=e299]:
+                - term [ref=e300]: Competitions
+                - definition [ref=e301]: "9"
+              - generic [ref=e302]:
+                - term [ref=e303]: Average placement
+                - definition [ref=e304]: 1,40
+              - generic [ref=e305]:
+                - term [ref=e306]: Fastest time
+                - definition [ref=e307]: 13,22
+            - application [ref=e1727]:
+              - generic [ref=e1754]:
+                - generic [ref=e1755]:
+                  - generic [ref=e2181]: 2026. febr. 22.
+                  - generic [ref=e2183]: 2026. ápr. 21.
+                  - generic [ref=e2185]: 2026-09-05 - 09-06
+                - generic [ref=e1774]:
+                  - generic [ref=e1775]: "1"
+                  - generic [ref=e1777]: "2"
+          - generic [ref=e310]:
+            - heading "SPEED LANE LSE." [level=3] [ref=e311]
+            - paragraph [ref=e312]: 10 members · 45 appearances
+            - generic [ref=e313]:
+              - generic [ref=e314]:
+                - term [ref=e315]: Club power
+                - definition [ref=e316]: "2721"
+              - generic [ref=e317]:
+                - term [ref=e318]: Club strength
+                - definition [ref=e319]: "328"
+              - generic [ref=e320]:
+                - term [ref=e321]: Wins
+                - definition [ref=e322]: "9"
+              - generic [ref=e323]:
+                - term [ref=e324]: Podiums
+                - definition [ref=e325]: "22"
+              - generic [ref=e326]:
+                - term [ref=e327]: Average placement
+                - definition [ref=e328]: 5,93
+              - generic [ref=e329]:
+                - term [ref=e330]: Top competitor
+                - definition [ref=e331]: Kató Péter
+      - region [ref=e332]:
+        - generic [ref=e333]:
+          - generic [ref=e334]:
+            - heading "2026 competition record" [level=2] [ref=e335]
+            - paragraph [ref=e336]: Discovered IDPA competitions with the official calendar entries and available result PDFs.
+          - link "Open MDLSZ calendar" [ref=e337] [cursor=pointer]:
+            - /url: https://portal.mdlsz.com/racecalendar?year=2026
+        - list [ref=e341]:
+          - listitem [ref=e342]:
+            - generic [ref=e343]:
+              - generic [ref=e344]: "01"
+              - time [ref=e345]: 2026. febr. 8.
+            - generic [ref=e346]:
+              - heading "IDPA Carnival Cup" [level=3] [ref=e347]
+              - paragraph [ref=e348]: Budapest - Globus lőtér
+              - generic [ref=e349]:
+                - generic [ref=e350]:
+                  - term [ref=e351]: Competitors
+                  - definition [ref=e352]: "61"
+                - generic [ref=e353]:
+                  - term [ref=e354]: Divisions
+                  - definition [ref=e355]: "6"
+                - generic [ref=e356]:
+                  - term [ref=e357]: Winner
+                  - definition [ref=e358]: Kató Péter
+                - generic [ref=e359]:
+                  - term [ref=e360]: Fastest
+                  - definition [ref=e361]: 151,38
+              - generic [ref=e362]:
+                - link "Competition source" [ref=e363] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3606/2026_54.pdf
+                - link "Official result" [ref=e368] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3606/2026_54.pdf
+          - listitem [ref=e373]:
+            - generic [ref=e374]:
+              - generic [ref=e375]: "02"
+              - time [ref=e376]: 2026. febr. 22.
+            - generic [ref=e377]:
+              - heading "Underground IDPA Series 2026 - Breaking Ice" [level=3] [ref=e378]
+              - paragraph [ref=e379]: Szombathely - Underground Lőtér
+              - generic [ref=e380]:
+                - generic [ref=e381]:
+                  - term [ref=e382]: Competitors
+                  - definition [ref=e383]: "40"
+                - generic [ref=e384]:
+                  - term [ref=e385]: Divisions
+                  - definition [ref=e386]: "6"
+                - generic [ref=e387]:
+                  - term [ref=e388]: Winner
+                  - definition [ref=e389]: Kató Péter
+                - generic [ref=e390]:
+                  - term [ref=e391]: Fastest
+                  - definition [ref=e392]: 96,16
+              - generic [ref=e393]:
+                - link "Competition source" [ref=e394] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3870/2026_315.pdf
+                - link "Official result" [ref=e399] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3870/2026_315.pdf
+          - listitem [ref=e404]:
+            - generic [ref=e405]:
+              - generic [ref=e406]: "03"
+              - time [ref=e407]: 2026. márc. 8.
+            - generic [ref=e408]:
+              - heading "IDPA Birthday Cup" [level=3] [ref=e409]
+              - paragraph [ref=e410]: Budapest - Globus lőtér
+              - generic [ref=e411]:
+                - generic [ref=e412]:
+                  - term [ref=e413]: Competitors
+                  - definition [ref=e414]: "56"
+                - generic [ref=e415]:
+                  - term [ref=e416]: Divisions
+                  - definition [ref=e417]: "6"
+                - generic [ref=e418]:
+                  - term [ref=e419]: Winner
+                  - definition [ref=e420]: Koricsánszky Csaba József
+                - generic [ref=e421]:
+                  - term [ref=e422]: Fastest
+                  - definition [ref=e423]: 410,86
+              - generic [ref=e424]:
+                - link "Competition source" [ref=e425] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3607/2026_55.pdf
+                - link "Official result" [ref=e430] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3607/2026_55.pdf
+          - listitem [ref=e435]:
+            - generic [ref=e436]:
+              - generic [ref=e437]: "04"
+              - time [ref=e438]: 2026. márc. 22.
+            - generic [ref=e439]:
+              - heading "IDPA First Shots Match" [level=3] [ref=e440]
+              - paragraph [ref=e441]: Pécs - Élménylövészet - Military és Kalandpark Lőtér
+              - generic [ref=e442]:
+                - generic [ref=e443]:
+                  - term [ref=e444]: Competitors
+                  - definition [ref=e445]: "8"
+                - generic [ref=e446]:
+                  - term [ref=e447]: Divisions
+                  - definition [ref=e448]: "5"
+                - generic [ref=e449]:
+                  - term [ref=e450]: Winner
+                  - definition [ref=e451]: Jobbágy Csaba András
+                - generic [ref=e452]:
+                  - term [ref=e453]: Fastest
+                  - definition [ref=e454]: 258,78
+              - generic [ref=e455]:
+                - link "Competition source" [ref=e456] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3929/2026_373.pdf
+                - link "Official result" [ref=e461] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3929/2026_373.pdf
+          - listitem [ref=e466]:
+            - generic [ref=e467]:
+              - generic [ref=e468]: "05"
+              - time [ref=e469]: 2026. márc. 22.
+            - generic [ref=e470]:
+              - heading "IDPA HÉT VEZÉR 72" [level=3] [ref=e471]
+              - paragraph [ref=e472]: Páty - Pátyi lőtér
+              - generic [ref=e473]:
+                - generic [ref=e474]:
+                  - term [ref=e475]: Competitors
+                  - definition [ref=e476]: "21"
+                - generic [ref=e477]:
+                  - term [ref=e478]: Divisions
+                  - definition [ref=e479]: "6"
+                - generic [ref=e480]:
+                  - term [ref=e481]: Winner
+                  - definition [ref=e482]: Utasi Viktor
+                - generic [ref=e483]:
+                  - term [ref=e484]: Fastest
+                  - definition [ref=e485]: 142,67
+              - generic [ref=e486]:
+                - link "Competition source" [ref=e487] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3944/2026_388.pdf
+                - link "Official result" [ref=e492] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3944/2026_388.pdf
+          - listitem [ref=e497]:
+            - generic [ref=e498]:
+              - generic [ref=e499]: "06"
+              - time [ref=e500]: 2026. ápr. 21.
+            - generic [ref=e501]:
+              - heading "SPEED LANE 5x5 IDPA Osztályozó Minősítő Verseny" [level=3] [ref=e502]
+              - paragraph [ref=e503]: Győrladamér - Pandúr lőtér
+              - generic [ref=e504]:
+                - generic [ref=e505]:
+                  - term [ref=e506]: Competitors
+                  - definition [ref=e507]: "16"
+                - generic [ref=e508]:
+                  - term [ref=e509]: Divisions
+                  - definition [ref=e510]: "5"
+                - generic [ref=e511]:
+                  - term [ref=e512]: Winner
+                  - definition [ref=e513]: Kató Péter
+                - generic [ref=e514]:
+                  - term [ref=e515]: Fastest
+                  - definition [ref=e516]: 0,00
+              - generic [ref=e517]:
+                - link "Competition source" [ref=e518] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3969/2026_412.pdf
+                - link "Official result" [ref=e523] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3969/2026_412.pdf
+          - listitem [ref=e528]:
+            - generic [ref=e529]:
+              - generic [ref=e530]: "07"
+              - time [ref=e531]: 2026. ápr. 26.
+            - generic [ref=e532]:
+              - heading "Underground IDPA Series 2026 - Time to spring" [level=3] [ref=e533]
+              - paragraph [ref=e534]: Vát - Váti Lőtér Lövészpark
+              - generic [ref=e535]:
+                - generic [ref=e536]:
+                  - term [ref=e537]: Competitors
+                  - definition [ref=e538]: "33"
+                - generic [ref=e539]:
+                  - term [ref=e540]: Divisions
+                  - definition [ref=e541]: "5"
+                - generic [ref=e542]:
+                  - term [ref=e543]: Winner
+                  - definition [ref=e544]: Kató Péter
+                - generic [ref=e545]:
+                  - term [ref=e546]: Fastest
+                  - definition [ref=e547]: 1,00
+              - generic [ref=e548]:
+                - link "Competition source" [ref=e549] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3871/2026_316.pdf
+                - link "Official result" [ref=e554] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3871/2026_316.pdf
+          - listitem [ref=e559]:
+            - generic [ref=e560]:
+              - generic [ref=e561]: "08"
+              - time [ref=e562]: 2026. ápr. 26.
+            - generic [ref=e563]:
+              - heading "IDPA HÉT VEZÉR 72" [level=3] [ref=e564]
+              - paragraph [ref=e565]: Páty - Pátyi lőtér
+              - generic [ref=e566]:
+                - generic [ref=e567]:
+                  - term [ref=e568]: Competitors
+                  - definition [ref=e569]: "10"
+                - generic [ref=e570]:
+                  - term [ref=e571]: Divisions
+                  - definition [ref=e572]: "5"
+                - generic [ref=e573]:
+                  - term [ref=e574]: Winner
+                  - definition [ref=e575]: Szántó Csongor
+                - generic [ref=e576]:
+                  - term [ref=e577]: Fastest
+                  - definition [ref=e578]: 175,86
+              - generic [ref=e579]:
+                - link "Competition source" [ref=e580] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3970/2026_413.pdf
+                - link "Official result" [ref=e585] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3970/2026_413.pdf
+          - listitem [ref=e590]:
+            - generic [ref=e591]:
+              - generic [ref=e592]: "09"
+              - time [ref=e593]: 2026. máj. 24.
+            - generic [ref=e594]:
+              - heading "IDPA Into the Green Match & Classifier 72" [level=3] [ref=e595]
+              - paragraph [ref=e596]: Pécs - Élménylövészet - Military és Kalandpark Lőtér
+              - generic [ref=e597]:
+                - generic [ref=e598]:
+                  - term [ref=e599]: Competitors
+                  - definition [ref=e600]: "4"
+                - generic [ref=e601]:
+                  - term [ref=e602]: Divisions
+                  - definition [ref=e603]: "2"
+                - generic [ref=e604]:
+                  - term [ref=e605]: Winner
+                  - definition [ref=e606]: Kósa János
+                - generic [ref=e607]:
+                  - term [ref=e608]: Fastest
+                  - definition [ref=e609]: 182,69
+              - generic [ref=e610]:
+                - link "Competition source" [ref=e611] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3986/2026_429.pdf
+                - link "Official result" [ref=e616] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3986/2026_429.pdf
+          - listitem [ref=e621]:
+            - generic [ref=e622]:
+              - generic [ref=e623]: "10"
+              - time [ref=e624]: 2026. máj. 30.
+            - generic [ref=e625]:
+              - heading "5 FK Csapatépítő IDPA 5X5" [level=3] [ref=e626]
+              - paragraph [ref=e627]: Budapest - Nagyttétny - Budapest - Nagytétényi ORFK. ROKK lőtér
+              - generic [ref=e628]:
+                - generic [ref=e629]:
+                  - term [ref=e630]: Competitors
+                  - definition [ref=e631]: "103"
+                - generic [ref=e632]:
+                  - term [ref=e633]: Divisions
+                  - definition [ref=e634]: "7"
+                - generic [ref=e635]:
+                  - term [ref=e636]: Winner
+                  - definition [ref=e637]: Lovas Csaba
+                - generic [ref=e638]:
+                  - term [ref=e639]: Fastest
+                  - definition [ref=e640]: 22,82
+              - generic [ref=e641]:
+                - link "Competition source" [ref=e642] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3963/2026_406.pdf
+                - link "Official result" [ref=e647] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3963/2026_406.pdf
+          - listitem [ref=e652]:
+            - generic [ref=e653]:
+              - generic [ref=e654]: "11"
+              - time [ref=e655]: 2026. máj. 31.
+            - generic [ref=e656]:
+              - heading "AGRIA IDPA • Clint Eastwood Kupa" [level=3] [ref=e657]
+              - paragraph [ref=e658]: Eger - Kazamata Lőtér
+              - generic [ref=e659]:
+                - generic [ref=e660]:
+                  - term [ref=e661]: Competitors
+                  - definition [ref=e662]: "21"
+                - generic [ref=e663]:
+                  - term [ref=e664]: Divisions
+                  - definition [ref=e665]: "4"
+                - generic [ref=e666]:
+                  - term [ref=e667]: Winner
+                  - definition [ref=e668]: Zentai Viktor
+                - generic [ref=e669]:
+                  - term [ref=e670]: Fastest
+                  - definition [ref=e671]: 110,00
+              - generic [ref=e672]:
+                - link "Competition source" [ref=e673] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3997/2026_440.pdf
+                - link "Official result" [ref=e678] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3997/2026_440.pdf
+          - listitem [ref=e683]:
+            - generic [ref=e684]:
+              - generic [ref=e685]: "12"
+              - time [ref=e686]: 2026. máj. 31.
+            - generic [ref=e687]:
+              - heading "IDPA HÉT VEZÉR 5X5" [level=3] [ref=e688]
+              - paragraph [ref=e689]: Páty - Pátyi lőtér
+              - generic [ref=e690]:
+                - generic [ref=e691]:
+                  - term [ref=e692]: Competitors
+                  - definition [ref=e693]: "13"
+                - generic [ref=e694]:
+                  - term [ref=e695]: Divisions
+                  - definition [ref=e696]: "8"
+                - generic [ref=e697]:
+                  - term [ref=e698]: Winner
+                  - definition [ref=e699]: Badinka Zoltán
+                - generic [ref=e700]:
+                  - term [ref=e701]: Fastest
+                  - definition [ref=e702]: 73,37
+              - generic [ref=e703]:
+                - link "Competition source" [ref=e704] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4020/2026_463.pdf
+                - link "Official result" [ref=e709] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4020/2026_463.pdf
+          - listitem [ref=e714]:
+            - generic [ref=e715]:
+              - generic [ref=e716]: "13"
+              - time [ref=e717]: 2026-06-05 - 06-06
+            - generic [ref=e718]:
+              - heading "Speed Lane Cup 2026" [level=3] [ref=e719]
+              - paragraph [ref=e720]: Budapest - Globus lőtér
+              - generic [ref=e721]:
+                - generic [ref=e722]:
+                  - term [ref=e723]: Competitors
+                  - definition [ref=e724]: "75"
+                - generic [ref=e725]:
+                  - term [ref=e726]: Divisions
+                  - definition [ref=e727]: "7"
+                - generic [ref=e728]:
+                  - term [ref=e729]: Winner
+                  - definition [ref=e730]: Kató Péter
+                - generic [ref=e731]:
+                  - term [ref=e732]: Fastest
+                  - definition [ref=e733]: 87,68
+              - generic [ref=e734]:
+                - link "Competition source" [ref=e735] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3849/2026_294.pdf
+                - link "Official result" [ref=e740] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3849/2026_294.pdf
+          - listitem [ref=e745]:
+            - generic [ref=e746]:
+              - generic [ref=e747]: "14"
+              - time [ref=e748]: 2026. jún. 14.
+            - generic [ref=e749]:
+              - heading "IDPA HÉT VEZÉR 72" [level=3] [ref=e750]
+              - paragraph [ref=e751]: Páty - Pátyi lőtér
+              - generic [ref=e752]:
+                - generic [ref=e753]:
+                  - term [ref=e754]: Competitors
+                  - definition [ref=e755]: "15"
+                - generic [ref=e756]:
+                  - term [ref=e757]: Divisions
+                  - definition [ref=e758]: "7"
+                - generic [ref=e759]:
+                  - term [ref=e760]: Winner
+                  - definition [ref=e761]: Kiss József
+                - generic [ref=e762]:
+                  - term [ref=e763]: Fastest
+                  - definition [ref=e764]: 120,70
+              - generic [ref=e765]:
+                - link "Competition source" [ref=e766] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4035/2026_477.pdf
+                - link "Official result" [ref=e771] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4035/2026_477.pdf
+          - listitem [ref=e776]:
+            - generic [ref=e777]:
+              - generic [ref=e778]: "15"
+              - time [ref=e779]: 2026. jún. 21.
+            - generic [ref=e780]:
+              - heading "Underground IDPA Series 2026 - Prep for the European" [level=3] [ref=e781]
+              - paragraph [ref=e782]: Vát - Váti Lőtér Lövészpark
+              - generic [ref=e783]:
+                - generic [ref=e784]:
+                  - term [ref=e785]: Competitors
+                  - definition [ref=e786]: "23"
+                - generic [ref=e787]:
+                  - term [ref=e788]: Divisions
+                  - definition [ref=e789]: "5"
+                - generic [ref=e790]:
+                  - term [ref=e791]: Winner
+                  - definition [ref=e792]: Németh Mátyás István
+                - generic [ref=e793]:
+                  - term [ref=e794]: Fastest
+                  - definition [ref=e795]: 185,51
+              - generic [ref=e796]:
+                - link "Competition source" [ref=e797] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3872/2026_317.pdf
+                - link "Official result" [ref=e802] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3872/2026_317.pdf
+          - listitem [ref=e807]:
+            - generic [ref=e808]:
+              - generic [ref=e809]: "16"
+              - time [ref=e810]: 2026. júl. 18.
+            - generic [ref=e811]:
+              - heading "IDPA HÉT VEZÉR Crazy Game" [level=3] [ref=e812]
+              - paragraph [ref=e813]: Páty - Pátyi lőtér
+              - generic [ref=e814]:
+                - generic [ref=e815]:
+                  - term [ref=e816]: Competitors
+                  - definition [ref=e817]: "39"
+                - generic [ref=e818]:
+                  - term [ref=e819]: Divisions
+                  - definition [ref=e820]: "5"
+                - generic [ref=e821]:
+                  - term [ref=e822]: Winner
+                  - definition [ref=e823]: Kiss József
+                - generic [ref=e824]:
+                  - term [ref=e825]: Fastest
+                  - definition [ref=e826]: 158,15
+              - generic [ref=e827]:
+                - link "Competition source" [ref=e828] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4063/2026_505.pdf
+                - link "Official result" [ref=e833] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4063/2026_505.pdf
+          - listitem [ref=e838]:
+            - generic [ref=e839]:
+              - generic [ref=e840]: "17"
+              - time [ref=e841]: 2026. júl. 26.
+            - generic [ref=e842]:
+              - heading "IDPA Operation Heatwave" [level=3] [ref=e843]
+              - paragraph [ref=e844]: Pécs - Élménylövészet - Military és Kalandpark Lőtér
+              - generic [ref=e845]:
+                - generic [ref=e846]:
+                  - term [ref=e847]: Competitors
+                  - definition [ref=e848]: "12"
+                - generic [ref=e849]:
+                  - term [ref=e850]: Divisions
+                  - definition [ref=e851]: "5"
+                - generic [ref=e852]:
+                  - term [ref=e853]: Winner
+                  - definition [ref=e854]: Mátai Mihály
+                - generic [ref=e855]:
+                  - term [ref=e856]: Fastest
+                  - definition [ref=e857]: 119,61
+              - generic [ref=e858]:
+                - link "Competition source" [ref=e859] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4058/2026_500.pdf
+                - link "Official result" [ref=e864] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/4058/2026_500.pdf
+          - listitem [ref=e869]:
+            - generic [ref=e870]:
+              - generic [ref=e871]: "18"
+              - time [ref=e872]: 2026. aug. 30.
+            - generic [ref=e873]:
+              - heading "Underground IDPA Series 2026 - Still hot to shoot" [level=3] [ref=e874]
+              - paragraph [ref=e875]: Vát - Váti Lőtér Lövészpark
+              - generic [ref=e876]:
+                - generic [ref=e877]:
+                  - term [ref=e878]: Competitors
+                  - definition [ref=e879]: "26"
+                - generic [ref=e880]:
+                  - term [ref=e881]: Divisions
+                  - definition [ref=e882]: "5"
+                - generic [ref=e883]:
+                  - term [ref=e884]: Winner
+                  - definition [ref=e885]: Kató Péter
+                - generic [ref=e886]:
+                  - term [ref=e887]: Fastest
+                  - definition [ref=e888]: 123,40
+              - generic [ref=e889]:
+                - link "Competition source" [ref=e890] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3873/2026_318.pdf
+                - link "Official result" [ref=e895] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3873/2026_318.pdf
+          - listitem [ref=e900]:
+            - generic [ref=e901]:
+              - generic [ref=e902]: "19"
+              - time [ref=e903]: 2026-09-05 - 09-06
+            - generic [ref=e904]:
+              - heading "IDPA Balkan Cup 2026" [level=3] [ref=e905]
+              - paragraph [ref=e906]: Fót - BTK Shooting Arena
+              - generic [ref=e907]:
+                - generic [ref=e908]:
+                  - term [ref=e909]: Competitors
+                  - definition [ref=e910]: "178"
+                - generic [ref=e911]:
+                  - term [ref=e912]: Divisions
+                  - definition [ref=e913]: "8"
+                - generic [ref=e914]:
+                  - term [ref=e915]: Winner
+                  - definition [ref=e916]: Momcilovic, Ljubisa
+                - generic [ref=e917]:
+                  - term [ref=e918]: Fastest
+                  - definition [ref=e919]: 1,00
+              - generic [ref=e920]:
+                - link "Competition source" [ref=e921] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3614/2026_62.pdf
+                - link "Official result" [ref=e926] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/eredmeny/3614/2026_62.pdf
+          - listitem [ref=e931]:
+            - generic [ref=e932]:
+              - generic [ref=e933]: "20"
+              - time [ref=e934]: 2026. okt. 11.
+            - generic [ref=e935]:
+              - heading "IDPA Stay'in Alive 2026" [level=3] [ref=e936]
+              - paragraph [ref=e937]: Budapest - Globus lőtér
+              - generic [ref=e938]:
+                - generic [ref=e939]:
+                  - term [ref=e940]: Competitors
+                  - definition [ref=e941]: "0"
+                - generic [ref=e942]:
+                  - term [ref=e943]: Divisions
+                  - definition [ref=e944]: "0"
+                - generic [ref=e945]:
+                  - term [ref=e946]: Winner
+                  - definition [ref=e947]: N/A
+                - generic [ref=e948]:
+                  - term [ref=e949]: Fastest
+                  - definition [ref=e950]: N/A
+              - generic [ref=e951]:
+                - link "Competition source" [ref=e952] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/racecalendar/3615
+                - generic [ref=e957]: Official result PDF not found
+          - listitem [ref=e958]:
+            - generic [ref=e959]:
+              - generic [ref=e960]: "21"
+              - time [ref=e961]: 2026. okt. 24.
+            - generic [ref=e962]:
+              - heading "IDPA HÉT VEZÉR Halloween" [level=3] [ref=e963]
+              - paragraph [ref=e964]: Páty - Pátyi lőtér
+              - generic [ref=e965]:
+                - generic [ref=e966]:
+                  - term [ref=e967]: Competitors
+                  - definition [ref=e968]: "0"
+                - generic [ref=e969]:
+                  - term [ref=e970]: Divisions
+                  - definition [ref=e971]: "0"
+                - generic [ref=e972]:
+                  - term [ref=e973]: Winner
+                  - definition [ref=e974]: N/A
+                - generic [ref=e975]:
+                  - term [ref=e976]: Fastest
+                  - definition [ref=e977]: N/A
+              - generic [ref=e978]:
+                - link "Competition source" [ref=e979] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/racecalendar/4166
+                - generic [ref=e984]: Official result PDF not found
+          - listitem [ref=e985]:
+            - generic [ref=e986]:
+              - generic [ref=e987]: "22"
+              - time [ref=e988]: 2026. okt. 25.
+            - generic [ref=e989]:
+              - heading "Underground IDPA Series 2026 - Almost HALLOWEEN" [level=3] [ref=e990]
+              - paragraph [ref=e991]: Szombathely - Underground Lőtér
+              - generic [ref=e992]:
+                - generic [ref=e993]:
+                  - term [ref=e994]: Competitors
+                  - definition [ref=e995]: "0"
+                - generic [ref=e996]:
+                  - term [ref=e997]: Divisions
+                  - definition [ref=e998]: "0"
+                - generic [ref=e999]:
+                  - term [ref=e1000]: Winner
+                  - definition [ref=e1001]: N/A
+                - generic [ref=e1002]:
+                  - term [ref=e1003]: Fastest
+                  - definition [ref=e1004]: N/A
+              - generic [ref=e1005]:
+                - link "Competition source" [ref=e1006] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/racecalendar/3874
+                - generic [ref=e1011]: Official result PDF not found
+          - listitem [ref=e1012]:
+            - generic [ref=e1013]:
+              - generic [ref=e1014]: "23"
+              - time [ref=e1015]: 2026. nov. 15.
+            - generic [ref=e1016]:
+              - heading "IDPA Winter is coming 2026" [level=3] [ref=e1017]
+              - paragraph [ref=e1018]: Budapest - Globus lőtér
+              - generic [ref=e1019]:
+                - generic [ref=e1020]:
+                  - term [ref=e1021]: Competitors
+                  - definition [ref=e1022]: "0"
+                - generic [ref=e1023]:
+                  - term [ref=e1024]: Divisions
+                  - definition [ref=e1025]: "0"
+                - generic [ref=e1026]:
+                  - term [ref=e1027]: Winner
+                  - definition [ref=e1028]: N/A
+                - generic [ref=e1029]:
+                  - term [ref=e1030]: Fastest
+                  - definition [ref=e1031]: N/A
+              - generic [ref=e1032]:
+                - link "Competition source" [ref=e1033] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/racecalendar/3616
+                - generic [ref=e1038]: Official result PDF not found
+          - listitem [ref=e1039]:
+            - generic [ref=e1040]:
+              - generic [ref=e1041]: "24"
+              - time [ref=e1042]: 2026. dec. 6.
+            - generic [ref=e1043]:
+              - heading "IDPA Central European championship 4th round" [level=3] [ref=e1044]
+              - paragraph [ref=e1045]: Szombathely - Underground Lőtér
+              - generic [ref=e1046]:
+                - generic [ref=e1047]:
+                  - term [ref=e1048]: Competitors
+                  - definition [ref=e1049]: "0"
+                - generic [ref=e1050]:
+                  - term [ref=e1051]: Divisions
+                  - definition [ref=e1052]: "0"
+                - generic [ref=e1053]:
+                  - term [ref=e1054]: Winner
+                  - definition [ref=e1055]: N/A
+                - generic [ref=e1056]:
+                  - term [ref=e1057]: Fastest
+                  - definition [ref=e1058]: N/A
+              - generic [ref=e1059]:
+                - link "Competition source" [ref=e1060] [cursor=pointer]:
+                  - /url: https://portal.mdlsz.com/racecalendar/3932
+                - generic [ref=e1065]: Official result PDF not found
+      - region [ref=e1066]:
+        - generic [ref=e1068]:
+          - heading "Season insights" [level=2] [ref=e1069]
+          - paragraph [ref=e1070]: Highlights are calculated from the normalized season results; unavailable values remain marked as N/A.
+        - generic [ref=e1071]:
+          - generic [ref=e1072]:
+            - generic [ref=e1073]:
+              - term [ref=e1074]: The dominator
+              - definition [ref=e1075]: Kató Péter
+            - generic [ref=e1076]:
+              - term [ref=e1077]: Speed leader
+              - definition [ref=e1078]: Lévai Róbert
+            - generic [ref=e1079]:
+              - term [ref=e1080]: Most appearances
+              - definition [ref=e1081]: Kató Péter
+            - generic [ref=e1082]:
+              - term [ref=e1083]: Most consistent
+              - definition [ref=e1084]: Sohajda Zoltán
+            - generic [ref=e1085]:
+              - term [ref=e1086]: Rising star
+              - definition [ref=e1087]: Nekifor Zsolt
+            - generic [ref=e1088]:
+              - term [ref=e1089]: Largest competition
+              - definition [ref=e1090]: IDPA Balkan Cup 2026
+            - generic [ref=e1091]:
+              - term [ref=e1092]: Leading club
+              - definition [ref=e1093]: SPEED LANE LSE.
+            - generic [ref=e1094]:
+              - term [ref=e1095]: Podium leader
+              - definition [ref=e1096]: Kató Péter
+          - generic [ref=e1097]:
+            - link "Scoring methodology" [ref=e1098] [cursor=pointer]:
+              - /url: /methodology
+            - link "Official MDLSZ calendar" [ref=e1099] [cursor=pointer]:
+              - /url: https://portal.mdlsz.com/racecalendar?year=2026
+      - region [ref=e1100]:
+        - generic [ref=e1102]:
+          - heading "Data quality and traceability" [level=2] [ref=e1103]
+          - paragraph [ref=e1104]: Pipeline failures, incomplete source records, and normalization ambiguities remain visible.
+        - generic [ref=e1105]:
+          - generic [ref=e1106]:
+            - heading "Processing quality" [level=3] [ref=e1107]
+            - paragraph [ref=e1108]: Counts from this season's extraction and normalization run.
+            - generic [ref=e1109]:
+              - generic [ref=e1110]:
+                - term [ref=e1111]: total Pdfs Discovered
+                - definition [ref=e1112]: "19"
+              - generic [ref=e1113]:
+                - term [ref=e1114]: successfully Processed Pdfs
+                - definition [ref=e1115]: "19"
+              - generic [ref=e1116]:
+                - term [ref=e1117]: failed Pdfs
+                - definition [ref=e1118]: "0"
+              - generic [ref=e1119]:
+                - term [ref=e1120]: total Extracted Rows
+                - definition [ref=e1121]: "797"
+              - generic [ref=e1122]:
+                - term [ref=e1123]: valid Competitor Rows
+                - definition [ref=e1124]: "797"
+              - generic [ref=e1125]:
+                - term [ref=e1126]: rows With Valid Time
+                - definition [ref=e1127]: "784"
+              - generic [ref=e1128]:
+                - term [ref=e1129]: rows With Missing Team
+                - definition [ref=e1130]: "700"
+              - generic [ref=e1131]:
+                - term [ref=e1132]: rows With Parsing Errors
+                - definition [ref=e1133]: "9"
+          - generic [ref=e1134]:
+            - heading "Results, linked back" [level=3] [ref=e1135]
+            - paragraph [ref=e1136]: Season facts remain traceable to their official source records.
+            - generic [ref=e1137]:
+              - generic [ref=e1138]:
+                - term [ref=e1139]: Competitions discovered
+                - definition [ref=e1140]: "24"
+              - generic [ref=e1141]:
+                - term [ref=e1142]: Normalized result rows
+                - definition [ref=e1143]: "797"
+              - generic [ref=e1144]:
+                - term [ref=e1145]: Rows with parsing issues
+                - definition [ref=e1146]: "9"
+              - generic [ref=e1147]:
+                - term [ref=e1148]: Ambiguous competitor identities
+                - definition [ref=e1149]: "0"
+            - paragraph [ref=e1150]: Raw times are not treated as cross-competition comparisons unless normalized against the fastest valid time within each competition.
+    - contentinfo [ref=e1151]:
+      - generic [ref=e1152]:
+        - generic [ref=e1153]:
+          - generic [ref=e1154]:
+            - paragraph [ref=e1155]:
+              - text: HERO OF
+              - strong [ref=e1156]: IDPA.
+            - paragraph [ref=e1157]: Season results, traceable to their official sources.
+          - generic "Governing organizations" [ref=e1158]:
+            - link "Visit MDLSZ website" [ref=e1159] [cursor=pointer]:
+              - /url: https://mdlsz.com/
+              - img "Magyar Dinamikus Lövészsport Szövetség" [ref=e1161]
+              - generic [ref=e1162]: MDLSZ
+            - link "Visit IDPA website" [ref=e1166] [cursor=pointer]:
+              - /url: https://www.idpa.com/
+              - img "International Defensive Pistol Association" [ref=e1168]
+              - generic [ref=e1169]: IDPA
+        - generic [ref=e1173]:
+          - generic [ref=e1174]:
+            - heading "MDLSZ disciplines" [level=2] [ref=e1175]
+            - link "Official federation pages" [ref=e1176] [cursor=pointer]:
+              - /url: https://mdlsz.com/
+          - list [ref=e1177]:
+            - listitem [ref=e1178]:
+              - link "IPSC discipline mark IPSC" [ref=e1179] [cursor=pointer]:
+                - /url: https://mdlsz.com/ipsc-szakag/
+                - img "IPSC discipline mark" [ref=e1181]
+                - generic [ref=e1182]: IPSC
+            - listitem [ref=e1186]:
+              - link "IMSSU discipline mark IMSSU" [ref=e1187] [cursor=pointer]:
+                - /url: https://mdlsz.com/imssu-szakag/
+                - img "IMSSU discipline mark" [ref=e1189]
+                - generic [ref=e1190]: IMSSU
+            - listitem [ref=e1194]:
+              - link "IDPA discipline mark IDPA" [ref=e1195] [cursor=pointer]:
+                - /url: https://mdlsz.com/idpa-szakag/
+                - img "IDPA discipline mark" [ref=e1197]
+                - generic [ref=e1198]: IDPA
+            - listitem [ref=e1202]:
+              - link "Gyorskombinált discipline mark Gyorskombinált" [ref=e1203] [cursor=pointer]:
+                - /url: https://mdlsz.com/gyorskombinalt-szakag/
+                - img "Gyorskombinált discipline mark" [ref=e1205]
+                - generic [ref=e1206]: Gyorskombinált
+            - listitem [ref=e1210]:
+              - link "Steel Challenge discipline mark Steel Challenge" [ref=e1211] [cursor=pointer]:
+                - /url: https://mdlsz.com/steel-challenge-szakag/
+                - img "Steel Challenge discipline mark" [ref=e1213]
+                - generic [ref=e1214]: Steel Challenge
+            - listitem [ref=e1218]:
+              - link "Gyorspont és hazai versenyszámok discipline mark Gyorspont és hazai versenyszámok" [ref=e1219] [cursor=pointer]:
+                - /url: https://mdlsz.com/gyorspont-es-hazaiversenyszamok-szakag/
+                - img "Gyorspont és hazai versenyszámok discipline mark" [ref=e1221]
+                - generic [ref=e1222]: Gyorspont és hazai versenyszámok
+            - listitem [ref=e1226]:
+              - link "IPRF discipline mark IPRF" [ref=e1227] [cursor=pointer]:
+                - /url: https://mdlsz.com/iprf-szakag/
+                - img "IPRF discipline mark" [ref=e1229]
+                - generic [ref=e1230]: IPRF
+        - generic [ref=e1234]:
+          - paragraph [ref=e1235]: "Source records: official MDLSZ competition calendar and result PDFs."
+          - generic [ref=e1236]:
+            - link "Data quality" [ref=e1237] [cursor=pointer]:
+              - /url: /2026#data-quality
+            - link "Methodology" [ref=e1238] [cursor=pointer]:
+              - /url: /methodology
+            - generic [ref=e1239]: © 2026 Hero of IDPA
+  - button "Open Next.js Dev Tools" [ref=e1245] [cursor=pointer]
+  - alert [ref=e1779]
+  - generic [aria-hidden] [ref=e1780]: "1"

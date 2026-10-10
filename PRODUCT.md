@@ -30,7 +30,7 @@ season, such as `/2026`.
 
 ## Capabilities and Constraints
 
-- Competitor, club, division, competition, and participation filtering.
+- Competitor standings filtered by competition, division, and club.
 - Season leaderboards, trends, charts, competition results, derived insights,
   methodology, and data-quality reporting.
 - Season inputs and computed dashboard data are JSON generated locally by the

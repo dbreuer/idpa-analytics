@@ -1,0 +1,14 @@
+[     425ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[     474ms] [LOG] [HMR] connected @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  482594ms] [ERROR] WebSocket connection to 'ws://localhost:3002/_next/hmr?id=IkezqfJAglc4DP0Af3GNM' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_client_0_90u2t._.js:16348
+[  484073ms] [LOG] [HMR] connected @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  485199ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  485233ms] [LOG] [HMR] connected @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  569733ms] [ERROR] WebSocket connection to 'ws://localhost:3002/_next/hmr?id=W_3Iyg_TVpHCZRCVJ4nEx' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_client_0_90u2t._.js:16348
+[  570735ms] [ERROR] WebSocket connection to 'ws://localhost:3002/_next/hmr?id=W_3Iyg_TVpHCZRCVJ4nEx' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_client_0_90u2t._.js:16348
+[  571737ms] [ERROR] WebSocket connection to 'ws://localhost:3002/_next/hmr?id=W_3Iyg_TVpHCZRCVJ4nEx' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_client_0_90u2t._.js:16348
+[  572740ms] [ERROR] WebSocket connection to 'ws://localhost:3002/_next/hmr?id=W_3Iyg_TVpHCZRCVJ4nEx' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_client_0_90u2t._.js:16348
+[  573742ms] [ERROR] WebSocket connection to 'ws://localhost:3002/_next/hmr?id=W_3Iyg_TVpHCZRCVJ4nEx' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_client_0_90u2t._.js:16348
+[  578746ms] [LOG] [HMR] connected @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  581395ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  581428ms] [LOG] [HMR] connected @ http://localhost:3002/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776

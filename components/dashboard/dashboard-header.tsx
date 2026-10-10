@@ -17,11 +17,9 @@ interface DashboardHeaderProps {
   competition: string;
   division: string;
   club: string;
-  minimumParticipation: number;
   onCompetitionChange: (value: string) => void;
   onDivisionChange: (value: string) => void;
   onClubChange: (value: string) => void;
-  onMinimumParticipationChange: (value: number) => void;
 }
 
 const filterSelectClass =
@@ -73,11 +71,9 @@ export function DashboardHeader({
   competition,
   division,
   club,
-  minimumParticipation,
   onCompetitionChange,
   onDivisionChange,
   onClubChange,
-  onMinimumParticipationChange,
 }: DashboardHeaderProps) {
   const router = useRouter();
   const headerRef = useRef<HTMLElement>(null);
@@ -89,7 +85,6 @@ export function DashboardHeader({
     competition !== "all",
     division !== "all",
     club !== "all",
-    minimumParticipation > 1,
   ].filter(Boolean).length;
 
   useEffect(() => {
@@ -160,7 +155,7 @@ export function DashboardHeader({
       <header ref={headerRef} className="site-header">
         <div className="filter-bar">
           <div className="filter-bar-inner">
-            <div className="hidden w-full grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)_minmax(0,1fr)_minmax(0,1.2fr)] items-end gap-3 lg:grid lg:gap-5">
+            <div className="hidden w-full grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)_minmax(0,1fr)] items-end gap-3 lg:grid lg:gap-5">
               <FilterSelect
                 id="competition-filter"
                 label="Competition"
@@ -185,24 +180,6 @@ export function DashboardHeader({
                 options={clubOptions.map((option) => ({ value: option, label: option === "all" ? "All clubs" : option }))}
                 onChange={onClubChange}
               />
-              <label className={filterLabelClass} htmlFor="participation-filter">
-                Minimum participation
-                <span className="mt-1.5 flex items-center gap-3 rounded-[0.65rem] border border-[var(--rule)] bg-[var(--paper)] px-3 py-1.5">
-                  <input
-                    id="participation-filter"
-                    aria-valuetext={`${minimumParticipation}${minimumParticipation === 5 ? " or more" : ""} competitions`}
-                    type="range"
-                    min={1}
-                    max={5}
-                    value={minimumParticipation}
-                    onChange={(event) => onMinimumParticipationChange(Number(event.target.value))}
-                    className="w-full accent-[var(--signal)]"
-                  />
-                  <output htmlFor="participation-filter" className="min-w-6 text-right text-sm font-bold tabular-nums text-[var(--ink)]">
-                    {minimumParticipation}{minimumParticipation === 5 ? "+" : ""}
-                  </output>
-                </span>
-              </label>
             </div>
 
             <div className="lg:hidden">
@@ -254,24 +231,6 @@ export function DashboardHeader({
                       options={clubOptions.map((option) => ({ value: option, label: option === "all" ? "All clubs" : option }))}
                       onChange={onClubChange}
                     />
-                    <label className={filterLabelClass} htmlFor="mobile-participation-filter">
-                      Minimum participation
-                      <span className="mt-1.5 flex items-center gap-3 rounded-[0.65rem] border border-[var(--rule)] bg-[var(--paper)] px-3 py-1.5">
-                        <input
-                          id="mobile-participation-filter"
-                          aria-valuetext={`${minimumParticipation}${minimumParticipation === 5 ? " or more" : ""} competitions`}
-                          type="range"
-                          min={1}
-                          max={5}
-                          value={minimumParticipation}
-                          onChange={(event) => onMinimumParticipationChange(Number(event.target.value))}
-                          className="w-full accent-[var(--signal)]"
-                        />
-                        <output htmlFor="mobile-participation-filter" className="min-w-6 text-right text-sm font-bold tabular-nums text-[var(--ink)]">
-                          {minimumParticipation}{minimumParticipation === 5 ? "+" : ""}
-                        </output>
-                      </span>
-                    </label>
                   </div>
                 </div>
               )}

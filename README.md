@@ -135,7 +135,7 @@ The original raw value is preserved. Failed parsing is surfaced via `parseError`
 - Full-width season hero and latest season totals
 - MDLSZ and IDPA organization links, plus official MDLSZ discipline logo directory
 - Separate season URLs, year navigation, and a latest-season homepage
-- Global competition, division, club, and participation filters
+- Competition, division, and club filters
 - Top competitor leaderboard
 - Club power and club strength ranking
 - Competitor detail trends
