@@ -104,9 +104,10 @@ scoring adapter; IDPA retains its existing statistics behavior.
 - `data/club-aliases.json` (shared across seasons)
 
 Each artifact records its discipline, season, and schema version. Only complete
-seasons under a published discipline are prerendered. The repository currently
-publishes IDPA seasons only. Other registered disciplines have noindex “coming
-soon” landing pages; unsupported season and methodology routes return 404.
+seasons with complete ingestion data are prerendered. IDPA has validated scored
+rankings; disciplines with source data show noindex descriptive reports without
+calculated rankings. Disciplines without season data show a noindex “coming soon”
+page; unsupported season and methodology routes return 404.
 Malformed JSON, mixed seasons, mixed disciplines, and unsupported schemas fail
 instead of producing misleading empty statistics.
 

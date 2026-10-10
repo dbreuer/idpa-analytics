@@ -31,6 +31,7 @@ const disciplines = loadModule(
   { "@/lib/associations": associations },
 );
 const paths = loadModule(fs.readFileSync(new URL("../lib/discipline-paths.ts", import.meta.url), "utf8"));
+const sourceSummary = loadModule(fs.readFileSync(new URL("../lib/discipline-summary.ts", import.meta.url), "utf8"));
 const utils = loadModule(fs.readFileSync(new URL("../lib/utils.ts", import.meta.url), "utf8"));
 
 test("Hungarian labels preserve section identifiers and cover desktop and mobile filters", () => {
@@ -129,6 +130,25 @@ test("discipline URLs centralize season and canonical paths on the chosen produc
   assert.equal(paths.methodologyPath("idpa"), "/idpa/methodology");
   assert.equal(paths.canonicalUrl("/"), "https://statisztika.lovesznaplo.hu");
   assert.equal(paths.canonicalUrl("/idpa/2026"), "https://statisztika.lovesznaplo.hu/idpa/2026");
+});
+
+test("descriptive summaries count source rows, names, clubs, and divisions without rankings", () => {
+  const summary = sourceSummary.summarizeSourceResults([
+    { normalizedCompetitorName: "alex-one", competitorName: "Alex One", normalizedClub: "club-a", club: "Club A", division: "Minor" },
+    { normalizedCompetitorName: "alex-one", competitorName: "Alex One", normalizedClub: "club-a", club: "Club A", division: "Minor" },
+    { normalizedCompetitorName: "bea-two", competitorName: "Bea Two", normalizedClub: "club-b", club: "Club B", division: "Major" },
+    { normalizedCompetitorName: "unknown-three", competitorName: "Unknown Three" },
+  ]);
+  assert.equal(summary.resultRows, 4);
+  assert.equal(summary.distinctNameIdentifiers, 3);
+  assert.equal(summary.representedClubs, 2);
+  assert.equal(summary.rowsWithoutDivision, 1);
+  assert.deepEqual(Array.from(summary.divisionCounts, (entry) => [entry.division, entry.entries]), [
+    ["Major", 1],
+    ["Minor", 2],
+  ]);
+  assert.equal("rankings" in summary, false);
+  assert.equal("scores" in summary, false);
 });
 
 test("legacy host and old root year URLs redirect directly to the discipline path", () => {

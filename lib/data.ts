@@ -11,37 +11,42 @@ import type {
 } from "@/lib/types";
 
 const dataDirectory = path.join(process.cwd(), "data");
-const seasonFiles = [
+const ingestionFiles = [
   "competitions.json",
   "raw-extracted-results.json",
   "results.json",
   "data-quality.json",
-  "statistics.json",
 ];
 
 function readJsonFile<T>(directory: string, fileName: string): T {
   return JSON.parse(fs.readFileSync(path.join(directory, fileName), "utf8")) as T;
 }
 
-function isCompleteSeason(directory: string) {
-  return seasonFiles.every((fileName) => fs.existsSync(path.join(directory, fileName)));
+function isCompleteSeason(directory: string, hasAnalytics: boolean) {
+  const hasIngestionFiles = ingestionFiles.every((fileName) => fs.existsSync(path.join(directory, fileName)));
+  const hasStatistics = fs.existsSync(path.join(directory, "statistics.json"));
+  return hasIngestionFiles && (hasAnalytics ? hasStatistics : !hasStatistics);
 }
 
 export function getAvailableYears(discipline: DisciplineSlug): number[] {
   const definition = getDiscipline(discipline);
-  if (!definition || !definition.published) return [];
+  if (!definition) return [];
 
   const disciplineDirectory = path.join(dataDirectory, discipline);
   if (!fs.existsSync(disciplineDirectory)) return [];
   return fs.readdirSync(disciplineDirectory, { withFileTypes: true })
     .filter((entry) => entry.isDirectory() && /^[1-9]\d{3}$/.test(entry.name))
     .filter((entry) => {
-      if (isCompleteSeason(path.join(disciplineDirectory, entry.name))) return true;
+      if (isCompleteSeason(path.join(disciplineDirectory, entry.name), definition.analytics === "idpa")) return true;
       console.warn(`Season ${entry.name} for ${discipline} is incomplete and will not be published.`);
       return false;
     })
     .map((entry) => Number(entry.name))
     .sort((a, b) => b - a);
+}
+
+export function getDisciplinesWithData() {
+  return disciplineDefinitions.filter((discipline) => getAvailableYears(discipline.slug).length > 0);
 }
 
 export function getPublishedDisciplines() {
@@ -55,9 +60,7 @@ export function loadDashboardData(discipline: string, year: number) {
     throw new Error(`Unknown discipline: ${discipline}`);
   }
   const definition = getDiscipline(discipline);
-  if (!definition?.published) {
-    throw new Error(`Discipline ${discipline} does not have a published analytics adapter.`);
-  }
+  if (!definition) throw new Error(`Unknown discipline: ${discipline}`);
   if (!getAvailableYears(discipline).includes(year)) {
     throw new Error(`Season ${year} for ${discipline} is not available.`);
   }
@@ -66,15 +69,19 @@ export function loadDashboardData(discipline: string, year: number) {
   const competitionsFile = readJsonFile<CompetitionDiscoveryFile>(directory, "competitions.json");
   const resultsFile = readJsonFile<ResultsFile>(directory, "results.json");
   const qualityFile = readJsonFile<QualityFile>(directory, "data-quality.json");
-  const statisticsFile = readJsonFile<StatisticsFile>(directory, "statistics.json");
+  const statisticsPath = path.join(directory, "statistics.json");
+  const statisticsFile = fs.existsSync(statisticsPath)
+    ? readJsonFile<StatisticsFile>(directory, "statistics.json")
+    : null;
   const aliases = readJsonFile<Record<string, string>>(dataDirectory, "club-aliases.json");
 
-  for (const [label, file] of [
+  const files = [
     ["competitions.json", competitionsFile],
     ["results.json", resultsFile],
     ["data-quality.json", qualityFile],
-    ["statistics.json", statisticsFile],
-  ] as const) {
+    ...(statisticsFile ? [["statistics.json", statisticsFile] as const] : []),
+  ] as const;
+  for (const [label, file] of files) {
     if (file.discipline !== discipline) {
       throw new Error(`${label} discipline metadata does not match ${discipline}.`);
     }
@@ -90,9 +97,11 @@ export function loadDashboardData(discipline: string, year: number) {
     throw new Error(`Season ${year} for ${discipline} contains competition or result dates from another year.`);
   }
 
-  const statistics = buildStatistics(competitionsFile.competitions, resultsFile.results, {
-    clubAliases: aliases,
-  });
+  const statistics = definition.analytics === "idpa"
+    ? buildStatistics(competitionsFile.competitions, resultsFile.results, {
+        clubAliases: aliases,
+      })
+    : null;
 
   return {
     discipline: definition,

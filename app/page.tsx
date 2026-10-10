@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { disciplinePath } from "@/lib/discipline-paths";
 import { disciplineDefinitions, getDisciplineMark } from "@/lib/disciplines";
-import { getPublishedDisciplines } from "@/lib/data";
+import { getDisciplinesWithData, getPublishedDisciplines } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Magyar sportlövészeti eredmények és ranglisták",
@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   const published = new Set(getPublishedDisciplines().map((discipline) => discipline.slug));
+  const withSeasonData = new Set(getDisciplinesWithData().map((discipline) => discipline.slug));
 
   return (
     <>
@@ -52,7 +53,11 @@ export default function HomePage() {
                         <span className="min-w-0">
                           <CardTitle>{discipline.name}</CardTitle>
                           <CardDescription className="mt-1">
-                            {isPublished ? "Eredmények és szezonranglisták" : "A statisztikai oldal készül"}
+                            {isPublished
+                              ? "Eredmények és szezonranglisták"
+                              : withSeasonData.has(discipline.slug)
+                                ? "Forrásalapú eredménykimutatás"
+                                : "Az adatfeldolgozás előkészítés alatt áll"}
                           </CardDescription>
                         </span>
                         <ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0 text-[var(--signal)]" />

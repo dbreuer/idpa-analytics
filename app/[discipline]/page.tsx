@@ -28,12 +28,25 @@ async function resolveDiscipline(params: Promise<{ discipline: string }>) {
 export async function generateMetadata({ params }: PageProps<"/[discipline]">): Promise<Metadata> {
   const discipline = await resolveDiscipline(params);
   const latestYear = getAvailableYears(discipline.slug)[0];
-  if (discipline.published && latestYear) {
-    return {
-      title: `${discipline.name} ${latestYear} · szezoneredmények`,
-      description: `A ${latestYear}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái.`,
+  if (latestYear) {
+    const metadata: Metadata = {
+      title: discipline.analytics === "idpa"
+        ? `${discipline.name} ${latestYear} · szezoneredmények`
+        : `${discipline.name} ${latestYear} · eredménykimutatás`,
+      description: discipline.analytics === "idpa"
+        ? `A ${latestYear}. évi magyarországi ${discipline.name}-versenyek rangsorai és statisztikái.`
+        : `A ${latestYear}. évi ${discipline.name}-versenyek forrásból normalizált eredménykimutatása, rangsorolás nélkül.`,
       alternates: { canonical: canonicalUrl(seasonPath(discipline.slug, latestYear)) },
     };
+    if (discipline.analytics !== "idpa") {
+      metadata.robots = { index: false, follow: true, googleBot: { index: false, follow: true } };
+    } else {
+      metadata.openGraph = {
+        title: `${discipline.name} ${latestYear} · szezonstatisztikák`,
+        description: `Versenyzői rangsorok, szezonadatok és hivatalos eredményforrások.`,
+      };
+    }
+    return metadata;
   }
   return {
     title: `${discipline.name} · statisztika hamarosan`,
@@ -53,7 +66,7 @@ export default async function DisciplinePage({ params }: PageProps<"/[discipline
   const years = getAvailableYears(discipline.slug);
   const latestYear = years[0];
   if (!mark) throw new Error(`Missing official discipline logo metadata for ${discipline.slug}.`);
-  if (discipline.published && latestYear) redirect(seasonPath(discipline.slug, latestYear));
+  if (latestYear) redirect(seasonPath(discipline.slug, latestYear));
 
   return (
     <>

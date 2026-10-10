@@ -29,12 +29,12 @@ function fixture(t) {
       : name === "@/lib/disciplines"
         ? {
             disciplineDefinitions: [
-              { slug: "idpa", published: true },
-              { slug: "ipsc", published: false },
+              { slug: "idpa", published: true, analytics: "idpa" },
+              { slug: "ipsc", published: false, analytics: "unsupported" },
             ],
             getDiscipline: (slug) => slug === "idpa"
-              ? { slug: "idpa", published: true }
-              : slug === "ipsc" ? { slug: "ipsc", published: false } : undefined,
+              ? { slug: "idpa", published: true, analytics: "idpa" }
+              : slug === "ipsc" ? { slug: "ipsc", published: false, analytics: "unsupported" } : undefined,
             isDisciplineSlug: (slug) => ["idpa", "ipsc"].includes(slug),
           }
       : { "node:fs": fs, "node:path": path }[name],
@@ -55,8 +55,10 @@ function writeSeason(directory, year, discipline = "idpa") {
     "raw-extracted-results.json": { discipline, year, schemaVersion: 1, extractions: [] },
     "results.json": { discipline, year, schemaVersion: 1, results: [{ competitionId: `race-${year}`, competitionDate: `${year}.05.01` }] },
     "data-quality.json": { discipline, year, schemaVersion: 1, quality: {} },
-    "statistics.json": { discipline, year, schemaVersion: 1, statistics: {} },
   };
+  if (discipline === "idpa") {
+    files["statistics.json"] = { discipline, year, schemaVersion: 1, statistics: {} };
+  }
   for (const [name, value] of Object.entries(files)) {
     fs.writeFileSync(path.join(directory, name), JSON.stringify(value));
   }
@@ -79,14 +81,21 @@ test("discovers complete seasons newest first and never combines their results",
   assert.throws(() => app.loadDashboardData("idpa", 2024), /not available/);
 });
 
-test("does not publish unscoped legacy data or disciplines without adapters", (t) => {
+test("publishes source-backed ingestion seasons without generating IDPA statistics", (t) => {
   const app = fixture(t);
   writeSeason(app.data, 2026);
   writeSeason(path.join(app.data, "ipsc", "2026"), 2026, "ipsc");
   assert.deepEqual(Array.from(app.getAvailableYears("idpa")), []);
-  assert.deepEqual(Array.from(app.getAvailableYears("ipsc")), []);
+  assert.deepEqual(Array.from(app.getAvailableYears("ipsc")), [2026]);
+  assert.deepEqual(
+    Array.from(app.getDisciplinesWithData(), ({ slug }) => slug),
+    ["ipsc"],
+  );
   assert.throws(() => app.loadDashboardData("idpa", 2026), /not available/);
-  assert.throws(() => app.loadDashboardData("ipsc", 2026), /does not have a published analytics adapter/);
+  const ingestion = app.loadDashboardData("ipsc", 2026);
+  assert.equal(ingestion.statistics, null);
+  assert.equal(ingestion.statisticsFile, null);
+  assert.equal(ingestion.resultsFile.results.length, 1);
   assert.throws(() => app.loadDashboardData("../idpa", 2026), /Unknown discipline/);
 });
 
