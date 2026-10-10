@@ -13,23 +13,23 @@ from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 import requests
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = Path(os.getenv("IDPA_DATA_DIR", REPO_ROOT / "data"))
+DATA_DIR = Path(os.getenv("PIPELINE_DATA_DIR", os.getenv("IDPA_DATA_DIR", REPO_ROOT / "data")))
 CLUB_ALIASES_PATH = REPO_ROOT / "data" / "club-aliases.json"
 REQUEST_TIMEOUT = int(os.getenv("MDLSZ_REQUEST_TIMEOUT", "60"))
 USER_AGENT = os.getenv(
     "MDLSZ_USER_AGENT",
-    "mdlsz-idpa-analytics/1.0 (+https://github.com/dbreuer/idpa-analytics)",
+    "mdlsz-shooting-analytics/1.0 (+https://github.com/dbreuer/idpa-analytics)",
 )
 DISCIPLINE_ALIASES = {
     "idpa": ("IDPA", "International Defensive Pistol Association"),
     "ipsc": ("IPSC", "International Practical Shooting Confederation"),
     "imssu": ("IMSSU", "International Metallic Silhouette Shooting Union"),
-    "gyorskombinalt": ("Gyorskombinált",),
+    "gyorskombinalt": ("Gyorskombinált", "Gyorskombinált és Precíziós"),
     "steel-challenge": ("Steel Challenge",),
     "gyorspont-es-hazai-versenyszamok": ("Gyorspont és hazai versenyszámok", "Gyorspont"),
     "iprf": ("IPRF", "International Precision Rifle Federation"),
 }
-SUPPORTED_PIPELINE_DISCIPLINES = frozenset({"idpa"})
+ANALYTICS_DISCIPLINES = frozenset({"idpa"})
 
 @dataclass(frozen=True)
 class PipelinePaths:
@@ -56,8 +56,6 @@ def pipeline_paths(year: int, discipline: str = "idpa") -> PipelinePaths:
         raise ValueError("year must be between 1000 and 9999")
     if discipline not in DISCIPLINE_ALIASES:
         raise ValueError(f"Unknown discipline: {discipline}")
-    if discipline not in SUPPORTED_PIPELINE_DISCIPLINES:
-        raise ValueError(f"The {discipline} pipeline adapter is not implemented yet")
     directory = DATA_DIR / discipline / str(year)
     calendar = urlsplit(os.getenv("MDLSZ_CALENDAR_URL", "https://portal.mdlsz.com/racecalendar"))
     query = [(key, value) for key, value in parse_qsl(calendar.query) if key != "year"]
@@ -82,7 +80,7 @@ def parse_pipeline_args(description: str) -> PipelinePaths:
         "--discipline",
         choices=sorted(DISCIPLINE_ALIASES),
         default="idpa",
-        help="Discipline slug (default: idpa; other adapters are not yet available)",
+        help="Discipline slug (default: idpa)",
     )
     parser.add_argument("--year", type=parse_year, default=datetime.now().year, help="Season year (default: current year)")
     arguments = parser.parse_args()
@@ -107,12 +105,15 @@ def validate_payload_scope(payload: dict[str, Any], paths: PipelinePaths, label:
 
 
 HEADER_ALIASES = {
-    "placement": ["helyezes", "helyezés", "sorszam", "sorszám", "rank"],
+    "placement": ["helyezes", "helyezés", "sorszam", "sorszám", "rank", "place"],
     "name": ["nev", "név", "competitor", "versenyzo", "versenyző"],
     "club_team": ["egyesulet / csapat", "egyesület / csapat", "club / team", "csapat", "egyesulet", "egyesület"],
     "category": ["kategoria", "kategória", "category"],
+    "classification": ["classification", "class"],
     "division": ["divizio", "divízió", "division"],
-    "result": ["eredmeny", "eredmény", "score", "result"],
+    "result": ["match points", "match pts", "points", "score", "result", "eredmeny", "eredmény"],
+    "percentage": ["match %", "match percentage", "percentage"],
+    "powerFactor": ["power factor", "pf"],
     "notes": ["megjegyzesek", "megjegyzések", "megjegyzes", "megjegyzés", "notes"],
 }
 

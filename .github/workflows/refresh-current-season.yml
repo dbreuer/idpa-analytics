@@ -92,12 +92,12 @@ jobs:
 
       - name: Fetch and generate current season results
         env:
-          IDPA_DATA_DIR: ${{ env.STAGING_DATA_DIR }}
+          PIPELINE_DATA_DIR: ${{ env.STAGING_DATA_DIR }}
         run: python3 scripts/run-pipeline.py --discipline "$SEASON_DISCIPLINE" --year "$SEASON_YEAR"
 
       - name: Validate staged season data
         env:
-          IDPA_DATA_DIR: ${{ env.STAGING_DATA_DIR }}
+          PIPELINE_DATA_DIR: ${{ env.STAGING_DATA_DIR }}
         run: python3 scripts/validate-season.py --data-dir "$STAGING_DATA_DIR" --discipline "$SEASON_DISCIPLINE" --year "$SEASON_YEAR"
 
       - name: Promote validated snapshot into the build

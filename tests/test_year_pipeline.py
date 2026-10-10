@@ -43,12 +43,34 @@ class YearPipelineTests(unittest.TestCase):
         self.assertEqual(first.calendar_url, "https://portal.mdlsz.com/racecalendar?test=1&year=2025")
         self.assertEqual(second.calendar_url, "https://portal.mdlsz.com/racecalendar?test=1&year=2026")
 
-    def test_pipeline_only_accepts_disciplines_with_an_implemented_adapter(self):
-        for value in ("ipsc", "imssu", "steel-challenge", "gyorskombinalt", "iprf"):
-            with self.subTest(discipline=value), self.assertRaisesRegex(ValueError, "adapter is not implemented"):
-                common.pipeline_paths(2026, value)
+    def test_ingestion_paths_cover_every_registered_discipline(self):
+        for value in common.DISCIPLINE_ALIASES:
+            with self.subTest(discipline=value):
+                paths = common.pipeline_paths(2026, value)
+                self.assertEqual(paths.discipline, value)
+                self.assertEqual(paths.data_dir, self.root / value / "2026")
+        self.assertEqual(common.ANALYTICS_DISCIPLINES, frozenset({"idpa"}))
         with self.assertRaisesRegex(ValueError, "Unknown discipline"):
             common.pipeline_paths(2026, "../idpa")
+
+    def test_competition_discovery_recognizes_all_official_discipline_aliases(self):
+        discover = script_module("discover-competitions")
+        for discipline, aliases in common.DISCIPLINE_ALIASES.items():
+            with self.subTest(discipline=discipline):
+                paths = common.pipeline_paths(2026, discipline)
+                official_label = aliases[-1] if discipline == "gyorskombinalt" else aliases[0]
+                row = (
+                    "<table><tr><td>2026-05-12</td><td>Sample match</td>"
+                    f"<td>{official_label}</td><td>Level</td><td>Budapest</td>"
+                    f"<td>Sample club</td><td>{discipline}-2026</td>"
+                    '<td><a href="/result.pdf">Eredmények</a></td></tr></table>'
+                )
+                with patch.object(sys, "argv", ["discover", "--discipline", discipline, "--year", "2026"]):
+                    with patch.object(discover, "fetch", return_value=Mock(text=row)):
+                        discover.main()
+                file = common.load_json(paths.competitions)
+                self.assertEqual(len(file["competitions"]), 1)
+                self.assertEqual(file["competitions"][0]["discipline"], official_label)
 
     def test_typescript_and_python_discipline_registries_stay_in_sync(self):
         source = (common.REPO_ROOT / "lib" / "disciplines.ts").read_text(encoding="utf-8")
@@ -99,13 +121,139 @@ class YearPipelineTests(unittest.TestCase):
         self.assertEqual(tables[0]["headerMap"]["name"], 1)
         self.assertEqual(tables[0]["rows"], [["1", "Test Competitor", "Test Club", "100"]])
 
+    def test_ipsc_pdf_adapter_tracks_division_headings_across_continuation_pages(self):
+        extract = script_module("extract-pdfs")
+
+        class Page:
+            def __init__(self, text, tables):
+                self._text = text
+                self._tables = tables
+
+            def extract_text(self):
+                return self._text
+
+            def extract_tables(self):
+                return self._tables
+
+        pages = [
+            Page("Match Results - Classic\nMatch Results - Open", [
+                [["1", "Competitor A", "A001", "", "C", "Min", "Senior", "500.00", "100.00%"]],
+                [["1", "Competitor B", "B001", "", "O", "Maj", "", "490.00", "98.00%"]],
+            ]),
+            Page("Match Results - Production Optics", [
+                [["2", "Competitor B", "B001", "", "O", "Maj", "", "480.00", "96.00%"]],
+                [["1", "Competitor C", "C001", "", "PO", "Min", "Lady", "470.00", "94.00%"]],
+            ]),
+            Page("", [
+                [["2", "Competitor C", "C001", "", "PO", "Min", "Lady", "460.00", "92.00%"]],
+            ]),
+        ]
+        pdf = Mock()
+        pdf.__enter__ = Mock(return_value=Mock(pages=pages))
+        pdf.__exit__ = Mock(return_value=False)
+        with patch.object(extract.pdfplumber, "open", return_value=pdf):
+            tables, errors = extract.extract_ipsc_with_pdfplumber(self.root / "ipsc.pdf")
+
+        self.assertEqual(errors, [])
+        self.assertEqual([table["metadata"]["division"] for table in tables], [
+            "Classic", "Open", "Open", "Production Optics", "Production Optics",
+        ])
+        self.assertEqual(tables[0]["headerMap"]["classification"], 4)
+        self.assertEqual(tables[0]["headerMap"]["powerFactor"], 5)
+        self.assertEqual(tables[0]["headerMap"]["result"], 7)
+
+    def test_normalization_ingests_all_disciplines_without_inventing_idpa_metrics(self):
+        normalize = script_module("normalize-data")
+        validate = script_module("validate-ingestion")
+        extract = script_module("extract-pdfs")
+        standard_header = ["Sorszám", "Név", "V.eng.", "Egyesület", "Eredmény", "Találatok száma", "%", "Megjegyzés"]
+        for discipline, aliases in common.DISCIPLINE_ALIASES.items():
+            if discipline == "idpa":
+                continue
+            with self.subTest(discipline=discipline):
+                paths = common.pipeline_paths(2026, discipline)
+                common.ensure_dirs(paths)
+                official_name = aliases[0]
+                competition = {
+                    "id": f"{discipline}-race-2026",
+                    "name": "Sample discipline event",
+                    "date": "2026-05-12",
+                    "discipline": official_name,
+                    "resultPdfUrl": f"https://example.invalid/{discipline}.pdf",
+                    "downloadStatus": "downloaded",
+                }
+                common.save_json(paths.competitions, {
+                    "discipline": discipline, "year": 2026, "schemaVersion": 1,
+                    "generatedAt": common.now_iso(), "sourceUrl": paths.calendar_url,
+                    "discoveredCount": 1, "competitions": [competition], "errors": [],
+                })
+                if discipline == "ipsc":
+                    raw_table = {
+                        "header": extract.IPSC_HEADER,
+                        "headerMap": extract.IPSC_HEADER_MAP,
+                        "metadata": {"division": "Production"},
+                        "rows": [["1", "Competitor, Alex", "A001", "", "B", "Minor", "Senior", "500.00", "100.00%"]],
+                    }
+                else:
+                    raw_table = {
+                        "header": standard_header,
+                        "headerMap": common.identify_header(standard_header),
+                        "metadata": {"division": "Division One"},
+                        "rows": [["1", "Alex Competitor", "A001", "Sample Club", "125", "12", "100", "unclassified note"]],
+                    }
+                common.save_json(paths.raw_extracted, {
+                    "discipline": discipline, "year": 2026, "schemaVersion": 1,
+                    "generatedAt": common.now_iso(),
+                    "extractions": [{
+                        "competitionId": competition["id"],
+                        "status": "processed",
+                        "tables": [raw_table],
+                        "error": None,
+                    }],
+                    "errors": [],
+                })
+                with patch.object(sys, "argv", ["normalize", "--discipline", discipline, "--year", "2026"]):
+                    with patch.object(normalize, "CLUB_ALIASES_PATH", self.root / "club-aliases.json"):
+                        normalize.main()
+
+                result = common.load_json(paths.results)["results"][0]
+                self.assertEqual(result["division"], "Production" if discipline == "ipsc" else "Division One")
+                self.assertNotIn("timeSeconds", result)
+                self.assertNotIn("parseError", result)
+                if discipline == "ipsc":
+                    self.assertEqual(result["classification"], "B")
+                    self.assertEqual(result["powerFactor"], "Minor")
+                    self.assertEqual(result["category"], "Senior")
+                    self.assertEqual(result["rawResult"], "500.00")
+                    self.assertIsNone(result["club"])
+                else:
+                    self.assertEqual(result["club"], "Sample Club")
+                validate.validate_ingestion(paths.data_dir, discipline, 2026)
+                self.assertFalse(paths.statistics.exists())
+
+    def test_gyorskombinalt_calendar_alias_maps_to_its_registered_discipline(self):
+        discover = script_module("discover-competitions")
+        slug = "gyorskombinalt"
+        paths = common.pipeline_paths(2026, slug)
+        rows = (
+            '<table><tr><td>2026-02-06</td><td>Competition</td>'
+            "<td>Gyorskombinált és Precíziós</td><td>Level</td><td>Budapest</td>"
+            '<td>Club</td><td>2026/175</td><td><a href="/results.pdf">Eredmények</a></td></tr></table>'
+        )
+        with patch.object(sys, "argv", ["discover", "--discipline", slug, "--year", "2026"]):
+            with patch.object(discover, "fetch", return_value=Mock(text=rows)):
+                discover.main()
+        competition = common.load_json(paths.competitions)["competitions"][0]
+        self.assertEqual(competition["discipline"], "Gyorskombinált és Precíziós")
+
+
     def test_missing_previous_stage_fails_without_empty_outputs(self):
         for name in ("download-results", "extract-pdfs", "normalize-data", "calculate-statistics"):
             module = script_module(name)
             with self.subTest(stage=name), patch.object(sys, "argv", [name, "--year", "2025"]):
                 with self.assertRaisesRegex(FileNotFoundError, "previous stage"):
                     module.main()
-        self.assertEqual(list((self.root / "2025").glob("*.json")), [])
+        self.assertEqual(list((self.root / "idpa" / "2025").glob("*.json")), [])
 
     def test_two_seasons_run_without_overwriting_or_mixing_data(self):
         discover = script_module("discover-competitions")
@@ -196,6 +344,28 @@ class YearPipelineTests(unittest.TestCase):
                 with self.assertRaises(subprocess.CalledProcessError):
                     runner.main()
                 self.assertEqual(run.call_count, 1)
+
+    def test_runner_ingests_non_idpa_results_without_running_scoring(self):
+        runner = script_module("run-pipeline")
+        with patch.object(sys, "argv", ["pipeline", "--discipline", "ipsc", "--year", "2026"]):
+            with patch.object(runner.subprocess, "run") as run:
+                runner.main()
+        scripts = [Path(call.args[0][1]).name for call in run.call_args_list]
+        self.assertEqual(scripts, [
+            "discover-competitions.py",
+            "download-results.py",
+            "extract-pdfs.py",
+            "normalize-data.py",
+            "validate-ingestion.py",
+        ])
+        self.assertNotIn("calculate-statistics.py", scripts)
+
+    def test_non_idpa_scoring_is_rejected_before_reading_or_writing_data(self):
+        statistics = script_module("calculate-statistics")
+        with patch.object(sys, "argv", ["stats", "--discipline", "steel-challenge", "--year", "2026"]):
+            with self.assertRaisesRegex(SystemExit, "No validated analytics/scoring adapter"):
+                statistics.main()
+        self.assertEqual(list(self.root.rglob("statistics.json")), [])
 
     def test_data_migration_is_idempotent_scoped_and_preserves_root_legacy(self):
         migration = script_module("migrate-discipline-data")

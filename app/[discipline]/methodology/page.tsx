@@ -7,6 +7,13 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { canonicalUrl, disciplinePath, methodologyPath } from "@/lib/discipline-paths";
 import { getDiscipline, isDisciplineSlug } from "@/lib/disciplines";
+import { getPublishedDisciplines } from "@/lib/data";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return getPublishedDisciplines().map((discipline) => ({ discipline: discipline.slug }));
+}
 
 const sections = [
   {

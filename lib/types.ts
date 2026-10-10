@@ -51,6 +51,9 @@ export interface CompetitionResult extends ParsedNotes {
   normalizedClub?: string;
   division?: string;
   category?: string;
+  classification?: string;
+  powerFactor?: string;
+  resultPercentage?: string;
   rawResult?: string;
   rawPlacement?: string;
   rawClubTeam?: string;

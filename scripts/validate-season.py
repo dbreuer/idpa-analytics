@@ -4,7 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
-from common import DISCIPLINE_ALIASES, normalize_key, parse_year
+from common import ANALYTICS_DISCIPLINES, DISCIPLINE_ALIASES, normalize_key, parse_year
 
 SEASON_FILES = (
     "competitions.json",
@@ -28,6 +28,8 @@ def load_scoped(directory: Path, name: str, discipline: str, year: int) -> dict:
 
 
 def validate_season(directory: Path, discipline: str, year: int) -> None:
+    if discipline not in ANALYTICS_DISCIPLINES:
+        raise ValueError(f"No validated scoring adapter is enabled for {discipline}.")
     missing = [name for name in SEASON_FILES if not (directory / name).is_file()]
     if missing:
         raise ValueError(f"Incomplete season data: missing {', '.join(missing)}")

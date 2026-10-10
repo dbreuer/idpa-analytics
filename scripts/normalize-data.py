@@ -24,11 +24,13 @@ def canonical_club(raw_value: str, aliases: dict[str, str]) -> str:
     return aliases.get(value, value)
 
 
-def parse_notes(value: str | None) -> dict:
+def parse_notes(value: str | None, discipline: str = "idpa") -> dict:
     raw = normalize_text(value)
     if not raw:
         return {"rawNotes": None}
     parsed: dict = {"rawNotes": raw}
+    if discipline != "idpa":
+        return parsed
     license_match = LICENSE_PATTERN.search(raw)
     if license_match:
         parsed["competitionLicenseId"] = license_match.group(1).upper()
@@ -95,7 +97,7 @@ def main() -> None:
         for table in tables:
             header = table.get("header", [])
             header_map = table.get("headerMap") or identify_header(header)
-            division = parse_division_code(table.get("metadata", {}).get("division"))
+            row_map = table.get("headerMap") or identify_header(header)
             for row in table.get("rows", []):
                 if not any(normalize_text(cell) for cell in row):
                     continue
@@ -113,18 +115,41 @@ def main() -> None:
 
                 identity = normalize_name(competitor_name)
                 competitor_variants[identity["normalizedName"]].add(identity["displayName"])
-                club_raw = padded_row[header_map.get("club_team", 2)] if len(padded_row) > header_map.get("club_team", 2) else ""
-                club, team = split_club_team(club_raw)
-                notes_raw = padded_row[header_map.get("notes", len(padded_row) - 1)] if padded_row else ""
-                parsed_notes = parse_notes(notes_raw)
+                if "club_team" in header_map and len(padded_row) > header_map["club_team"]:
+                    club_raw = padded_row[header_map["club_team"]]
+                    club, team = split_club_team(club_raw)
+                else:
+                    club_raw = None
+                    club, team = None, None
+                notes_raw = (
+                    padded_row[header_map["notes"]]
+                    if "notes" in header_map and len(padded_row) > header_map["notes"]
+                    else None
+                )
+                parsed_notes = parse_notes(notes_raw, paths.discipline)
                 if parsed_notes.get("timeSeconds") is not None:
                     quality["rowsWithValidTime"] += 1
                 if parsed_notes.get("parseError"):
                     parsing_errors.append({"competitionId": extraction.get("competitionId"), "row": raw_row, "error": "Failed to parse notes"})
                     quality["rowsWithParsingErrors"] += 1
-                if not team:
+                if "club_team" in header_map and not team:
                     quality["rowsWithMissingTeam"] += 1
 
+                raw_division = (
+                    padded_row[row_map["division"]]
+                    if "division" in row_map and len(padded_row) > row_map["division"]
+                    else table.get("metadata", {}).get("division")
+                )
+                division = (
+                    parse_division_code(raw_division)
+                    if paths.discipline == "idpa"
+                    else normalize_text(raw_division) or None
+                )
+                raw_result = (
+                    normalize_text(padded_row[header_map["result"]])
+                    if "result" in header_map and len(padded_row) > header_map["result"]
+                    else None
+                )
                 result = {
                     "competitionId": extraction.get("competitionId"),
                     "competitionName": competition.get("name"),
@@ -140,7 +165,10 @@ def main() -> None:
                     "normalizedClub": canonical_club(club or "", aliases) if club else None,
                     "division": division,
                     "category": (normalize_text(padded_row[header_map["category"]]) or None) if "category" in header_map and len(padded_row) > header_map["category"] else None,
-                    "rawResult": normalize_text(padded_row[header_map.get("result", 5)] if len(padded_row) > header_map.get("result", 5) else "") or None,
+                    "classification": (normalize_text(padded_row[header_map["classification"]]) or None) if "classification" in header_map and len(padded_row) > header_map["classification"] else None,
+                    "powerFactor": (normalize_text(padded_row[header_map["powerFactor"]]) or None) if "powerFactor" in header_map and len(padded_row) > header_map["powerFactor"] else None,
+                    "resultPercentage": (normalize_text(padded_row[header_map["percentage"]]) or None) if "percentage" in header_map and len(padded_row) > header_map["percentage"] else None,
+                    "rawResult": raw_result or None,
                     "rawClubTeam": club_raw,
                     "rawRow": raw_row,
                     **parsed_notes,

@@ -5,13 +5,17 @@ import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { DashboardApp } from "@/components/dashboard/dashboard-app";
 import { canonicalUrl, disciplinePath, seasonPath } from "@/lib/discipline-paths";
 import { getDiscipline, isDisciplineSlug } from "@/lib/disciplines";
-import { getAvailableYears, loadDashboardData } from "@/lib/data";
+import { getAvailableYears, getPublishedDisciplines, loadDashboardData } from "@/lib/data";
 
 export const dynamicParams = false;
 
-export function generateStaticParams({ params }: { params: { discipline: string } }) {
-  if (!isDisciplineSlug(params.discipline)) return [];
-  return getAvailableYears(params.discipline).map((year) => ({ year: String(year) }));
+export function generateStaticParams() {
+  return getPublishedDisciplines().flatMap((discipline) =>
+    getAvailableYears(discipline.slug).map((year) => ({
+      discipline: discipline.slug,
+      year: String(year),
+    })),
+  );
 }
 
 async function seasonParams(params: Promise<{ discipline: string; year: string }>) {

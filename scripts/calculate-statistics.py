@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from math import sqrt
 
-from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, validate_payload_scope
+from common import ANALYTICS_DISCIPLINES, ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, validate_payload_scope
 
 
 def average(values: list[float]) -> float | None:
@@ -38,6 +38,11 @@ def placement_points(placement: int | None) -> float:
 
 def main() -> None:
     paths = parse_pipeline_args("Calculate statistics for one discipline and season.")
+    if paths.discipline not in ANALYTICS_DISCIPLINES:
+        raise SystemExit(
+            f"No validated analytics/scoring adapter exists for {paths.discipline}; "
+            "ingest and normalize its official results without publishing rankings."
+        )
     ensure_dirs(paths)
     competitions_file = load_json(paths.competitions)
     results_file = load_json(paths.results)

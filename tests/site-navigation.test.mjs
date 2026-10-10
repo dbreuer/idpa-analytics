@@ -107,10 +107,14 @@ test("discipline registry exposes seven source-linked sports but publishes valid
 test("discipline landing pages open the newest season and the footer links every discipline", () => {
   const disciplinePage = fs.readFileSync(new URL("../app/[discipline]/page.tsx", import.meta.url), "utf8");
   const disciplineLayout = fs.readFileSync(new URL("../app/[discipline]/layout.tsx", import.meta.url), "utf8");
+  const seasonPage = fs.readFileSync(new URL("../app/[discipline]/[year]/page.tsx", import.meta.url), "utf8");
   const footer = fs.readFileSync(new URL("../components/layout/site-footer.tsx", import.meta.url), "utf8");
   assert.match(disciplinePage, /redirect\(seasonPath\(discipline\.slug, latestYear\)\)/);
   assert.doesNotMatch(disciplinePage, /Elérhető szezonok/);
-  assert.match(disciplineLayout, /disciplineDefinitions\.map/);
+  assert.match(disciplinePage, /disciplineDefinitions\.map/);
+  assert.match(seasonPage, /discipline:\s*discipline\.slug/);
+  assert.match(seasonPage, /year:\s*String\(year\)/);
+  assert.match(disciplineLayout, /return children/);
   assert.match(disciplinePage, /robots:\s*\{\s*index:\s*false,\s*follow:\s*true,\s*googleBot:/);
   assert.match(footer, /href=\{disciplinePath\(definition\.slug\)\}/);
 });

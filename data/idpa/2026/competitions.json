@@ -1,6 +1,8 @@
 {
-  "generatedAt": "2026-10-10T06:25:07.322521+00:00",
+  "generatedAt": "2026-10-10T07:44:38.239558+00:00",
+  "discipline": "idpa",
   "year": 2026,
+  "schemaVersion": 1,
   "sourceUrl": "https://portal.mdlsz.com/racecalendar?year=2026",
   "discoveredCount": 24,
   "competitions": [
@@ -341,7 +343,5 @@
       "downloadError": "Eredmények link not found"
     }
   ],
-  "errors": [],
-  "discipline": "idpa",
-  "schemaVersion": 1
+  "errors": []
 }

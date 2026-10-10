@@ -25,7 +25,7 @@ export const disciplineDefinitions = [
   {
     slug: "gyorskombinalt",
     name: "Gyorskombinált",
-    aliases: ["Gyorskombinált"],
+    aliases: ["Gyorskombinált", "Gyorskombinált és Precíziós"],
     published: false,
     analytics: "unsupported",
   },

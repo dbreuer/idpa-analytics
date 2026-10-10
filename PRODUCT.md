@@ -13,7 +13,9 @@ Hungarian sport shooters comparing their season performance.
 ## Product Purpose
 
 Lövésznapló Statisztika presents traceable, season-by-season analytics for MDLSZ
-shooting disciplines. IDPA is the first fully supported sport.
+shooting disciplines. All seven listed disciplines support source discovery, PDF
+extraction, and normalized ingestion. IDPA is the only discipline with validated
+scoring and public season rankings.
 
 ## Positioning
 
@@ -37,7 +39,8 @@ from isolated `data/<discipline>/<year>/` records.
   repository's data pipeline; the dashboard does not depend on a database or API.
 - Keep discipline and season data isolated, preserve the existing IDPA scoring and
   analytics semantics, and never apply them to another sport without its validated
-  rules and parser.
+  scoring rules. Until then, retain normalized source results without computed
+  rankings or public season reports.
   and link derived results to available official sources.
 - Do not fabricate unavailable years, results, organization relationships, or
   performance claims.

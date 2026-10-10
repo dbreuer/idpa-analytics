@@ -8,8 +8,14 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { BreadcrumbJsonLd } from "@/components/seo/breadcrumb-json-ld";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { canonicalUrl, disciplinePath, seasonPath } from "@/lib/discipline-paths";
-import { getDiscipline, getDisciplineMark, isDisciplineSlug } from "@/lib/disciplines";
+import { disciplineDefinitions, getDiscipline, getDisciplineMark, isDisciplineSlug } from "@/lib/disciplines";
 import { getAvailableYears } from "@/lib/data";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return disciplineDefinitions.map((discipline) => ({ discipline: discipline.slug }));
+}
 
 async function resolveDiscipline(params: Promise<{ discipline: string }>) {
   const { discipline: slug } = await params;

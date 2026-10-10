@@ -1,11 +1,83 @@
 from __future__ import annotations
 
 from pathlib import Path
+import re
 
 import pymupdf
 import pdfplumber
 
 from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, split_table_rows, validate_payload_scope
+
+IPSC_HEADER = [
+    "Place",
+    "Name",
+    "License",
+    "Reserved",
+    "Classification",
+    "Power factor",
+    "Category",
+    "Match points",
+    "Match percentage",
+]
+IPSC_HEADER_MAP = {
+    "placement": 0,
+    "name": 1,
+    "classification": 4,
+    "powerFactor": 5,
+    "category": 6,
+    "result": 7,
+    "percentage": 8,
+}
+
+
+def extract_ipsc_with_pdfplumber(pdf_path: Path) -> tuple[list[dict], list[str]]:
+    tables: list[dict] = []
+    errors: list[str] = []
+    last_division: str | None = None
+    with pdfplumber.open(pdf_path) as pdf:
+        for page_index, page in enumerate(pdf.pages, start=1):
+            extracted_tables = page.extract_tables() or []
+            if not extracted_tables:
+                continue
+            text = page.extract_text() or ""
+            divisions = [
+                " ".join(match.split())
+                for match in re.findall(r"Match Results\s*-\s*([^\r\n]+)", text, flags=re.IGNORECASE)
+            ]
+            if len(divisions) == len(extracted_tables):
+                table_divisions: list[str | None] = divisions
+            elif not divisions and last_division:
+                table_divisions = [last_division] * len(extracted_tables)
+            elif last_division and len(divisions) == len(extracted_tables) - 1:
+                table_divisions = [last_division, *divisions]
+            else:
+                errors.append(
+                    f"Page {page_index}: could not map {len(divisions)} division headings "
+                    f"to {len(extracted_tables)} extracted match tables"
+                )
+                table_divisions = [None] * len(extracted_tables)
+
+            for table_index, (raw_table, division) in enumerate(
+                zip(extracted_tables, table_divisions, strict=True),
+                start=1,
+            ):
+                rows = [[(cell or "").strip() for cell in row] for row in raw_table if row]
+                if division:
+                    last_division = division
+                if not rows:
+                    continue
+                tables.append(
+                    {
+                        "page": page_index,
+                        "table": table_index,
+                        "strategy": "ipsc-match-results",
+                        "metadata": {"division": division} if division else {},
+                        "header": IPSC_HEADER,
+                        "headerMap": IPSC_HEADER_MAP,
+                        "rows": rows,
+                    }
+                )
+    return tables, errors
 
 
 def extract_with_pdfplumber(pdf_path: Path) -> list[dict]:
@@ -99,9 +171,13 @@ def main() -> None:
 
         pdf_path = Path(paths.data_dir / pdf_relative_path)
         try:
-            tables = extract_with_pdfplumber(pdf_path)
-            if not tables:
-                tables = extract_with_pymupdf(pdf_path)
+            if paths.discipline == "ipsc":
+                tables, extraction_warnings = extract_ipsc_with_pdfplumber(pdf_path)
+                errors.extend(f"{competition['id']}: {warning}" for warning in extraction_warnings)
+            else:
+                tables = extract_with_pdfplumber(pdf_path)
+                if not tables:
+                    tables = extract_with_pymupdf(pdf_path)
             outputs.append(
                 {
                     "competitionId": competition["id"],

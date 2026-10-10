@@ -1,8 +1,9 @@
 # Lövésznapló sportlövészeti statisztika
 
 Next.js dashboard and Python data pipeline for Hungarian MDLSZ sportlövészeti
-eredmények. The platform is designed for seven MDLSZ disciplines; only IDPA
-currently has a validated parser, scoring model, and public season pages.
+eredmények. Discovery, PDF extraction and result normalization are implemented
+for all seven listed disciplines. IDPA alone has validated season scoring and
+public rankings; the other six stop after source-linked normalized ingestion.
 
 The planned canonical domain is `https://statisztika.lovesznaplo.hu`. `/idpa`
 opens the latest available season (currently `/idpa/2026`); older seasons remain
@@ -61,14 +62,36 @@ Or run everything in sequence:
 ```bash
 npm run pipeline:all -- --discipline idpa --year 2025
 npm run pipeline:all -- --discipline idpa --year 2026
+npm run pipeline:all -- --discipline imssu --year 2026
+npm run pipeline:all -- --discipline ipsc --year 2026
+npm run pipeline:all -- --discipline gyorskombinalt --year 2026
+npm run pipeline:all -- --discipline steel-challenge --year 2026
+npm run pipeline:all -- --discipline gyorspont-es-hazai-versenyszamok --year 2026
+npm run pipeline:all -- --discipline iprf --year 2026
 ```
 
 Every stage accepts `--discipline` and `--year`; omitted values default to `idpa`
 and the current local calendar year for CLI compatibility. Automation passes both
 explicitly. The all-stage runner forwards both values and stops on failure.
 Downstream stages reject missing or mismatched discipline/year/schema metadata.
-Non-IDPA pipeline adapters are intentionally unavailable until their own result
-parsers and analytics have been validated.
+All seven calendar aliases and result PDF links are ingested. The IPSC match-report
+format has its own division-aware extractor; other supported MDLSZ result PDFs use
+the shared table extractor. Normalization preserves discipline-specific class,
+division, power-factor and raw-result fields without interpreting them as IDPA
+scores.
+
+For an ingest-only season, for example:
+
+```bash
+npm run pipeline:all -- --discipline ipsc --year 2026
+python3 scripts/validate-ingestion.py --discipline ipsc --year 2026
+```
+
+The non-IDPA runner stops after normalized source records and the ingestion
+validation gate. It does not produce `statistics.json`, calculate placements as a
+universal ranking, publish a season page, or enable that discipline for indexing.
+`calculate-statistics.py` deliberately rejects every discipline without a validated
+scoring adapter; IDPA retains its existing statistics behavior.
 
 ### Pipeline Outputs
 
@@ -76,7 +99,7 @@ parsers and analytics have been validated.
 - `data/<discipline>/<year>/raw-extracted-results.json`
 - `data/<discipline>/<year>/results.json`
 - `data/<discipline>/<year>/data-quality.json`
-- `data/<discipline>/<year>/statistics.json`
+- `data/idpa/<year>/statistics.json` (IDPA's validated analytics adapter only)
 - `data/<discipline>/<year>/pdfs/` (ignored by Git)
 - `data/club-aliases.json` (shared across seasons)
 
@@ -101,6 +124,8 @@ Available settings:
 - `MDLSZ_USER_AGENT`
 
 The Python scripts read these from the process environment, not automatically from `.env`.
+`PIPELINE_DATA_DIR` selects an isolated output root for ingestion and CI; the
+legacy `IDPA_DATA_DIR` environment variable remains accepted as a fallback.
 
 ### Design assets
 
