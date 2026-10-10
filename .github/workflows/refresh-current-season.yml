@@ -4,19 +4,31 @@ on:
   schedule:
     - cron: "0 4 1 * *"
   workflow_dispatch:
+    inputs:
+      discipline:
+        description: "Discipline adapter to refresh"
+        type: choice
+        options:
+          - idpa
+        default: idpa
+        required: true
+      year:
+        description: "Season year (blank uses the current Budapest calendar year)"
+        type: string
+        required: false
 
 permissions:
   contents: write
 
 concurrency:
-  group: refresh-current-season
+  group: publish-season-data
   cancel-in-progress: false
 
 jobs:
   refresh:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - name: Check out main
         uses: actions/checkout@v7.0.1
@@ -40,14 +52,81 @@ jobs:
           python3 -m pip install -r requirements.txt
           npm ci
 
-      - name: Select the current season
-        run: echo "SEASON_YEAR=$(TZ=Europe/Budapest date +%Y)" >> "$GITHUB_ENV"
+      - name: Validate publishing configuration
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK_URL" ] || [ -z "$VERCEL_TOKEN" ] || [ -z "$VERCEL_PROJECT_ID" ] || [ -z "$PUBLIC_SITE_URL" ]; then
+            echo "::error::Configure VERCEL_DEPLOY_HOOK_URL, VERCEL_TOKEN, VERCEL_PROJECT_ID, and PUBLIC_SITE_URL before running this publisher."
+            exit 1
+          fi
+
+      - name: Select discipline, season, and staging directory
+        env:
+          INPUT_DISCIPLINE: ${{ inputs.discipline }}
+          INPUT_YEAR: ${{ inputs.year }}
+        run: |
+          DISCIPLINE="${INPUT_DISCIPLINE:-idpa}"
+          if [ "$DISCIPLINE" != "idpa" ]; then
+            echo "::error::Only the IDPA pipeline adapter is currently supported."
+            exit 1
+          fi
+          YEAR="${INPUT_YEAR:-$(TZ=Europe/Budapest date +%Y)}"
+          if ! [[ "$YEAR" =~ ^[1-9][0-9]{3}$ ]]; then
+            echo "::error::The season year must be a four-digit year."
+            exit 1
+          fi
+          STAGING_DATA_DIR="$(mktemp -d "$RUNNER_TEMP/discipline-data.XXXXXX")"
+          echo "SEASON_DISCIPLINE=$DISCIPLINE" >> "$GITHUB_ENV"
+          echo "SEASON_YEAR=$YEAR" >> "$GITHUB_ENV"
+          echo "STAGING_DATA_DIR=$STAGING_DATA_DIR" >> "$GITHUB_ENV"
 
       - name: Run pipeline regression tests
         run: python3 -m unittest discover -s tests -p 'test_*.py'
 
+      - name: Prepare isolated pipeline data directory
+        run: mkdir -p "$STAGING_DATA_DIR"
+
       - name: Fetch and generate current season results
-        run: python3 scripts/run-pipeline.py --year "$SEASON_YEAR"
+        env:
+          IDPA_DATA_DIR: ${{ env.STAGING_DATA_DIR }}
+        run: python3 scripts/run-pipeline.py --discipline "$SEASON_DISCIPLINE" --year "$SEASON_YEAR"
+
+      - name: Validate staged season data
+        env:
+          IDPA_DATA_DIR: ${{ env.STAGING_DATA_DIR }}
+        run: python3 scripts/validate-season.py --data-dir "$STAGING_DATA_DIR" --discipline "$SEASON_DISCIPLINE" --year "$SEASON_YEAR"
+
+      - name: Promote validated snapshot into the build
+        run: |
+          python3 - "$STAGING_DATA_DIR/$SEASON_DISCIPLINE/$SEASON_YEAR" "data/$SEASON_DISCIPLINE/$SEASON_YEAR" <<'PY'
+          import os
+          from pathlib import Path
+          import shutil
+          import sys
+          import tempfile
+
+          source, target = map(Path, sys.argv[1:])
+          target.parent.mkdir(parents=True, exist_ok=True)
+          for name in (
+              "competitions.json",
+              "raw-extracted-results.json",
+              "results.json",
+              "data-quality.json",
+              "statistics.json",
+          ):
+              payload = source / name
+              with tempfile.NamedTemporaryFile(dir=target.parent, delete=False) as temporary:
+                  temporary_path = Path(temporary.name)
+              try:
+                  shutil.copyfile(payload, temporary_path)
+                  os.replace(temporary_path, target / name)
+              finally:
+                  temporary_path.unlink(missing_ok=True)
+          PY
 
       - name: Validate the dashboard
         run: |
@@ -55,19 +134,38 @@ jobs:
           npm run build
 
       - name: Commit and push refreshed season data
+        id: publish
+        env:
+          SEASON_YEAR: ${{ env.SEASON_YEAR }}
+          SEASON_DISCIPLINE: ${{ env.SEASON_DISCIPLINE }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
-            "data/$SEASON_YEAR/competitions.json" \
-            "data/$SEASON_YEAR/raw-extracted-results.json" \
-            "data/$SEASON_YEAR/results.json" \
-            "data/$SEASON_YEAR/data-quality.json" \
-            "data/$SEASON_YEAR/statistics.json"
+            "data/$SEASON_DISCIPLINE/$SEASON_YEAR/competitions.json" \
+            "data/$SEASON_DISCIPLINE/$SEASON_YEAR/raw-extracted-results.json" \
+            "data/$SEASON_DISCIPLINE/$SEASON_YEAR/results.json" \
+            "data/$SEASON_DISCIPLINE/$SEASON_YEAR/data-quality.json" \
+            "data/$SEASON_DISCIPLINE/$SEASON_YEAR/statistics.json"
           if git diff --cached --quiet; then
             echo "No season data changes to commit."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git commit -m "chore(data): refresh $SEASON_YEAR season results"
+          git commit -m "chore(data): refresh $SEASON_DISCIPLINE $SEASON_YEAR results"
           git pull --rebase origin main
           git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "PUBLISHED_COMMIT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Verify Vercel production deployment and season
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+          PUBLISHED_COMMIT_SHA: ${{ env.PUBLISHED_COMMIT_SHA }}
+          SEASON_YEAR: ${{ env.SEASON_YEAR }}
+        run: node scripts/trigger-vercel-deploy.mjs

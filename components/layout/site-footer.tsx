@@ -3,14 +3,16 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { governingOrganizations, mdlszDisciplines } from "@/lib/associations";
+import type { DisciplineSlug } from "@/lib/disciplines";
+import { methodologyPath, seasonPath } from "@/lib/discipline-paths";
 
-export function SiteFooter({ year }: { year?: number }) {
+export function SiteFooter({ disciplineSlug, year }: { disciplineSlug?: DisciplineSlug; year?: number }) {
   return (
     <footer className="site-footer">
       <div className="site-footer-inner">
         <div className="footer-topline">
           <div>
-            <p className="footer-wordmark">HERO OF <strong>IDPA.</strong></p>
+            <p className="footer-wordmark">{disciplineSlug === "idpa" ? <>HERO OF <strong>IDPA.</strong></> : <>LÖVÉSZNAPLÓ <strong>STATISZTIKA.</strong></>}</p>
             <p className="footer-copy">Szezoneredmények, visszakövethető hivatalos forrásokkal.</p>
           </div>
           <div className="footer-orgs" aria-label="Sportszövetségek">
@@ -74,9 +76,11 @@ export function SiteFooter({ year }: { year?: number }) {
         <div className="footer-bottom">
           <p>Adatforrások: az MDLSZ hivatalos versenynaptára és PDF-eredményjegyzékei.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link href={year ? `/${year}#data-quality` : "/"}>Adatminőség</Link>
-            <Link href="/methodology">Módszertan</Link>
-            <span>© {year ?? new Date().getFullYear()} Hero of IDPA</span>
+            {disciplineSlug && year ? (
+              <Link href={seasonPath(disciplineSlug, year, "#data-quality")}>Adatminőség</Link>
+            ) : null}
+            {disciplineSlug ? <Link href={methodologyPath(disciplineSlug)}>Módszertan</Link> : null}
+            <span>© {year ?? new Date().getFullYear()} Lövésznapló statisztika</span>
           </div>
         </div>
       </div>

@@ -1,0 +1,17 @@
+{
+  "generatedAt": "2026-10-10T05:50:52.875374+00:00",
+  "year": 2023,
+  "quality": {
+    "totalPdfsDiscovered": 34,
+    "successfullyProcessedPdfs": 34,
+    "failedPdfs": 0,
+    "totalExtractedRows": 1685,
+    "validCompetitorRows": 1685,
+    "rowsWithValidTime": 1602,
+    "rowsWithMissingTeam": 1274,
+    "rowsWithParsingErrors": 20
+  },
+  "errors": [],
+  "discipline": "idpa",
+  "schemaVersion": 1
+}

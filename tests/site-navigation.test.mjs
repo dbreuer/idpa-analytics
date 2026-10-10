@@ -9,16 +9,28 @@ const navigationSource = fs.readFileSync(new URL("../lib/site-navigation.ts", im
 const associationsSource = fs.readFileSync(new URL("../lib/associations.ts", import.meta.url), "utf8");
 const dashboardSource = fs.readFileSync(new URL("../components/dashboard/dashboard-app.tsx", import.meta.url), "utf8");
 const headerSource = fs.readFileSync(new URL("../components/dashboard/dashboard-header.tsx", import.meta.url), "utf8");
-function loadModule(source) {
+function loadModule(source, dependencies = {}) {
   const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
   const exports = {};
-  vm.runInNewContext(compiled, { exports, require: createRequire(import.meta.url), Intl });
+  const fallbackRequire = createRequire(import.meta.url);
+  vm.runInNewContext(compiled, {
+  exports,
+  process,
+  URL,
+  require: (name) => dependencies[name] ?? fallbackRequire(name),
+  Intl,
+  });
   return exports;
 }
 const navigation = loadModule(navigationSource);
 const associations = loadModule(associationsSource);
+const disciplines = loadModule(
+  fs.readFileSync(new URL("../lib/disciplines.ts", import.meta.url), "utf8"),
+  { "@/lib/associations": associations },
+);
+const paths = loadModule(fs.readFileSync(new URL("../lib/discipline-paths.ts", import.meta.url), "utf8"));
 const utils = loadModule(fs.readFileSync(new URL("../lib/utils.ts", import.meta.url), "utf8"));
 
 test("Hungarian labels preserve section identifiers and cover desktop and mobile filters", () => {
@@ -48,13 +60,14 @@ test("Hungarian locale formats numbers, dates, and missing values", () => {
 
 test("document language and page metadata use Hungarian", () => {
   const layout = fs.readFileSync(new URL("../app/layout.tsx", import.meta.url), "utf8");
-  const season = fs.readFileSync(new URL("../app/[year]/page.tsx", import.meta.url), "utf8");
-  const methodology = fs.readFileSync(new URL("../app/methodology/page.tsx", import.meta.url), "utf8");
+  const season = fs.readFileSync(new URL("../app/[discipline]/[year]/page.tsx", import.meta.url), "utf8");
+  const methodology = fs.readFileSync(new URL("../app/[discipline]/methodology/page.tsx", import.meta.url), "utf8");
   const notFound = fs.readFileSync(new URL("../app/not-found.tsx", import.meta.url), "utf8");
   assert.match(layout, /lang="hu"/);
-  assert.match(layout, /Szezonstatisztikák/);
-  assert.match(season, /Szezonstatisztikák/);
-  assert.match(methodology, /Módszertan \| Hero of IDPA/);
+  assert.match(layout, /lang="hu"/);
+  assert.match(layout, /Lövésznapló Statisztika/);
+  assert.match(season, /szezoneredmények/);
+  assert.match(methodology, /módszertan/);
   assert.match(notFound, /Az oldal nem található/);
 });
 
@@ -74,6 +87,67 @@ test("navigation destinations and dashboard anchors remain in lockstep", () => {
     assert.ok(section.label.length > 0);
     assert.match(dashboardSource, new RegExp(`id="${section.id}"`));
   }
+});
+
+test("discipline registry exposes seven source-linked sports but publishes validated IDPA only", () => {
+  const records = Array.from(disciplines.disciplineDefinitions);
+  assert.equal(records.length, 7);
+  assert.deepEqual(records.map(({ slug }) => slug), [
+    "ipsc", "imssu", "idpa", "gyorskombinalt", "steel-challenge",
+    "gyorspont-es-hazai-versenyszamok", "iprf",
+  ]);
+  assert.deepEqual(records.filter(({ published }) => published).map(({ slug }) => slug), ["idpa"]);
+  for (const record of records) {
+    assert.ok(disciplines.getDisciplineMark(record.slug));
+    assert.ok(record.aliases.length > 0);
+    assert.ok(!record.slug.includes(" "));
+  }
+});
+
+test("discipline URLs centralize season and canonical paths on the chosen production host", () => {
+  assert.equal(paths.seasonPath("idpa", 2026), "/idpa/2026");
+  assert.equal(paths.seasonPath("steel-challenge", 2026), "/steel-challenge/2026");
+  assert.equal(paths.methodologyPath("idpa"), "/idpa/methodology");
+  assert.equal(paths.canonicalUrl("/"), "https://statisztika.lovesznaplo.hu");
+  assert.equal(paths.canonicalUrl("/idpa/2026"), "https://statisztika.lovesznaplo.hu/idpa/2026");
+});
+
+test("legacy host and old root year URLs redirect directly to the discipline path", () => {
+  const redirects = [];
+  const proxy = loadModule(fs.readFileSync(new URL("../proxy.ts", import.meta.url), "utf8"), {
+    "next/server": {
+      NextResponse: {
+        next: () => ({ action: "next" }),
+        redirect: (url, status) => {
+          const result = { action: "redirect", url: url.toString(), status };
+          redirects.push(result);
+          return result;
+        },
+      },
+    },
+    "@/lib/discipline-paths": { siteOrigin: paths.siteOrigin },
+  });
+  const request = (hostname, pathname, search = "") => ({
+    nextUrl: { hostname, pathname, search },
+  });
+  assert.deepEqual(
+    proxy.proxy(request("hero-of-idpa.hu", "/2026", "?source=old")).url,
+    "https://statisztika.lovesznaplo.hu/idpa/2026?source=old",
+  );
+  assert.equal(redirects.at(-1).status, 308);
+  assert.equal(proxy.proxy(request("statisztika.lovesznaplo.hu", "/2025")).url,
+    "https://statisztika.lovesznaplo.hu/idpa/2025");
+  assert.equal(proxy.proxy(request("hero-of-idpa.hu", "/")).url, "https://statisztika.lovesznaplo.hu/idpa");
+  assert.equal(
+    proxy.proxy(request("hero-of-idpa.hu", "/methodology")).url,
+    "https://statisztika.lovesznaplo.hu/idpa/methodology",
+  );
+  assert.equal(
+    proxy.proxy(request("statisztika.lovesznaplo.hu", "/methodology")).url,
+    "https://statisztika.lovesznaplo.hu/idpa/methodology",
+  );
+  assert.deepEqual(proxy.proxy(request("statisztika.lovesznaplo.hu", "/")), { action: "next" });
+  assert.deepEqual(proxy.proxy(request("hero-of-idpa.hu", "/unknown")), { action: "next" });
 });
 
 test("every navigation href targets the shared section registry", () => {

@@ -3,6 +3,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -38,9 +39,41 @@ class YearPipelineTests(unittest.TestCase):
         first = common.pipeline_paths(2025)
         second = common.pipeline_paths(2026)
         self.assertNotEqual(first.pdf_dir, second.pdf_dir)
-        self.assertEqual(first.competitions, self.root / "2025" / "competitions.json")
+        self.assertEqual(first.competitions, self.root / "idpa" / "2025" / "competitions.json")
         self.assertEqual(first.calendar_url, "https://portal.mdlsz.com/racecalendar?test=1&year=2025")
         self.assertEqual(second.calendar_url, "https://portal.mdlsz.com/racecalendar?test=1&year=2026")
+
+    def test_pipeline_only_accepts_disciplines_with_an_implemented_adapter(self):
+        for value in ("ipsc", "imssu", "steel-challenge", "gyorskombinalt", "iprf"):
+            with self.subTest(discipline=value), self.assertRaisesRegex(ValueError, "adapter is not implemented"):
+                common.pipeline_paths(2026, value)
+        with self.assertRaisesRegex(ValueError, "Unknown discipline"):
+            common.pipeline_paths(2026, "../idpa")
+
+    def test_typescript_and_python_discipline_registries_stay_in_sync(self):
+        source = (common.REPO_ROOT / "lib" / "disciplines.ts").read_text(encoding="utf-8")
+        declared_slugs = re.findall(r'slug:\s*"([^"]+)"', source)
+        self.assertEqual(set(declared_slugs), set(common.DISCIPLINE_ALIASES))
+        self.assertEqual(len(declared_slugs), len(common.DISCIPLINE_ALIASES))
+        for slug, aliases in common.DISCIPLINE_ALIASES.items():
+            entry = re.search(
+                rf'slug:\s*"{re.escape(slug)}",(.*?)(?=\n  \{{|\n\] as const)',
+                source,
+                re.DOTALL,
+            )
+            self.assertIsNotNone(entry, f"TypeScript registry is missing {slug}")
+            declared_aliases = re.findall(r'"([^"]+)"', re.search(r"aliases:\s*\[(.*?)\]", entry.group(1), re.DOTALL).group(1))
+            self.assertEqual(declared_aliases, list(aliases), slug)
+
+    def test_pipeline_rejects_mixed_discipline_and_year_inputs(self):
+        paths = common.pipeline_paths(2025, "idpa")
+        for payload in (
+            {"discipline": "ipsc", "year": 2025},
+            {"discipline": "idpa", "year": 2026},
+            {"year": 2025},
+        ):
+            with self.subTest(payload=payload), self.assertRaises(ValueError):
+                common.validate_payload_scope(payload, paths, "fixture.json")
 
     def test_invalid_years_are_rejected(self):
         for value in ("25", "2025/../2026", "0", "10000", "2025.5"):
@@ -80,6 +113,7 @@ class YearPipelineTests(unittest.TestCase):
         extract = script_module("extract-pdfs")
         normalize = script_module("normalize-data")
         statistics = script_module("calculate-statistics")
+        validate = script_module("validate-season")
         aliases = self.root / "club-aliases.json"
         common.save_json(aliases, {"Club": "Shared Club"})
         rows = "".join(
@@ -113,7 +147,9 @@ class YearPipelineTests(unittest.TestCase):
                     normalize.main()
                 statistics.main()
             for file in (paths.competitions, paths.raw_extracted, paths.results, paths.quality, paths.statistics):
-                self.assertEqual(json.loads(file.read_text())["year"], year)
+                payload = json.loads(file.read_text())
+                self.assertEqual(payload["year"], year)
+                self.assertEqual(payload["discipline"], "idpa")
             discovery = common.load_json(paths.competitions)
             self.assertEqual(len(discovery["competitions"]), 1)
             self.assertEqual(discovery["competitions"][0]["id"], f"race-{year}")
@@ -122,13 +158,20 @@ class YearPipelineTests(unittest.TestCase):
             self.assertTrue(result["competitionDate"].startswith(str(year)))
             self.assertEqual(result["normalizedClub"], "Shared Club")
             self.assertEqual(common.load_json(paths.statistics)["statistics"]["totalCompetitions"], 1)
+            validate.validate_season(paths.data_dir, "idpa", year)
             if year == 2025:
                 original_2025 = {file.name: file.read_bytes() for file in paths.data_dir.glob("*.json")}
         self.assertEqual(
             original_2025,
-            {file.name: file.read_bytes() for file in (self.root / "2025").glob("*.json")},
+            {file.name: file.read_bytes() for file in (self.root / "idpa" / "2025").glob("*.json")},
         )
         self.assertFalse((self.root / "competitions.json").exists())
+
+        results_payload = common.load_json(paths.results)
+        results_payload["results"] = []
+        common.save_json(paths.results, results_payload)
+        with self.assertRaisesRegex(ValueError, "No competitor results"):
+            validate.validate_season(paths.data_dir, "idpa", 2026)
 
     def test_discovery_failure_is_recorded_and_stops_runner(self):
         discover = script_module("discover-competitions")
@@ -140,18 +183,66 @@ class YearPipelineTests(unittest.TestCase):
 
     def test_runner_forwards_year_and_stops_on_failure(self):
         runner = script_module("run-pipeline")
-        with patch.object(sys, "argv", ["pipeline", "--year", "2025"]):
+        with patch.object(sys, "argv", ["pipeline", "--discipline", "idpa", "--year", "2025"]):
             with patch.object(runner.subprocess, "run") as run:
                 runner.main()
                 self.assertEqual(run.call_count, 5)
                 for call in run.call_args_list:
                     self.assertEqual(call.args[0][0], sys.executable)
                     self.assertEqual(call.args[0][-2:], ["--year", "2025"])
+                    self.assertEqual(call.args[0][2:4], ["--discipline", "idpa"])
                     self.assertTrue(call.kwargs["check"])
             with patch.object(runner.subprocess, "run", side_effect=subprocess.CalledProcessError(1, "discovery")) as run:
                 with self.assertRaises(subprocess.CalledProcessError):
                     runner.main()
                 self.assertEqual(run.call_count, 1)
+
+    def test_data_migration_is_idempotent_scoped_and_preserves_root_legacy(self):
+        migration = script_module("migrate-discipline-data")
+        data_dir = self.root / "data"
+        legacy = data_dir / "2026"
+        legacy.mkdir(parents=True)
+        payloads = {
+            "competitions.json": {"year": 2026, "competitions": [{"date": "2026.05.01"}]},
+            "raw-extracted-results.json": {"year": 2026, "extractions": []},
+            "results.json": {"year": 2026, "results": [{"competitionDate": "2026.05.01"}]},
+            "data-quality.json": {"year": 2026, "quality": {}},
+            "statistics.json": {"year": 2026, "statistics": {"totalEntries": 1}},
+        }
+        for filename, payload in payloads.items():
+            (legacy / filename).write_text(json.dumps(payload), encoding="utf-8")
+        root_payloads = {
+            filename: json.loads(json.dumps(payload)) for filename, payload in payloads.items()
+        }
+        root_payloads["competitions.json"].pop("year")
+        root_payloads["raw-extracted-results.json"].pop("year")
+        root_payloads["results.json"].pop("year")
+        root_payloads["data-quality.json"].pop("year")
+        root_payloads["statistics.json"].pop("year")
+        root_payloads["competitions.json"]["sourceUrl"] = "https://portal.mdlsz.com/racecalendar?year=2026"
+        for filename, payload in root_payloads.items():
+            (data_dir / filename).write_text(json.dumps(payload), encoding="utf-8")
+        (data_dir / "pdfs").mkdir()
+        (data_dir / "pdfs" / "legacy.pdf").write_bytes(b"legacy")
+
+        plan = migration.migrate(data_dir, dry_run=True)
+        self.assertEqual(len(plan), 2)
+        self.assertTrue(legacy.exists())
+        migration.migrate(data_dir)
+
+        migrated = data_dir / "idpa" / "2026"
+        archived = data_dir / "idpa" / "legacy-root"
+        self.assertEqual(json.loads((migrated / "results.json").read_text())["results"], payloads["results.json"]["results"])
+        self.assertEqual(json.loads((migrated / "results.json").read_text())["discipline"], "idpa")
+        self.assertEqual(json.loads((migrated / "results.json").read_text())["year"], 2026)
+        self.assertEqual(json.loads((migrated / "statistics.json").read_text())["analyticsVersion"], "legacy-unversioned")
+        self.assertEqual(json.loads((archived / "results.json").read_text())["discipline"], "idpa")
+        self.assertEqual((archived / "pdfs" / "legacy.pdf").read_bytes(), b"legacy")
+        self.assertFalse((data_dir / "competitions.json").exists())
+        self.assertFalse(legacy.exists())
+
+        migration.migrate(data_dir)
+        self.assertTrue(migrated.exists())
 
 
 if __name__ == "__main__":

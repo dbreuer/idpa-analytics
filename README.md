@@ -1,12 +1,14 @@
-# MDLSZ IDPA Season Analytics
+# Lövésznapló sportlövészeti statisztika
 
-Interactive Next.js dashboard and Python data pipeline for analyzing official Hungarian MDLSZ IDPA competition results, separated by season.
+Next.js dashboard and Python data pipeline for Hungarian MDLSZ sportlövészeti
+eredmények. The platform is designed for seven MDLSZ disciplines; only IDPA
+currently has a validated parser, scoring model, and public season pages.
 
-The intended production domain is `https://hero-of-idpa.hu`. Each generated season has
-its own page (for example `/2025` or `/2026`), and `/` redirects to the latest available
-season. The dashboard uses a championship-editorial design with a fixed filter and section
-navigation, a full-width season hero, season-specific analytics, and an official
-organization/discipline directory footer.
+The planned canonical domain is `https://statisztika.lovesznaplo.hu`. Public IDPA
+pages use `/idpa` and `/idpa/<year>` (for example `/idpa/2026`). The root page
+introduces the platform and links only to published disciplines. Existing
+`hero-of-idpa.hu/<year>` URLs permanently redirect to their `/idpa/<year>`
+counterparts. DNS and Vercel domain configuration are not changed by this repository.
 
 The public interface is in Hungarian (`lang="hu"`), with Hungarian date and number
 formatting. Sporting terminology uses *divízió*, *egyesület*, *helyezés*, and
@@ -45,44 +47,47 @@ Open http://localhost:3000.
 The pipeline is designed to keep missing data and parsing failures visible instead of silently hiding them.
 
 ```bash
-python3 scripts/discover-competitions.py --year 2025
-python3 scripts/download-results.py --year 2025
-python3 scripts/extract-pdfs.py --year 2025
-python3 scripts/normalize-data.py --year 2025
-python3 scripts/calculate-statistics.py --year 2025
+python3 scripts/discover-competitions.py --discipline idpa --year 2025
+python3 scripts/download-results.py --discipline idpa --year 2025
+python3 scripts/extract-pdfs.py --discipline idpa --year 2025
+python3 scripts/normalize-data.py --discipline idpa --year 2025
+python3 scripts/calculate-statistics.py --discipline idpa --year 2025
 ```
 
 Or run everything in sequence:
 
 ```bash
-npm run pipeline:all -- --year 2025
-npm run pipeline:all -- --year 2026
+npm run pipeline:all -- --discipline idpa --year 2025
+npm run pipeline:all -- --discipline idpa --year 2026
 ```
 
-Every stage accepts `--year`; omitting it uses the current calendar year. The all-stage
-runner forwards the same year to every stage and stops if a stage fails. Individual
-npm commands also forward arguments, e.g. `npm run pipeline:stats -- --year 2025`.
-Downstream stages require the previous stage's files for that year; they never read
-another season's data. Generate all stages before building/publishing a new season.
+Every stage accepts `--discipline` and `--year`; omitted values default to `idpa`
+and the current local calendar year for CLI compatibility. Automation passes both
+explicitly. The all-stage runner forwards both values and stops on failure.
+Downstream stages reject missing or mismatched discipline/year/schema metadata.
+Non-IDPA pipeline adapters are intentionally unavailable until their own result
+parsers and analytics have been validated.
 
 ### Pipeline Outputs
 
-- `data/<year>/competitions.json`
-- `data/<year>/raw-extracted-results.json`
-- `data/<year>/results.json`
-- `data/<year>/data-quality.json`
-- `data/<year>/statistics.json`
-- `data/<year>/pdfs/` (ignored by Git)
+- `data/<discipline>/<year>/competitions.json`
+- `data/<discipline>/<year>/raw-extracted-results.json`
+- `data/<discipline>/<year>/results.json`
+- `data/<discipline>/<year>/data-quality.json`
+- `data/<discipline>/<year>/statistics.json`
+- `data/<discipline>/<year>/pdfs/` (ignored by Git)
 - `data/club-aliases.json` (shared across seasons)
 
-Only complete seasons (competition, results, quality, and statistics files present)
-are published. Unknown years return 404. Malformed JSON or mixed-year data fails the
-build rather than displaying misleading empty statistics.
+Each artifact records its discipline, season, and schema version. Only complete
+seasons under a published discipline are prerendered. The repository currently
+publishes IDPA seasons only; other registered sports and unknown years return 404.
+Malformed JSON, mixed seasons, mixed disciplines, and unsupported schemas fail
+instead of producing misleading empty statistics.
 
-Existing root-level JSON remains readable as a legacy season, inferred from its
-calendar URL or competition dates. New pipeline runs always use year directories;
-once a directory exists for a legacy year, it takes precedence over root-level data.
-Existing root-level files and PDFs are not moved or overwritten.
+Historical season directories have been migrated into `data/idpa/<year>/`. Use
+`python3 scripts/migrate-discipline-data.py --dry-run` to inspect future migrations.
+Root-level legacy JSON/PDF files that overlap a published year are preserved in
+`data/idpa/legacy-root/` and are never treated as a public season.
 
 ### Environment
 
@@ -110,40 +115,74 @@ npm run build
 npm start
 ```
 
-Year pages are prerendered at build time from the locally generated JSON, with no
-database or API. Rebuild after refreshing or adding seasons. Point the hosting
-provider's custom-domain configuration at `hero-of-idpa.hu`; metadata alone does not
-configure DNS or deploy the site.
+Discipline and season pages are prerendered from local JSON, with no database or API.
+Rebuild after refreshing or adding seasons. Canonical metadata is configured for
+`statisztika.lovesznaplo.hu`; a Vercel domain and DNS cutover still require
+configuration in Vercel and at the DNS provider.
+
+### Vercel domain cutover
+
+1. In the existing Vercel project, add `statisztika.lovesznaplo.hu` and apply the
+   exact DNS record value shown by Vercel. Do not change the `lovesznaplo.hu`
+   apex or its mail records.
+2. Keep `hero-of-idpa.hu` and, if used, `www.hero-of-idpa.hu` assigned to the
+   same project so `proxy.ts` can map legacy IDPA URLs directly to their new
+   canonical paths. Do not configure a blanket domain redirect; it would lose
+   the discipline path mapping.
+3. Verify TLS, `/idpa`, `/idpa/2026`, `/idpa/methodology`, sitemap and robots on
+   the new host. Verify legacy home, methodology, and each old season path return
+   a single `308` to the exact new-host destination. Unknown old paths remain 404.
+4. Configure the GitHub Actions secrets/variable listed under [Scheduled refresh](#scheduled-refresh).
+   Only then enable the monthly data publisher and its production smoke check.
+5. Verify the old and new hosts in Search Console, submit the canonical sitemap,
+   and retain the old-host redirects for at least one year, preferably indefinitely.
+
+The host/domain and DNS cutover is an operator action; the code does not change
+Vercel project settings, DNS, Search Console, or certificates.
 
 ## Refreshing Source Data
 
 ### Scheduled refresh
 
 The `Refresh current season` GitHub Actions workflow runs on the **1st of every
-month at 04:00 UTC**, within the first week of the month. It can also be started
-manually from the Actions tab with **Run workflow** on `main`.
+month at 04:00 UTC**, within the first week of the month. On `main`, it can also
+be run manually for the IDPA adapter with an optional season year.
 
-The workflow selects the current year in the `Europe/Budapest` time zone, runs all
-five Python pipeline stages with that year, and validates the regression tests
-and production dashboard build before committing the five generated JSON files
-under `data/<year>/` to `main`. Other seasons and downloaded PDFs are not committed.
-A failing pipeline, test, build, rebase, or push fails the workflow; existing
-parsing diagnostics remain available in the generated data-quality files.
+The workflow selects the current year in the `Europe/Budapest` time zone, runs the
+pipeline in an isolated staging directory, validates the results, runs regression
+tests and a production build, and only then commits the five generated JSON files
+under `data/idpa/<year>/` to `main`. If the fetch, extraction, validation, tests, or
+build fail, the prior published season data is unchanged. Diagnostic PDF/result
+parsing issues remain visible; empty, mixed-season, or mixed-discipline snapshots
+are not promoted.
 
-The workflow uses the repository's `GITHUB_TOKEN` with `contents: write`.
-Branch protection must permit this bot to push to `main`; otherwise the push fails.
-GitHub may delay scheduled runs. Commits made with `GITHUB_TOKEN` do not trigger
-other GitHub Actions workflows on `push`; deployment automation must account for
-this (for example, by using a `workflow_run` trigger). This workflow refreshes data
-but does not itself deploy the website.
+Before enabling the workflow, configure these GitHub Actions secrets and variable:
+
+- Secret `VERCEL_DEPLOY_HOOK_URL`: Deploy Hook URL for the production project and `main`.
+- Secret `VERCEL_TOKEN`: read-only-capable Vercel API token to inspect deployment status.
+- Secret `VERCEL_PROJECT_ID`: Vercel project ID for this application.
+- Optional secret `VERCEL_TEAM_ID`: Vercel team ID for team-scoped projects.
+- Variable `PUBLIC_SITE_URL`: `https://statisztika.lovesznaplo.hu`.
+
+After publishing data, the action first checks whether the Git push already caused a
+production deployment. If not, it triggers the Deploy Hook, waits for a `READY`
+deployment associated with the published commit, and smoke-tests the canonical
+season URL. Missing configuration, failed builds, and failed smoke tests are
+reported as workflow failures. No hook URL or token is stored in the repository.
+No deployment is triggered when generated data has not changed.
+
+Keep Vercel's Git integration connected because Deploy Hooks depend on it. The
+workflow detects a Git-triggered deployment before requesting a hook, to avoid
+duplicate production builds. GitHub schedule execution can be delayed; the first
+day's run uses Budapest local time to select the year.
 
 ### Manual refresh
 
-1. Run the discovery script with `--year <year>` to rebuild that season's IDPA competition list from the official MDLSZ calendar.
+1. Run the discovery script with `--discipline idpa --year <year>` to rebuild that season's IDPA competition list from the official MDLSZ calendar.
 2. Run the download script to resolve every `Eredmények` link and fetch available PDFs.
 3. Run extraction and normalization to rebuild normalized competitor rows and parsing diagnostics.
 4. Run statistics calculation to regenerate leaderboard and insight data.
-5. Review `data/<year>/data-quality.json` and `data/<year>/results.json` for parse errors, missing teams, and ambiguous identities before publishing.
+5. Run `python3 scripts/validate-season.py --data-dir data --discipline idpa --year <year>` and review `data/idpa/<year>/data-quality.json` and `data/idpa/<year>/results.json` for parse errors, missing teams, and ambiguous identities before publishing.
 
 ## Notes Parsing
 

@@ -15,7 +15,9 @@ export interface Competition {
 }
 
 export interface CompetitionDiscoveryFile {
-  year?: number;
+  discipline: string;
+  year: number;
+  schemaVersion?: number;
   generatedAt: string | null;
   sourceUrl: string;
   discoveredCount: number;
@@ -56,7 +58,9 @@ export interface CompetitionResult extends ParsedNotes {
 }
 
 export interface ResultsFile {
-  year?: number;
+  discipline: string;
+  year: number;
+  schemaVersion?: number;
   generatedAt: string | null;
   results: CompetitionResult[];
   parsingErrors: Array<Record<string, unknown>>;
@@ -75,7 +79,9 @@ export interface DataQuality {
 }
 
 export interface QualityFile {
-  year?: number;
+  discipline: string;
+  year: number;
+  schemaVersion?: number;
   generatedAt: string | null;
   quality: DataQuality;
   errors: string[];
@@ -181,7 +187,10 @@ export interface StatisticsSnapshot {
 }
 
 export interface StatisticsFile {
-  year?: number;
+  discipline: string;
+  year: number;
+  schemaVersion?: number;
+  analyticsVersion?: string;
   generatedAt: string | null;
   statistics: StatisticsSnapshot | null;
   errors: string[];

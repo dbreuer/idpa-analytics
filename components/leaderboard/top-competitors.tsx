@@ -5,12 +5,13 @@ import type { CompetitorStanding } from "@/lib/types";
 import { formatNullableNumber, formatNumber } from "@/lib/utils";
 
 interface TopCompetitorsProps {
+  disciplineName: string;
   year: number;
   competitors: CompetitorStanding[];
   onSelect: (competitor: CompetitorStanding) => void;
 }
 
-export function TopCompetitors({ year, competitors, onSelect }: TopCompetitorsProps) {
+export function TopCompetitors({ disciplineName, year, competitors, onSelect }: TopCompetitorsProps) {
   const maxScore = Math.max(competitors[0]?.overallScore ?? 0, 1);
 
   return (
@@ -18,7 +19,7 @@ export function TopCompetitors({ year, competitors, onSelect }: TopCompetitorsPr
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
           <CardTitle className="font-display text-3xl">Élen álló versenyzők</CardTitle>
-          <CardDescription className="mt-1">Magyarországi IDPA-versenyek · {year}</CardDescription>
+          <CardDescription className="mt-1">Magyarországi {disciplineName}-versenyek · {year}</CardDescription>
         </div>
         <p className="hidden text-right text-xs text-[var(--ink-muted)] sm:block">Összesített<br />teljesítmény</p>
       </div>

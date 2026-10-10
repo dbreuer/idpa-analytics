@@ -6,9 +6,13 @@ import { useRouter } from "next/navigation";
 import { ChevronDown, ListFilter, Menu, X } from "lucide-react";
 
 import { dashboardSections, isDashboardSectionId, type DashboardSectionId } from "@/lib/site-navigation";
+import { seasonPath } from "@/lib/discipline-paths";
+import type { DisciplineSlug } from "@/lib/disciplines";
 import { cn } from "@/lib/utils";
 
 interface DashboardHeaderProps {
+  disciplineSlug: DisciplineSlug;
+  disciplineName: string;
   year: number;
   availableYears: number[];
   competitionOptions: Array<{ id: string; name: string }>;
@@ -63,6 +67,8 @@ function FilterSelect({
 }
 
 export function DashboardHeader({
+  disciplineSlug,
+  disciplineName,
   year,
   availableYears,
   competitionOptions,
@@ -241,13 +247,13 @@ export function DashboardHeader({
         <div className="nav-bar">
           <div className="nav-bar-inner">
             <Link
-              href={`/${year}#overview`}
+              href={seasonPath(disciplineSlug, year, "#overview")}
               onClick={() => handleSectionClick("overview")}
-              aria-label={`Hero of IDPA – ${year}. évi áttekintés`}
+              aria-label={`${disciplineName} – ${year}. évi áttekintés`}
               className="brand-mark"
             >
-              <span className="brand-mark-top">HERO OF</span>
-              <span className="brand-mark-bottom">IDPA<span className="brand-period">.</span></span>
+              <span className="brand-mark-top">{disciplineSlug === "idpa" ? "HERO OF" : "LÖVÉSZNAPLÓ"}</span>
+              <span className="brand-mark-bottom">{disciplineName}<span className="brand-period">.</span></span>
             </Link>
 
             <nav aria-label="Az oldal szakaszai" className="hidden xl:block">
@@ -288,7 +294,7 @@ export function DashboardHeader({
                   value={year}
                   onChange={(event) => {
                     const section = window.location.hash;
-                    router.push(`/${event.target.value}${section}`);
+                    router.push(seasonPath(disciplineSlug, Number(event.target.value), section));
                   }}
                   className={selectClasses}
                 >

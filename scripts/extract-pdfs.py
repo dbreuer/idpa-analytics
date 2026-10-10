@@ -5,7 +5,7 @@ from pathlib import Path
 import pymupdf
 import pdfplumber
 
-from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, split_table_rows
+from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, split_table_rows, validate_payload_scope
 
 
 def extract_with_pdfplumber(pdf_path: Path) -> list[dict]:
@@ -77,9 +77,10 @@ def extract_with_pymupdf(pdf_path: Path) -> list[dict]:
 
 
 def main() -> None:
-    paths = parse_pipeline_args("Extract PDF tables for one season.")
+    paths = parse_pipeline_args("Extract PDF tables for one discipline and season.")
     ensure_dirs(paths)
     competitions_file = load_json(paths.competitions)
+    validate_payload_scope(competitions_file, paths, str(paths.competitions))
     outputs = []
     errors: list[str] = []
 
@@ -122,7 +123,14 @@ def main() -> None:
 
     save_json(
         paths.raw_extracted,
-        {"generatedAt": now_iso(), "year": paths.year, "extractions": outputs, "errors": errors},
+        {
+            "generatedAt": now_iso(),
+            "discipline": paths.discipline,
+            "year": paths.year,
+            "schemaVersion": 1,
+            "extractions": outputs,
+            "errors": errors,
+        },
     )
 
 

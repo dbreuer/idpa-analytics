@@ -5,18 +5,34 @@ Notes on the non-obvious parts of the `scripts/` pipeline. Read this before chan
 
 ## Stages
 
-1. `discover-competitions.py` — scrapes the MDLSZ calendar table and writes `data/<year>/competitions.json`.
-2. `download-results.py` — resolves each competition's `Eredmények` link and downloads the result PDF into `data/<year>/pdfs/`.
-3. `extract-pdfs.py` — extracts raw tables from each PDF into `data/<year>/raw-extracted-results.json`.
-4. `normalize-data.py` — turns raw tables into per-competitor rows in `data/<year>/results.json`, plus `data/<year>/data-quality.json`.
-5. `calculate-statistics.py` — aggregates `results.json` into `data/<year>/statistics.json` for the dashboard.
+1. `discover-competitions.py` — scrapes the selected discipline calendar rows into `data/<discipline>/<year>/competitions.json`.
+2. `download-results.py` — resolves each competition's `Eredmények` link and downloads the result PDF into `data/<discipline>/<year>/pdfs/`.
+3. `extract-pdfs.py` — extracts raw tables from each PDF into `data/<discipline>/<year>/raw-extracted-results.json`.
+4. `normalize-data.py` — turns raw tables into per-competitor rows in `data/<discipline>/<year>/results.json`, plus `data/<discipline>/<year>/data-quality.json`.
+5. `calculate-statistics.py` — aggregates `results.json` into `data/<discipline>/<year>/statistics.json`.
 
-All stages accept `--year <year>` (default: current year). `common.parse_pipeline_args()`
-resolves year-specific paths and the calendar URL; `run-pipeline.py` runs all five
-stages with the same year. Club aliases remain shared in `data/club-aliases.json`.
+All stages accept `--discipline <slug>` and `--year <year>` (defaults: IDPA and current
+year). Only the IDPA parser/scoring adapter is enabled. `common.parse_pipeline_args()`
+resolves discipline- and year-specific paths; `run-pipeline.py` forwards both values
+to all stages. Club aliases remain shared in `data/club-aliases.json`.
 PDF paths in competition JSON are relative to the season directory (`pdfs/<id>.pdf`).
 Missing required inputs stop downstream stages rather than generating empty output.
-Generated JSON includes a top-level `year`.
+Every generated JSON payload includes top-level `discipline`, `year`, and
+`schemaVersion`. Stage inputs must match the selected discipline/year and supported
+schema before processing.
+
+The public dashboard has an IDPA analytics adapter only. `scripts/validate-season.py`
+is the promotion gate for refreshed data: it checks source errors, valid matching
+discipline/year metadata, non-empty competitions/results, result-to-competition
+references, quality counters, and the pipeline summary before a staged snapshot can
+replace the build's copy. Parsing errors and individual missing/failed result PDFs
+remain in the quality data for review; an empty or mis-scoped snapshot cannot replace
+the published season.
+
+Historical IDPA files live in `data/idpa/<year>/`. Run
+`scripts/migrate-discipline-data.py --dry-run` before repeating the scoped layout
+migration. The legacy root-level snapshot that overlapped 2026 is archived under
+`data/idpa/legacy-root/` and is deliberately excluded from published season lookup.
 
 ## Calendar source
 

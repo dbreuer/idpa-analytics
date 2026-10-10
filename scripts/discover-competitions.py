@@ -2,11 +2,11 @@ from __future__ import annotations
 
 from bs4 import BeautifulSoup
 
-from common import ensure_dirs, fetch, make_session, normalize_key, normalize_text, now_iso, parse_pipeline_args, resolve_url, save_json, slugify
+from common import DISCIPLINE_ALIASES, ensure_dirs, fetch, make_session, normalize_key, normalize_text, now_iso, parse_pipeline_args, resolve_url, save_json, slugify
 
 
 def main() -> None:
-    paths = parse_pipeline_args("Discover IDPA competitions for one season.")
+    paths = parse_pipeline_args("Discover competitions for one discipline and season.")
     ensure_dirs(paths)
     errors: list[str] = []
     competitions: list[dict] = []
@@ -20,8 +20,16 @@ def main() -> None:
             values = [normalize_text(cell.get_text(" ", strip=True)) for cell in cells]
             if len(values) < 5:
                 continue
-            discipline = next((value for value in values if normalize_key(value) == "idpa"), None)
-            if not discipline:
+            source_discipline = next(
+                (
+                    value
+                    for value in values
+                    if normalize_key(value)
+                    in {normalize_key(alias) for alias in DISCIPLINE_ALIASES[paths.discipline]}
+                ),
+                None,
+            )
+            if not source_discipline:
                 continue
             date = next((value for value in values if value.startswith(str(paths.year))), "")
             if not date.startswith(str(paths.year)):
@@ -39,7 +47,7 @@ def main() -> None:
                     "date": date,
                     "location": location or None,
                     "sourceUrl": source_url,
-                    "discipline": discipline,
+                    "discipline": source_discipline,
                     "level": values[3] if len(values) > 3 else None,
                     "organizer": values[5] if len(values) > 5 else None,
                     "code": code,
@@ -52,7 +60,9 @@ def main() -> None:
 
     payload = {
         "generatedAt": now_iso(),
+        "discipline": paths.discipline,
         "year": paths.year,
+        "schemaVersion": 1,
         "sourceUrl": paths.calendar_url,
         "discoveredCount": len(competitions),
         "competitions": competitions,

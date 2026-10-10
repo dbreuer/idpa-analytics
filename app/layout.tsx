@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
+
+import { siteOrigin } from "@/lib/discipline-paths";
 import "./globals.css";
 
+const indexProduction = process.env.VERCEL_ENV !== "preview";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hero-of-idpa.hu"),
-  title: "Hero of IDPA | Szezonstatisztikák",
+  metadataBase: new URL(siteOrigin),
+  title: {
+    default: "Lövésznapló Statisztika | Magyar sportlövészeti eredmények",
+    template: "%s | Lövésznapló Statisztika",
+  },
   description:
-    "A magyarországi IDPA-versenyek eredményei, rangsorai és statisztikái az MDLSZ hivatalos versenyadatai alapján.",
+    "Magyar sportlövészeti versenyeredmények, szezonranglisták és statisztikák a hivatalos forrásadatok alapján.",
+  robots: {
+    index: indexProduction,
+    follow: indexProduction,
+    googleBot: { index: indexProduction, follow: indexProduction },
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

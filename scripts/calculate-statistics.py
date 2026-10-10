@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from math import sqrt
 
-from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json
+from common import ensure_dirs, load_json, now_iso, parse_pipeline_args, save_json, validate_payload_scope
 
 
 def average(values: list[float]) -> float | None:
@@ -37,10 +37,12 @@ def placement_points(placement: int | None) -> float:
 
 
 def main() -> None:
-    paths = parse_pipeline_args("Calculate statistics for one season.")
+    paths = parse_pipeline_args("Calculate statistics for one discipline and season.")
     ensure_dirs(paths)
     competitions_file = load_json(paths.competitions)
     results_file = load_json(paths.results)
+    validate_payload_scope(competitions_file, paths, str(paths.competitions))
+    validate_payload_scope(results_file, paths, str(paths.results))
     competitions = competitions_file.get("competitions", [])
     results = results_file.get("results", [])
 
@@ -175,7 +177,18 @@ def main() -> None:
         },
     }
 
-    save_json(paths.statistics, {"generatedAt": now_iso(), "year": paths.year, "statistics": statistics, "errors": []})
+    save_json(
+        paths.statistics,
+        {
+            "generatedAt": now_iso(),
+            "discipline": paths.discipline,
+            "year": paths.year,
+            "schemaVersion": 1,
+            "analyticsVersion": "idpa-python-pipeline-v1",
+            "statistics": statistics,
+            "errors": [],
+        },
+    )
 
 
 if __name__ == "__main__":

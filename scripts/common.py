@@ -13,16 +13,27 @@ from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 import requests
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = REPO_ROOT / "data"
-CLUB_ALIASES_PATH = DATA_DIR / "club-aliases.json"
+DATA_DIR = Path(os.getenv("IDPA_DATA_DIR", REPO_ROOT / "data"))
+CLUB_ALIASES_PATH = REPO_ROOT / "data" / "club-aliases.json"
 REQUEST_TIMEOUT = int(os.getenv("MDLSZ_REQUEST_TIMEOUT", "60"))
 USER_AGENT = os.getenv(
     "MDLSZ_USER_AGENT",
     "mdlsz-idpa-analytics/1.0 (+https://github.com/dbreuer/idpa-analytics)",
 )
+DISCIPLINE_ALIASES = {
+    "idpa": ("IDPA", "International Defensive Pistol Association"),
+    "ipsc": ("IPSC", "International Practical Shooting Confederation"),
+    "imssu": ("IMSSU", "International Metallic Silhouette Shooting Union"),
+    "gyorskombinalt": ("Gyorskombinált",),
+    "steel-challenge": ("Steel Challenge",),
+    "gyorspont-es-hazai-versenyszamok": ("Gyorspont és hazai versenyszámok", "Gyorspont"),
+    "iprf": ("IPRF", "International Precision Rifle Federation"),
+}
+SUPPORTED_PIPELINE_DISCIPLINES = frozenset({"idpa"})
 
 @dataclass(frozen=True)
 class PipelinePaths:
+    discipline: str
     year: int
     data_dir: Path
     pdf_dir: Path
@@ -40,14 +51,19 @@ def parse_year(value: str) -> int:
     return int(value)
 
 
-def pipeline_paths(year: int) -> PipelinePaths:
+def pipeline_paths(year: int, discipline: str = "idpa") -> PipelinePaths:
     if not 1000 <= year <= 9999:
         raise ValueError("year must be between 1000 and 9999")
-    directory = DATA_DIR / str(year)
+    if discipline not in DISCIPLINE_ALIASES:
+        raise ValueError(f"Unknown discipline: {discipline}")
+    if discipline not in SUPPORTED_PIPELINE_DISCIPLINES:
+        raise ValueError(f"The {discipline} pipeline adapter is not implemented yet")
+    directory = DATA_DIR / discipline / str(year)
     calendar = urlsplit(os.getenv("MDLSZ_CALENDAR_URL", "https://portal.mdlsz.com/racecalendar"))
     query = [(key, value) for key, value in parse_qsl(calendar.query) if key != "year"]
     query.append(("year", str(year)))
     return PipelinePaths(
+        discipline=discipline,
         year=year,
         data_dir=directory,
         pdf_dir=directory / "pdfs",
@@ -62,8 +78,32 @@ def pipeline_paths(year: int) -> PipelinePaths:
 
 def parse_pipeline_args(description: str) -> PipelinePaths:
     parser = argparse.ArgumentParser(description=description)
+    parser.add_argument(
+        "--discipline",
+        choices=sorted(DISCIPLINE_ALIASES),
+        default="idpa",
+        help="Discipline slug (default: idpa; other adapters are not yet available)",
+    )
     parser.add_argument("--year", type=parse_year, default=datetime.now().year, help="Season year (default: current year)")
-    return pipeline_paths(parser.parse_args().year)
+    arguments = parser.parse_args()
+    try:
+        return pipeline_paths(arguments.year, arguments.discipline)
+    except ValueError as error:
+        parser.error(str(error))
+
+
+def validate_payload_scope(payload: dict[str, Any], paths: PipelinePaths, label: str) -> None:
+    if payload.get("discipline") != paths.discipline:
+        raise ValueError(
+            f"{label} discipline mismatch: expected {paths.discipline}, "
+            f"got {payload.get('discipline')!r}"
+        )
+    if payload.get("year") != paths.year:
+        raise ValueError(
+            f"{label} year mismatch: expected {paths.year}, got {payload.get('year')!r}"
+        )
+    if payload.get("schemaVersion") != 1:
+        raise ValueError(f"{label} has an unsupported or missing schema version")
 
 
 HEADER_ALIASES = {

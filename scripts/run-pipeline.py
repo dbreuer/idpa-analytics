@@ -7,7 +7,7 @@ from common import REPO_ROOT, parse_pipeline_args
 
 
 def main() -> None:
-    paths = parse_pipeline_args("Run all data pipeline stages for one season.")
+    paths = parse_pipeline_args("Run all data pipeline stages for one discipline and season.")
     for script in (
         "discover-competitions.py",
         "download-results.py",
@@ -16,7 +16,14 @@ def main() -> None:
         "calculate-statistics.py",
     ):
         subprocess.run(
-            [sys.executable, str(REPO_ROOT / "scripts" / script), "--year", str(paths.year)],
+            [
+                sys.executable,
+                str(REPO_ROOT / "scripts" / script),
+                "--discipline",
+                paths.discipline,
+                "--year",
+                str(paths.year),
+            ],
             check=True,
         )
 

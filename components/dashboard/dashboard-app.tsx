@@ -26,6 +26,8 @@ import { SectionHeading } from "@/components/dashboard/section-heading";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { TopCompetitors } from "@/components/leaderboard/top-competitors";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { methodologyPath } from "@/lib/discipline-paths";
+import type { Discipline } from "@/lib/disciplines";
 import type {
   ClubStanding,
   CompetitionDiscoveryFile,
@@ -38,6 +40,7 @@ import type {
 import { formatDate, formatNullableNumber, formatNumber } from "@/lib/utils";
 
 interface DashboardAppProps {
+  discipline: Discipline;
   year: number;
   availableYears: number[];
   competitionsFile: CompetitionDiscoveryFile;
@@ -93,6 +96,7 @@ function MetricValue({ label, value }: { label: string; value: string | number }
 }
 
 export function DashboardApp({
+  discipline,
   year,
   availableYears,
   competitionsFile,
@@ -157,6 +161,8 @@ export function DashboardApp({
   return (
     <>
       <DashboardHeader
+        disciplineSlug={discipline.slug}
+        disciplineName={discipline.name}
         year={year}
         availableYears={availableYears}
         competitionOptions={statistics.competitions.map((competition) => ({
@@ -183,7 +189,7 @@ export function DashboardApp({
           <div className="season-hero-inner">
             <div>
               <h1 id="overview-title" className="hero-title">
-                IDPA
+                {discipline.name}
                 <span className="hero-title-year">{year}. évi szezon</span>
               </h1>
               <p className="hero-description">
@@ -214,7 +220,7 @@ export function DashboardApp({
               description="A versenyzői rangsor a verseny-, divízió- és egyesületszűrőt követi. Az egyesületi rangsort az egyesületszűrő módosítja; az összesített diagramok a teljes szezon adatait mutatják."
             />
             <div className="grid gap-8 xl:grid-cols-[1.15fr_0.85fr]">
-              <TopCompetitors year={year} competitors={filteredTop5} onSelect={setSelectedCompetitor} />
+              <TopCompetitors disciplineName={discipline.name} year={year} competitors={filteredTop5} onSelect={setSelectedCompetitor} />
               <Card className="club-panel">
                 <CardTitle className="font-display text-3xl">Élen álló egyesületek</CardTitle>
                 <CardDescription className="mt-1">
@@ -440,7 +446,7 @@ export function DashboardApp({
                 ))}
               </dl>
               <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-                <Link href="/methodology" className="source-link">Pontszámítási módszertan</Link>
+                <Link href={methodologyPath(discipline.slug)} className="source-link">Pontszámítási módszertan</Link>
                 <a className="source-link" href={competitionsFile.sourceUrl} target="_blank" rel="noreferrer">
                   Hivatalos MDLSZ-versenynaptár
                 </a>
@@ -498,7 +504,7 @@ export function DashboardApp({
             </div>
           </section>
         </main>
-        <SiteFooter year={year} />
+        <SiteFooter disciplineSlug={discipline.slug} year={year} />
       </div>
     </>
   );

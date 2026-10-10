@@ -8,12 +8,12 @@ web
 
 ## Users
 
-IDPA competitors comparing their season performance.
+Hungarian sport shooters comparing their season performance.
 
 ## Product Purpose
 
-Hero of IDPA presents season-by-season analytics for Hungarian IDPA competition
-results so competitors can compare their performance across the season.
+Lövésznapló Statisztika presents traceable, season-by-season analytics for MDLSZ
+shooting disciplines. IDPA is the first fully supported sport.
 
 ## Positioning
 
@@ -25,8 +25,8 @@ issues instead of presenting untraceable rankings.
 
 The Python pipeline discovers competitions from the MDLSZ calendar, downloads
 official result PDFs, extracts and normalizes result rows, and computes season
-statistics. The static Next.js site publishes a separate page for each generated
-season, such as `/2026`.
+statistics. The static Next.js site publishes discipline-scoped pages such as `/idpa/2026`
+from isolated `data/<discipline>/<year>/` records.
 
 ## Capabilities and Constraints
 
@@ -35,14 +35,18 @@ season, such as `/2026`.
   methodology, and data-quality reporting.
 - Season inputs and computed dashboard data are JSON generated locally by the
   repository's data pipeline; the dashboard does not depend on a database or API.
-- Keep season data isolated, preserve the current scoring and analytics semantics,
+- Keep discipline and season data isolated, preserve the existing IDPA scoring and
+  analytics semantics, and never apply them to another sport without its validated
+  rules and parser.
   and link derived results to available official sources.
 - Do not fabricate unavailable years, results, organization relationships, or
   performance claims.
 
 ## Brand Commitments
 
-- The web product name is **Hero of IDPA** and it is hosted for `hero-of-idpa.hu`.
+- The platform is **Lövésznapló Statisztika** at the planned canonical host
+  `statisztika.lovesznaplo.hu`. IDPA season dashboards retain the **Hero of IDPA**
+  identity. Legacy IDPA URLs redirect to discipline-scoped URLs.
 - MDLSZ and IDPA are linked as governing organizations, not represented as product
   sponsors or endorsers.
 - Use the official MDLSZ marks and discipline artwork only in their actual linked
@@ -52,7 +56,7 @@ season, such as `/2026`.
 
 - Official MDLSZ race-calendar data and linked result PDFs, processed by the
   pipeline and retained with source links.
-- Season JSON files under `data/`, including normalized results, statistics,
+- Discipline/year JSON files under `data/`, including normalized results, statistics,
   discovery errors, and data-quality counts.
 - Official MDLSZ organization and discipline pages and supplied image URLs are
   recorded in the approved Hero of IDPA redesign plan in the session workspace.

@@ -4,7 +4,7 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-from common import ensure_dirs, fetch, load_json, make_session, now_iso, parse_pipeline_args, resolve_url, save_json
+from common import ensure_dirs, fetch, load_json, make_session, now_iso, parse_pipeline_args, resolve_url, save_json, validate_payload_scope
 
 
 def discover_result_link(session, competition: dict) -> tuple[str | None, str | None]:
@@ -37,9 +37,10 @@ def download_pdf(session, url: str, target_path: Path) -> None:
 
 
 def main() -> None:
-    paths = parse_pipeline_args("Download result PDFs for one season.")
+    paths = parse_pipeline_args("Download result PDFs for one discipline and season.")
     ensure_dirs(paths)
     competitions_file = load_json(paths.competitions)
+    validate_payload_scope(competitions_file, paths, str(paths.competitions))
     competitions = competitions_file.get("competitions", [])
     errors = competitions_file.get("errors", [])
     session = make_session()
@@ -68,7 +69,9 @@ def main() -> None:
     payload = {
         **competitions_file,
         "generatedAt": now_iso(),
+        "discipline": paths.discipline,
         "year": paths.year,
+        "schemaVersion": 1,
         "competitions": competitions,
         "errors": errors,
     }
