@@ -23,7 +23,7 @@ export function formatNumber(value: number, digits = 0) {
 
 export function formatNullableNumber(value?: number | null, digits = 0) {
   if (value === undefined || value === null || Number.isNaN(value)) {
-    return "N/A";
+    return "Nincs adat";
   }
 
   return formatNumber(value, digits);
@@ -31,7 +31,7 @@ export function formatNullableNumber(value?: number | null, digits = 0) {
 
 export function formatDate(value?: string | null) {
   if (!value) {
-    return "N/A";
+    return "Nincs adat";
   }
 
   const date = new Date(value);

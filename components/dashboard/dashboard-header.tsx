@@ -151,33 +151,33 @@ export function DashboardHeader({
 
   return (
     <>
-      <a className="skip-link" href="#content">Skip to content</a>
+      <a className="skip-link" href="#content">Ugrás a tartalomra</a>
       <header ref={headerRef} className="site-header">
         <div className="filter-bar">
           <div className="filter-bar-inner">
             <div className="hidden w-full grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)_minmax(0,1fr)] items-end gap-3 lg:grid lg:gap-5">
               <FilterSelect
                 id="competition-filter"
-                label="Competition"
+                label="Verseny"
                 value={competition}
                 options={[
-                  { value: "all", label: "All competitions" },
+                  { value: "all", label: "Összes verseny" },
                   ...competitionOptions.map((option) => ({ value: option.id, label: option.name })),
                 ]}
                 onChange={onCompetitionChange}
               />
               <FilterSelect
                 id="division-filter"
-                label="Division"
+                label="Divízió"
                 value={division}
-                options={divisionOptions.map((option) => ({ value: option, label: option === "all" ? "All divisions" : option }))}
+                options={divisionOptions.map((option) => ({ value: option, label: option === "all" ? "Összes divízió" : option }))}
                 onChange={onDivisionChange}
               />
               <FilterSelect
                 id="club-filter"
-                label="Club"
+                label="Egyesület"
                 value={club}
-                options={clubOptions.map((option) => ({ value: option, label: option === "all" ? "All clubs" : option }))}
+                options={clubOptions.map((option) => ({ value: option, label: option === "all" ? "Összes egyesület" : option }))}
                 onChange={onClubChange}
               />
             </div>
@@ -195,11 +195,11 @@ export function DashboardHeader({
               >
                 <span className="inline-flex items-center gap-2">
                   <ListFilter aria-hidden="true" className="h-4 w-4 text-[var(--signal)]" />
-                  Filters
+                  Szűrők
                   <span className="rounded-sm bg-[var(--signal)] px-1.5 py-0.5 text-xs tabular-nums text-white">{activeFilterCount}</span>
                 </span>
                 <span className="max-w-[65%] truncate text-xs font-medium text-[var(--ink-muted)]">
-                  {competition === "all" ? "All competitions" : competitionOptions.find((option) => option.id === competition)?.name}
+                  {competition === "all" ? "Összes verseny" : competitionOptions.find((option) => option.id === competition)?.name}
                   {division !== "all" ? ` · ${division}` : ""}
                   {club !== "all" ? ` · ${club}` : ""}
                 </span>
@@ -209,26 +209,26 @@ export function DashboardHeader({
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <FilterSelect
                       id="mobile-competition-filter"
-                      label="Competition"
+                      label="Verseny"
                       value={competition}
                       options={[
-                        { value: "all", label: "All competitions" },
+                        { value: "all", label: "Összes verseny" },
                         ...competitionOptions.map((option) => ({ value: option.id, label: option.name })),
                       ]}
                       onChange={onCompetitionChange}
                     />
                     <FilterSelect
                       id="mobile-division-filter"
-                      label="Division"
+                      label="Divízió"
                       value={division}
-                      options={divisionOptions.map((option) => ({ value: option, label: option === "all" ? "All divisions" : option }))}
+                      options={divisionOptions.map((option) => ({ value: option, label: option === "all" ? "Összes divízió" : option }))}
                       onChange={onDivisionChange}
                     />
                     <FilterSelect
                       id="mobile-club-filter"
-                      label="Club"
+                      label="Egyesület"
                       value={club}
-                      options={clubOptions.map((option) => ({ value: option, label: option === "all" ? "All clubs" : option }))}
+                      options={clubOptions.map((option) => ({ value: option, label: option === "all" ? "Összes egyesület" : option }))}
                       onChange={onClubChange}
                     />
                   </div>
@@ -243,14 +243,14 @@ export function DashboardHeader({
             <Link
               href={`/${year}#overview`}
               onClick={() => handleSectionClick("overview")}
-              aria-label={`Hero of IDPA ${year}, overview`}
+              aria-label={`Hero of IDPA – ${year}. évi áttekintés`}
               className="brand-mark"
             >
               <span className="brand-mark-top">HERO OF</span>
               <span className="brand-mark-bottom">IDPA<span className="brand-period">.</span></span>
             </Link>
 
-            <nav aria-label="Dashboard sections" className="hidden xl:block">
+            <nav aria-label="Az oldal szakaszai" className="hidden xl:block">
               <ul className="flex items-center gap-1">
                 {dashboardSections.map((section) => (
                   <li key={section.id}>
@@ -279,10 +279,10 @@ export function DashboardHeader({
                 className="mobile-nav-toggle"
               >
                 {navigationOpen ? <X aria-hidden="true" className="h-4 w-4" /> : <Menu aria-hidden="true" className="h-4 w-4" />}
-                <span className="sr-only">{navigationOpen ? "Close sections" : "Open sections"}</span>
+                <span className="sr-only">{navigationOpen ? "Navigáció bezárása" : "Navigáció megnyitása"}</span>
               </button>
               <label className="season-select-label" htmlFor="season-selector">
-                Season
+                Szezon
                 <select
                   id="season-selector"
                   value={year}
@@ -301,7 +301,7 @@ export function DashboardHeader({
             </div>
           </div>
           {navigationOpen && (
-            <nav id="mobile-navigation" aria-label="Dashboard sections" className="mobile-nav-panel xl:hidden">
+            <nav id="mobile-navigation" aria-label="Az oldal szakaszai" className="mobile-nav-panel xl:hidden">
               {dashboardSections.map((section) => (
                 <a
                   key={section.id}

@@ -3,14 +3,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hero-of-idpa.hu"),
-  title: "Hero of IDPA | Season Analytics",
+  title: "Hero of IDPA | Szezonstatisztikák",
   description:
-    "Interactive analytics dashboard for official Hungarian MDLSZ IDPA competition results.",
+    "A magyarországi IDPA-versenyek eredményei, rangsorai és statisztikái az MDLSZ hivatalos versenyadatai alapján.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="hu" className="h-full">
       <body className="min-h-full bg-background text-foreground antialiased">{children}</body>
     </html>
   );

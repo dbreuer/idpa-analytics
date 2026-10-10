@@ -19,8 +19,8 @@ async function seasonYear(params: Promise<{ year: string }>) {
 export async function generateMetadata({ params }: PageProps<"/[year]">): Promise<Metadata> {
   const year = await seasonYear(params);
   return {
-    title: `Hero of IDPA ${year} | Season Analytics`,
-    description: `Interactive analytics for official Hungarian MDLSZ IDPA ${year} competition results.`,
+    title: `Hero of IDPA ${year} | Szezonstatisztikák`,
+    description: `A ${year}. évi magyarországi IDPA-versenyek eredményei, rangsorai és statisztikái az MDLSZ hivatalos versenyadatai alapján.`,
     alternates: { canonical: `/${year}` },
   };
 }

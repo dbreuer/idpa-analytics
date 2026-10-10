@@ -1,11 +1,11 @@
 export const dashboardSections = [
-  { id: "overview", label: "Overview" },
-  { id: "rankings", label: "Rankings" },
-  { id: "analytics", label: "Analytics" },
-  { id: "details", label: "Details" },
-  { id: "competitions", label: "Competitions" },
-  { id: "insights", label: "Insights" },
-  { id: "data-quality", label: "Data quality" },
+  { id: "overview", label: "Áttekintés" },
+  { id: "rankings", label: "Rangsorok" },
+  { id: "analytics", label: "Statisztikák" },
+  { id: "details", label: "Részletek" },
+  { id: "competitions", label: "Versenyek" },
+  { id: "insights", label: "Szezonkiemelések" },
+  { id: "data-quality", label: "Adatminőség" },
 ] as const;
 
 export type DashboardSectionId = (typeof dashboardSections)[number]["id"];

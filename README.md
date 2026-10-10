@@ -8,6 +8,13 @@ season. The dashboard uses a championship-editorial design with a fixed filter a
 navigation, a full-width season hero, season-specific analytics, and an official
 organization/discipline directory footer.
 
+The public interface is in Hungarian (`lang="hu"`), with Hungarian date and number
+formatting. Sporting terminology uses *divízió*, *egyesület*, *helyezés*, and
+*dobogós helyezés*. Club Power is displayed as *egyesületi összpontszám* and
+Club Strength as *tagok átlagpontszáma*. Missing values display *Nincs adat*.
+Official names, division codes, source records, and original technical diagnostics
+remain unchanged.
+
 ## Stack
 
 - Next.js 16

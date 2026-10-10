@@ -12,9 +12,9 @@ export default function Home() {
     <>
       <main className="empty-main min-h-screen">
         <div className="mx-auto max-w-4xl px-5 py-16">
-          <h1 className="font-display text-5xl font-extrabold">Season data not generated yet</h1>
+          <h1 className="font-display text-5xl font-extrabold">Még nem állnak rendelkezésre szezonadatok</h1>
           <p className="mt-4 max-w-prose text-[var(--ink-muted)]">
-            Generate a season with <code className="rounded border border-[var(--rule)] bg-[var(--paper)] px-1.5 py-1">npm run pipeline:all -- --year 2026</code>, then rebuild the site.
+            A szezonadatok előállításához futtassa a <code className="rounded border border-[var(--rule)] bg-[var(--paper)] px-1.5 py-1">npm run pipeline:all -- --year 2026</code> parancsot, majd készítse el újra a webhelyet.
           </p>
         </div>
       </main>

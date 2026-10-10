@@ -1,54 +1,60 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 
 const sections = [
   {
-    title: "Overall performance score",
+    title: "Összesített teljesítménypontszám",
     description:
-      "Placement points, participation, win bonuses, podium bonuses, and consistency are combined using a configurable scoring model. Participation is capped so it cannot dominate performance by itself.",
+      "A konfigurálható pontszámítási modell a helyezésekért járó pontokat, a versenyrészvételt, a győzelmi és dobogós bónuszokat, valamint a kiegyensúlyozottsági pontszámot összesíti. A részvételi pontszám felső korlátja megakadályozza, hogy önmagában az indulások száma határozza meg a rangsort.",
   },
   {
-    title: "Speed metrics",
+    title: "Sebességmutatók",
     description:
-      "Raw times are displayed when present, but cross-competition comparisons are labeled carefully. The dashboard also computes normalized speed scores using each competition's fastest valid time as the baseline.",
+      "Az időeredmények akkor jelennek meg, ha rendelkezésre állnak. Különböző versenyek időeredményei közvetlenül nem hasonlíthatók össze. A normalizált sebességmutató az adott verseny legjobb érvényes idejét használja viszonyítási alapként.",
   },
   {
-    title: "Club rankings",
+    title: "Egyesületi rangsorok",
     description:
-      "Club Power uses the capped sum of top member scores, while Club Strength uses average member output. This prevents very large clubs from winning only through volume.",
+      "Az egyesületi összpontszám (Club Power) az öt legeredményesebb tag pontszámának összege. A tagok átlagpontszáma (Club Strength) az egyesület versenyzőinek átlagos teljesítményét mutatja. Így az egyesület létszáma önmagában nem határozza meg a rangsorát.",
   },
   {
-    title: "Rising star",
+    title: "Fejlődési mutató",
     description:
-      "The dashboard compares the first half and second half of an eligible competitor's season by average placement. The best positive improvement becomes the rising star when at least three competitions exist.",
+      "A fejlődési mutató a versenyző szezonjának első és második felében elért átlagos helyezést hasonlítja össze. A kiemelés az átlagos helyezés legnagyobb javulását mutatja a legalább három rögzített helyezéssel rendelkező versenyzők között.",
   },
   {
-    title: "Source data and transparency",
+    title: "Forrásadatok és átláthatóság",
     description:
-      "The source of truth is the official MDLSZ competition calendar and official competition result PDFs. Raw and normalized values are preserved, missing data is shown as N/A, and parsing failures are surfaced in the quality dashboard.",
+      "Az adatforrás az MDLSZ hivatalos versenynaptára és a versenyek hivatalos PDF-eredményjegyzékei. Az eredeti és a normalizált értékeket egyaránt megőrizzük. A hiányzó értékeket „Nincs adat” jelölés mutatja; a feldolgozási hibák az adatminőségi szakaszban jelennek meg.",
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Módszertan | Hero of IDPA",
+  description: "A Hero of IDPA rangsorainak, teljesítménymutatóinak és adatfeldolgozásának módszertana.",
+};
 
 export default function MethodologyPage() {
   return (
     <>
       <header className="methodology-nav">
         <div className="methodology-nav-inner">
-          <Link href="/" className="brand-mark" aria-label="Hero of IDPA home">
+          <Link href="/" className="brand-mark" aria-label="Hero of IDPA kezdőlap">
             <span className="brand-mark-top">HERO OF</span>
             <span className="brand-mark-bottom">IDPA<span className="brand-period">.</span></span>
           </Link>
-          <Link href="/" className="source-link">Back to season overview</Link>
+          <Link href="/" className="source-link">Vissza a szezonáttekintéshez</Link>
         </div>
       </header>
       <main className="methodology-main">
         <h1 className="font-display text-5xl font-extrabold leading-[0.95] md:text-6xl">
-          Transparent analytics methodology
+          Statisztikai és pontszámítási módszertan
         </h1>
         <p className="mt-4 max-w-[68ch] text-base leading-7 text-[var(--ink-muted)]">
-          Every major metric is documented so each season’s story stays traceable to its official sources.
+          A főbb mutatók számítását dokumentáljuk, hogy a szezoneredmények visszakövethetők legyenek a hivatalos forrásokhoz.
         </p>
         <div className="mt-10 space-y-7">
           {sections.map((section) => (

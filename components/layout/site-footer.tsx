@@ -11,16 +11,16 @@ export function SiteFooter({ year }: { year?: number }) {
         <div className="footer-topline">
           <div>
             <p className="footer-wordmark">HERO OF <strong>IDPA.</strong></p>
-            <p className="footer-copy">Season results, traceable to their official sources.</p>
+            <p className="footer-copy">Szezoneredmények, visszakövethető hivatalos forrásokkal.</p>
           </div>
-          <div className="footer-orgs" aria-label="Governing organizations">
+          <div className="footer-orgs" aria-label="Sportszövetségek">
             {governingOrganizations.map((organization) => (
               <a
                 key={organization.name}
                 href={organization.href}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`Visit ${organization.name} website`}
+                aria-label={`${organization.name} hivatalos honlapja`}
                 className="footer-org-link"
               >
                 <span className="footer-logo-plate">
@@ -42,8 +42,8 @@ export function SiteFooter({ year }: { year?: number }) {
 
         <div className="footer-disciplines">
           <div className="footer-section-heading">
-            <h2>MDLSZ disciplines</h2>
-            <a href="https://mdlsz.com/" target="_blank" rel="noreferrer">Official federation pages</a>
+            <h2>Az MDLSZ szakágai</h2>
+            <a href="https://mdlsz.com/" target="_blank" rel="noreferrer">A szövetség hivatalos honlapja</a>
           </div>
           <ul className="discipline-grid">
             {mdlszDisciplines.map((discipline) => (
@@ -72,10 +72,10 @@ export function SiteFooter({ year }: { year?: number }) {
         </div>
 
         <div className="footer-bottom">
-          <p>Source records: official MDLSZ competition calendar and result PDFs.</p>
+          <p>Adatforrások: az MDLSZ hivatalos versenynaptára és PDF-eredményjegyzékei.</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link href={year ? `/${year}#data-quality` : "/"}>Data quality</Link>
-            <Link href="/methodology">Methodology</Link>
+            <Link href={year ? `/${year}#data-quality` : "/"}>Adatminőség</Link>
+            <Link href="/methodology">Módszertan</Link>
             <span>© {year ?? new Date().getFullYear()} Hero of IDPA</span>
           </div>
         </div>

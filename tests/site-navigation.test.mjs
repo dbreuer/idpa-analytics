@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
 import vm from "node:vm";
+import { createRequire } from "node:module";
 import ts from "typescript";
 
 const navigationSource = fs.readFileSync(new URL("../lib/site-navigation.ts", import.meta.url), "utf8");
@@ -13,11 +14,49 @@ function loadModule(source) {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
   const exports = {};
-  vm.runInNewContext(compiled, { exports });
+  vm.runInNewContext(compiled, { exports, require: createRequire(import.meta.url), Intl });
   return exports;
 }
 const navigation = loadModule(navigationSource);
 const associations = loadModule(associationsSource);
+const utils = loadModule(fs.readFileSync(new URL("../lib/utils.ts", import.meta.url), "utf8"));
+
+test("Hungarian labels preserve section identifiers and cover desktop and mobile filters", () => {
+  assert.deepEqual(Array.from(navigation.dashboardSections, (section) => section.label), [
+    "Áttekintés", "Rangsorok", "Statisztikák", "Részletek", "Versenyek", "Szezonkiemelések", "Adatminőség",
+  ]);
+  for (const label of ["Verseny", "Divízió", "Egyesület"]) {
+    assert.equal(headerSource.split(`label="${label}"`).length - 1, 2);
+  }
+  assert.match(dashboardSource, /qualityLabels: Record<keyof DataQuality, string>/);
+  assert.doesNotMatch(dashboardSource, /label\.replace|N\/A/);
+});
+
+test("Hungarian locale formats numbers, dates, and missing values", () => {
+  assert.equal(utils.formatNumber(1234.5, 2), new Intl.NumberFormat("hu-HU", {
+    minimumFractionDigits: 2, maximumFractionDigits: 2,
+  }).format(1234.5));
+  assert.equal(utils.formatDate("2026-05-12"), new Intl.DateTimeFormat("hu-HU", {
+    year: "numeric", month: "short", day: "numeric",
+  }).format(new Date("2026-05-12")));
+  assert.equal(utils.formatNullableNumber(null), "Nincs adat");
+  assert.equal(utils.formatNullableNumber(undefined), "Nincs adat");
+  assert.equal(utils.formatNullableNumber(NaN), "Nincs adat");
+  assert.equal(utils.formatNullableNumber(0), "0");
+  assert.equal(utils.formatDate(null), "Nincs adat");
+});
+
+test("document language and page metadata use Hungarian", () => {
+  const layout = fs.readFileSync(new URL("../app/layout.tsx", import.meta.url), "utf8");
+  const season = fs.readFileSync(new URL("../app/[year]/page.tsx", import.meta.url), "utf8");
+  const methodology = fs.readFileSync(new URL("../app/methodology/page.tsx", import.meta.url), "utf8");
+  const notFound = fs.readFileSync(new URL("../app/not-found.tsx", import.meta.url), "utf8");
+  assert.match(layout, /lang="hu"/);
+  assert.match(layout, /Szezonstatisztikák/);
+  assert.match(season, /Szezonstatisztikák/);
+  assert.match(methodology, /Módszertan \| Hero of IDPA/);
+  assert.match(notFound, /Az oldal nem található/);
+});
 
 test("navigation destinations and dashboard anchors remain in lockstep", () => {
   const sections = Array.from(navigation.dashboardSections);
