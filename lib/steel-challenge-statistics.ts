@@ -8,11 +8,7 @@ export interface SteelChallengeCount {
 
 export interface SteelChallengeResult {
   competitionId: string;
-  competitionName: string;
   competitionDate: string;
-  competitionLevel: string;
-  sourceUrl: string;
-  resultPdfUrl?: string;
   competitorKey: string;
   competitorName: string;
   club?: string;
@@ -81,7 +77,6 @@ export interface SteelChallengeStatistics {
   levels: SteelChallengeCount[];
   competitions: SteelChallengeCompetitionSummary[];
   fieldResults: SteelChallengeResult[];
-  leaderboard: SteelChallengeLeaderboardEntry[];
   championshipWinners: SteelChallengeResult[];
   largestField?: { competitionName: string; division: string; size: number };
   mostActive?: { name: string; competitions: number };
@@ -236,11 +231,7 @@ export function buildSteelChallengeStatistics(competitions: Competition[], resul
       const parsedResult = parseResultValue(row.rawResult);
       fieldResults.push({
         competitionId: competition.id,
-        competitionName: competition.name,
         competitionDate: competition.date,
-        competitionLevel: competition.level?.trim() || missingLevelLabel,
-        sourceUrl: competition.sourceUrl,
-        resultPdfUrl: competition.resultPdfUrl,
         competitorKey: sourceCompetitorKey(row),
         competitorName: row.competitorName,
         club: row.normalizedClub || row.club || row.team || undefined,
@@ -259,7 +250,6 @@ export function buildSteelChallengeStatistics(competitions: Competition[], resul
     }
   }
 
-  const leaderboard = rankSteelChallengeResults(fieldResults);
   const fieldKeysByDivision = new Map<string, Set<string>>();
   for (const result of fieldResults) {
     const keys = fieldKeysByDivision.get(result.division) ?? new Set<string>();
@@ -290,7 +280,10 @@ export function buildSteelChallengeStatistics(competitions: Competition[], resul
     rankedFields: new Set(fieldResults.map((result) => `${result.competitionId}\u0000${result.division}`)).size,
     rankedCompetitors: new Set(fieldResults.map((result) => result.competitorKey)).size,
     divisions: countValues(fieldResults.map((result) => result.division)),
-    levels: countValues(fieldResults.map((result) => result.competitionLevel)),
+    levels: countValues(fieldResults.map((result) => {
+      const competition = competitionsById.get(result.competitionId);
+      return competition?.level?.trim() || missingLevelLabel;
+    })),
     competitions: competitions.map((competition) => {
       const rows = results.filter((result) => result.competitionId === competition.id);
       const ranked = fieldResults.filter((result) => result.competitionId === competition.id);
@@ -310,9 +303,8 @@ export function buildSteelChallengeStatistics(competitions: Competition[], resul
       };
     }),
     fieldResults,
-    leaderboard,
     championshipWinners: fieldResults
-      .filter((result) => nationalChampionshipPattern.test(result.competitionLevel) && result.placement === 1)
+      .filter((result) => nationalChampionshipPattern.test(competitionsById.get(result.competitionId)?.level ?? "") && result.placement === 1)
       .sort((a, b) => a.division.localeCompare(b.division, "hu")),
     largestField,
     mostActive: mostActive ? { name: mostActive.name, competitions: mostActive.competitions.size } : undefined,

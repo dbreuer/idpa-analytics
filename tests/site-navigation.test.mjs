@@ -230,7 +230,8 @@ test("Steel Challenge standings rank by within-field placement percentiles", () 
     row("sc-2", "Open", "Cy Shooter", "125", 3, "65"),
   ]);
 
-  const leaderboard = statistics.leaderboard.filter((entry) => entry.division === "Open");
+  const leaderboard = steelChallengeStatistics.rankSteelChallengeResults(statistics.fieldResults)
+    .filter((entry) => entry.division === "Open");
   assert.deepEqual(Array.from(leaderboard, ({ competitorName, averagePercentile, matchCount }) => [
     competitorName, averagePercentile, matchCount,
   ]), [

@@ -179,7 +179,6 @@ export default async function SeasonPage({ params }: PageProps<"/[discipline]/[y
           year={year}
           availableYears={getAvailableYears(discipline.slug)}
           competitionsFile={data.competitionsFile}
-          resultsFile={data.resultsFile}
           qualityFile={data.qualityFile}
           statistics={buildSteelChallengeStatistics(data.competitionsFile.competitions, data.resultsFile.results)}
         />

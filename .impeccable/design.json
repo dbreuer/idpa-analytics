@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-10T05:36:12Z",
+  "generatedAt": "2026-10-10T15:13:02Z",
   "title": "Design System: Hero of IDPA",
   "extensions": {
     "colorMeta": {
@@ -135,6 +135,96 @@
         "displayName": "Footer Muted",
         "canonical": "#aaa8a2",
         "tonalRamp": ["oklch(15% 0.009 91.5)", "oklch(25% 0.009 91.5)", "oklch(35% 0.009 91.5)", "oklch(45% 0.009 91.5)", "oklch(55% 0.009 91.5)", "oklch(65% 0.009 91.5)", "oklch(75% 0.009 91.5)", "oklch(95% 0.009 91.5)"]
+      },
+      "steel-background": {
+        "role": "neutral",
+        "displayName": "Steel Graphite",
+        "canonical": "#111418",
+        "tonalRamp": ["oklch(15% 0.012 250)", "oklch(25% 0.012 250)", "oklch(35% 0.012 250)", "oklch(45% 0.012 250)", "oklch(55% 0.012 250)", "oklch(65% 0.012 250)", "oklch(75% 0.012 250)", "oklch(95% 0.012 250)"]
+      },
+      "steel-paper": {
+        "role": "neutral",
+        "displayName": "Steel Graphite Panel",
+        "canonical": "#1b2027",
+        "tonalRamp": ["oklch(15% 0.017 252)", "oklch(25% 0.017 252)", "oklch(35% 0.017 252)", "oklch(45% 0.017 252)", "oklch(55% 0.017 252)", "oklch(65% 0.017 252)", "oklch(75% 0.017 252)", "oklch(95% 0.017 252)"]
+      },
+      "steel-inset": {
+        "role": "neutral",
+        "displayName": "Steel Inset",
+        "canonical": "#181d24",
+        "tonalRamp": ["oklch(15% 0.017 254)", "oklch(25% 0.017 254)", "oklch(35% 0.017 254)", "oklch(45% 0.017 254)", "oklch(55% 0.017 254)", "oklch(65% 0.017 254)", "oklch(75% 0.017 254)", "oklch(95% 0.017 254)"]
+      },
+      "steel-filter-rail": {
+        "role": "neutral",
+        "displayName": "Steel Filter Rail",
+        "canonical": "#15191f",
+        "tonalRamp": ["oklch(15% 0.015 252)", "oklch(25% 0.015 252)", "oklch(35% 0.015 252)", "oklch(45% 0.015 252)", "oklch(55% 0.015 252)", "oklch(65% 0.015 252)", "oklch(75% 0.015 252)", "oklch(95% 0.015 252)"]
+      },
+      "steel-ink": {
+        "role": "neutral",
+        "displayName": "Steel Light Text",
+        "canonical": "#f4f6f8",
+        "tonalRamp": ["oklch(15% 0.004 240)", "oklch(25% 0.004 240)", "oklch(35% 0.004 240)", "oklch(45% 0.004 240)", "oklch(55% 0.004 240)", "oklch(65% 0.004 240)", "oklch(75% 0.004 240)", "oklch(95% 0.004 240)"]
+      },
+      "steel-muted": {
+        "role": "neutral",
+        "displayName": "Steel Muted Text",
+        "canonical": "#9ba6b2",
+        "tonalRamp": ["oklch(15% 0.025 250)", "oklch(25% 0.025 250)", "oklch(35% 0.025 250)", "oklch(45% 0.025 250)", "oklch(55% 0.025 250)", "oklch(65% 0.025 250)", "oklch(75% 0.025 250)", "oklch(95% 0.025 250)"]
+      },
+      "steel-rule": {
+        "role": "neutral",
+        "displayName": "Steel Rule",
+        "canonical": "#262d37",
+        "tonalRamp": ["oklch(15% 0.024 250)", "oklch(25% 0.024 250)", "oklch(35% 0.024 250)", "oklch(45% 0.024 250)", "oklch(55% 0.024 250)", "oklch(65% 0.024 250)", "oklch(75% 0.024 250)", "oklch(95% 0.024 250)"]
+      },
+      "steel-orange": {
+        "role": "primary",
+        "displayName": "Steel Orange Signal",
+        "canonical": "#ff6b35",
+        "tonalRamp": ["oklch(15% 0.215 38)", "oklch(25% 0.215 38)", "oklch(35% 0.215 38)", "oklch(45% 0.215 38)", "oklch(55% 0.215 38)", "oklch(65% 0.215 38)", "oklch(75% 0.215 38)", "oklch(95% 0.215 38)"]
+      },
+      "steel-orange-hover": {
+        "role": "primary",
+        "displayName": "Steel Orange Hover",
+        "canonical": "#ff8a61",
+        "tonalRamp": ["oklch(15% 0.175 40)", "oklch(25% 0.175 40)", "oklch(35% 0.175 40)", "oklch(45% 0.175 40)", "oklch(55% 0.175 40)", "oklch(65% 0.175 40)", "oklch(75% 0.175 40)", "oklch(95% 0.175 40)"]
+      },
+      "steel-green": {
+        "role": "secondary",
+        "displayName": "Verified Status Green",
+        "canonical": "#40b982",
+        "tonalRamp": ["oklch(15% 0.15 157)", "oklch(25% 0.15 157)", "oklch(35% 0.15 157)", "oklch(45% 0.15 157)", "oklch(55% 0.15 157)", "oklch(65% 0.15 157)", "oklch(75% 0.15 157)", "oklch(95% 0.15 157)"]
+      },
+      "steel-border": {
+        "role": "neutral",
+        "displayName": "Steel Control Border",
+        "canonical": "#343c48",
+        "tonalRamp": ["oklch(15% 0.022 250)", "oklch(25% 0.022 250)", "oklch(35% 0.022 250)", "oklch(45% 0.022 250)", "oklch(55% 0.022 250)", "oklch(65% 0.022 250)", "oklch(75% 0.022 250)", "oklch(95% 0.022 250)"]
+      },
+      "steel-row-hover": {
+        "role": "neutral",
+        "displayName": "Steel Row Hover",
+        "canonical": "#222832",
+        "tonalRamp": ["oklch(15% 0.021 252)", "oklch(25% 0.021 252)", "oklch(35% 0.021 252)", "oklch(45% 0.021 252)", "oklch(55% 0.021 252)", "oklch(65% 0.021 252)", "oklch(75% 0.021 252)", "oklch(95% 0.021 252)"]
+      },
+      "steel-chart-blue": {
+        "role": "secondary",
+        "displayName": "Steel Chart Blue",
+        "canonical": "#66a8e6",
+        "tonalRamp": ["oklch(15% 0.14 250)", "oklch(25% 0.14 250)", "oklch(35% 0.14 250)", "oklch(45% 0.14 250)", "oklch(55% 0.14 250)", "oklch(65% 0.14 250)", "oklch(75% 0.14 250)", "oklch(95% 0.14 250)"]
+      },
+      "steel-chart-gold": {
+        "role": "secondary",
+        "displayName": "Steel Chart Gold",
+        "canonical": "#e8c365",
+        "tonalRamp": ["oklch(15% 0.14 87)", "oklch(25% 0.14 87)", "oklch(35% 0.14 87)", "oklch(45% 0.14 87)", "oklch(55% 0.14 87)", "oklch(65% 0.14 87)", "oklch(75% 0.14 87)", "oklch(95% 0.14 87)"]
+      },
+      "steel-chart-purple": {
+        "role": "secondary",
+        "displayName": "Steel Chart Purple",
+        "canonical": "#c58ce5",
+        "tonalRamp": ["oklch(15% 0.16 305)", "oklch(25% 0.16 305)", "oklch(35% 0.16 305)", "oklch(45% 0.16 305)", "oklch(55% 0.16 305)", "oklch(65% 0.16 305)", "oklch(75% 0.16 305)", "oklch(95% 0.16 305)"]
       }
     },
     "typographyMeta": {
@@ -157,6 +247,18 @@
       "label": {
         "displayName": "Control Label",
         "purpose": "Concise uppercase control and data labels."
+      },
+      "steel-display": {
+        "displayName": "Steel Masthead",
+        "purpose": "Route-specific uppercase Steel Challenge masthead in Barlow Condensed."
+      },
+      "steel-headline": {
+        "displayName": "Steel Section Heading",
+        "purpose": "Route-specific Steel Challenge report section headings in Barlow Condensed."
+      },
+      "steel-data": {
+        "displayName": "Steel Telemetry",
+        "purpose": "Route-specific positions, counts, percentiles, and compact metadata."
       }
     },
     "shadows": [
@@ -164,6 +266,11 @@
         "name": "chart-tooltip",
         "value": "0 8px 24px rgb(26 27 25 / 12%)",
         "purpose": "Keep chart tooltip legible above plotted data."
+      },
+      {
+        "name": "steel-chart-tooltip",
+        "value": "0 8px 24px rgb(0 0 0 / 35%)",
+        "purpose": "Separate a chart tooltip from Steel Challenge's dark plot surface."
       }
     ],
     "motion": [
@@ -181,7 +288,9 @@
     "breakpoints": [
       { "name": "md", "value": "768px" },
       { "name": "lg", "value": "1024px" },
-      { "name": "xl", "value": "1280px" }
+      { "name": "xl", "value": "1280px" },
+      { "name": "steel-card-columns", "value": "1100px" },
+      { "name": "steel-phone-layout", "value": "767px" }
     ]
   },
   "components": [
@@ -240,17 +349,50 @@
       "description": "A real official federation page link with an unmodified mark and a visible discipline name.",
       "html": "<a class=\"ds-discipline-link\" href=\"https://mdlsz.com/idpa-szakag/\"><img alt=\"\" src=\"/logos/idpa-discipline.png\"><span>IDPA</span><span aria-hidden=\"true\">↗</span></a>",
       "css": ".ds-discipline-link{display:flex;min-width:0;min-height:4rem;align-items:center;gap:10px;padding:8px;border:1px solid rgb(250 249 245 / 20%);color:var(--paper);font:600 .76rem/1.25 'DM Sans',sans-serif;text-decoration:none;transition:border-color 150ms ease,background-color 150ms ease}.ds-discipline-link:hover{border-color:var(--footer-accent);background:rgb(250 249 245 / 5%)}.ds-discipline-link img{width:59px;height:42px;object-fit:contain;background:var(--paper-raised)}.ds-discipline-link:focus-visible{outline:2px solid var(--footer-accent);outline-offset:3px}"
+    },
+    {
+      "name": "Steel Status Chip",
+      "kind": "chip",
+      "refersTo": "steel-status-chip",
+      "description": "Route-scoped archive status and season context; green is reserved for available verified data.",
+      "html": "<span class=\"ds-steel-status\"><i aria-hidden=\"true\"></i> MDLSZ / RESULTS ARCHIVE</span>",
+      "css": ".ds-steel-status{display:inline-flex;min-height:28px;align-items:center;gap:7px;padding:6px 9px;border:1px solid #343c48;border-radius:4px;background:#181d24;color:#ff6b35;font:700 10px/1.2 ui-monospace,monospace;letter-spacing:.1em}.ds-steel-status i{width:7px;height:7px;border-radius:50%;background:#40b982}.ds-steel-status:hover{border-color:#ff6b35}.ds-steel-status:focus-visible{outline:2px solid #ff6b35;outline-offset:3px}"
+    },
+    {
+      "name": "Steel Season Ledger",
+      "kind": "custom",
+      "refersTo": "steel-season-ledger",
+      "description": "A ruled, factual season summary that moves from paired columns to a single handset list.",
+      "html": "<dl class=\"ds-steel-ledger\"><div><dt>Ranked fields</dt><dd>—</dd></div><div><dt>Divisions</dt><dd>—</dd></div></dl>",
+      "css": ".ds-steel-ledger{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px;border-top:1px solid #262d37}.ds-steel-ledger div{display:flex;min-height:52px;align-items:baseline;justify-content:space-between;gap:8px;padding:9px 2px;border-bottom:1px solid #262d37}.ds-steel-ledger dt{color:#9ba6b2;font:600 10px ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase}.ds-steel-ledger dd{margin:0;color:#f4f6f8;font:700 20px ui-monospace,monospace;font-variant-numeric:tabular-nums}@media(max-width:767px){.ds-steel-ledger{grid-template-columns:1fr}}"
+    },
+    {
+      "name": "Steel Division Ranking Card",
+      "kind": "card",
+      "refersTo": "steel-division-card",
+      "description": "A graphite division card with selectable, percentile-based rows and native field expansion.",
+      "html": "<article class=\"ds-steel-card\"><h3>Division name</h3><button type=\"button\" class=\"ds-steel-rank\"><b>01</b><span>Competitor name</span><strong>Percentile</strong><i><em></em></i></button></article>",
+      "css": ".ds-steel-card{padding:16px;border:1px solid #262d37;border-radius:5px;background:#1b2027;color:#f4f6f8}.ds-steel-card h3{margin:8px 0 12px;font:650 17px/1.35 'DM Sans',sans-serif}.ds-steel-rank{display:grid;width:100%;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:8px;padding:10px 3px;border:0;border-bottom:1px solid #262d37;background:transparent;color:#f4f6f8;text-align:left;font:600 13px 'DM Sans',sans-serif}.ds-steel-rank:hover,.ds-steel-rank[aria-pressed=true]{background:#222832}.ds-steel-rank:focus-visible{outline:2px solid #ff6b35;outline-offset:2px}.ds-steel-rank b,.ds-steel-rank strong{font:700 12px ui-monospace,monospace}.ds-steel-rank b{color:#ff6b35}.ds-steel-rank i{grid-column:1/-1;height:4px;background:#262d37}.ds-steel-rank em{display:block;width:70%;height:100%;background:#ff6b35}"
+    },
+    {
+      "name": "Steel Result Table",
+      "kind": "custom",
+      "refersTo": "steel-record-table",
+      "description": "A compact, ruled result ledger with secondary metadata and explicit source links.",
+      "html": "<div class=\"ds-steel-table-wrap\"><table class=\"ds-steel-table\"><thead><tr><th>Event</th><th>Place</th><th>Field</th><th>Source</th></tr></thead><tbody><tr><td>Competition<span>date · level</span></td><td>—</td><td>—</td><td><a href=\"#source\">Official result</a></td></tr></tbody></table></div>",
+      "css": ".ds-steel-table-wrap{overflow-x:auto;border:1px solid #262d37;border-radius:5px;background:#1b2027}.ds-steel-table{width:100%;min-width:600px;border-collapse:collapse;color:#f4f6f8;font:400 13px 'DM Sans',sans-serif}.ds-steel-table th,.ds-steel-table td{padding:12px 14px;border-bottom:1px solid #262d37;text-align:left;vertical-align:top}.ds-steel-table thead{background:#181d24;color:#9ba6b2;font:600 10px ui-monospace,monospace;letter-spacing:.07em;text-transform:uppercase}.ds-steel-table tbody tr:hover{background:#222832}.ds-steel-table td span{display:block;margin-top:4px;color:#9ba6b2;font-size:11px}.ds-steel-table a{color:#ff6b35;text-decoration:underline;text-underline-offset:3px}.ds-steel-table a:hover{color:#ff8a61}.ds-steel-table a:focus-visible{outline:2px solid #ff6b35;outline-offset:3px}"
     }
   ],
   "narrative": {
     "northStar": "The Championship Record",
-    "overview": "Hero of IDPA reads each season as a traceable championship editorial record. A full-width season masthead, measured totals, open report grids, official links, and restrained data plots make rankings legible without presenting them as free-floating claims. The audience is competitors comparing a season of official Hungarian IDPA results.\n\nWarm opaque paper, championship ink, hairline rules, and a precise red signal form the page's reusable grammar. Display lettering carries the competition identity; ordinary interface work remains easy to read and operate. Section links, live season filters, year-specific routes, quality warnings, and official result sources are functional parts of the record.",
+    "overview": "Hero of IDPA reads each season as a traceable championship editorial record. A full-width season masthead, measured totals, open report grids, official links, and restrained data plots make rankings legible without presenting them as free-floating claims. The audience is competitors comparing a season of official Hungarian IDPA results.\n\nWarm opaque paper, championship ink, hairline rules, and a precise red signal form the page's reusable grammar. Display lettering carries the competition identity; ordinary interface work remains easy to read and operate. Section links, live season filters, year-specific routes, quality warnings, and official result sources are functional parts of the record.\n\nSteel Challenge carries a route-scoped telemetry treatment: graphite panels, orange active signals, restrained green availability, a ruled season ledger, division cards, and source-backed result tables. Other disciplines retain the warm editorial palette.",
     "keyCharacteristics": [
       "Full-bleed season masthead; centered editorial reading measure below.",
       "Opaque warm-paper surfaces and ruled, mostly square-corner reports.",
       "Championship red marks current state, standings, source links, and plot series.",
       "Reproducible season totals and rankings remain tied to official sources.",
-      "Official organization marks retain their original artwork and attribution."
+      "Official organization marks retain their original artwork and attribution.",
+      "Steel Challenge uses a route-scoped graphite telemetry variant; the warm editorial system remains the default for every other discipline."
     ],
     "rules": [
       {
@@ -267,6 +409,11 @@
         "name": "The Rule-Over-Shadow Rule",
         "body": "Prefer a visible editorial rule or tonal paper shift to adding elevation.",
         "section": "elevation"
+      },
+      {
+        "name": "The Route Scope Rule",
+        "body": "Steel telemetry colors and treatments belong only to the Steel Challenge route. Do not promote its graphite surfaces or orange signal to the shared editorial palette.",
+        "section": "colors"
       }
     ],
     "dos": [
@@ -274,12 +421,16 @@
       "Do retain source attribution, visible parsing/quality states, and semantic season-wide versus filtered scope.",
       "Do label and shape chart series with the existing palette, legible axes, and paper tooltips.",
       "Do retain official organization artwork without recoloring or distorting it; its source-to-link mapping lives in docs/asset-sources.md.",
-      "Do maintain visible keyboard focus, a skip-to-content link, reduced-motion support, and a measured anchor offset."
+      "Do maintain visible keyboard focus, a skip-to-content link, reduced-motion support, and a measured anchor offset.",
+      "Do confine the Steel Challenge telemetry variant to its own route, keep orange functional and green status-only, and retain the warm editorial discipline palette elsewhere.",
+      "Do keep Steel Challenge rankings tied to official placement percentiles and provide the source-backed season record; never infer unsupported performance measures from visual styling."
     ],
     "donts": [
       "Don't imply sponsorship or endorsement through organization or discipline marks.",
       "Don't use color as the only way to distinguish a ranking, state, or chart series.",
-      "Don't make report cards compete with the actual season figures using glass, gradients, decorative shadow stacks, or ornamental accents."
+      "Don't make report cards compete with the actual season figures using glass, gradients, decorative shadow stacks, or ornamental accents.",
+      "Don't apply Steel Challenge graphite, orange, or status-green tokens to other discipline routes by default.",
+      "Don't imply stage records, raw stage timings, plate layouts, shooter ratings, or calculator results that the published data does not establish."
     ]
   }
 }

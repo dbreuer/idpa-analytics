@@ -24,6 +24,21 @@ colors:
   footer-accent: "#e07868"
   footer-copy: "#d0cec8"
   footer-muted: "#aaa8a2"
+  steel-background: "#111418"
+  steel-paper: "#1b2027"
+  steel-inset: "#181d24"
+  steel-filter-rail: "#15191f"
+  steel-ink: "#f4f6f8"
+  steel-muted: "#9ba6b2"
+  steel-rule: "#262d37"
+  steel-orange: "#ff6b35"
+  steel-orange-hover: "#ff8a61"
+  steel-green: "#40b982"
+  steel-border: "#343c48"
+  steel-row-hover: "#222832"
+  steel-chart-blue: "#66a8e6"
+  steel-chart-gold: "#e8c365"
+  steel-chart-purple: "#c58ce5"
 typography:
   display:
     fontFamily: "Barlow Condensed, sans-serif"
@@ -51,10 +66,26 @@ typography:
     fontSize: "0.67rem"
     fontWeight: 700
     letterSpacing: "0.14em"
+  steel-display:
+    fontFamily: "Barlow Condensed, sans-serif"
+    fontSize: "clamp(3.25rem, 7vw, 6rem)"
+    fontWeight: 800
+    lineHeight: 0.84
+    letterSpacing: "-0.055em"
+  steel-headline:
+    fontFamily: "Barlow Condensed, sans-serif"
+    fontSize: "clamp(1.8rem, 3vw, 2.35rem)"
+    fontWeight: 600
+    lineHeight: 1
+    letterSpacing: "-0.025em"
+  steel-data:
+    fontFamily: "ui-monospace, SFMono-Regular, Consolas, monospace"
 rounded:
   none: "0px"
   sm: "2px"
   md: "10.4px"
+  steel-chip: "4px"
+  steel-card: "4.8px"
 spacing:
   sm: "8px"
   md: "16px"
@@ -88,6 +119,24 @@ components:
     textColor: "{colors.paper}"
     rounded: "{rounded.none}"
     padding: "8px"
+  steel-status-chip:
+    backgroundColor: "{colors.steel-inset}"
+    textColor: "{colors.steel-orange}"
+    rounded: "{rounded.steel-chip}"
+    padding: "5.6px 8.8px"
+  steel-division-card:
+    backgroundColor: "{colors.steel-paper}"
+    textColor: "{colors.steel-ink}"
+    rounded: "{rounded.steel-card}"
+    padding: "16px"
+  steel-season-ledger:
+    backgroundColor: "transparent"
+    textColor: "{colors.steel-ink}"
+    padding: "8.8px 2.4px"
+  steel-record-table:
+    backgroundColor: "{colors.steel-paper}"
+    textColor: "{colors.steel-ink}"
+    rounded: "{rounded.steel-card}"
 ---
 
 # Design System: Hero of IDPA
@@ -108,12 +157,18 @@ ordinary interface work remains easy to read and operate. Section links, live
 season filters, year-specific routes, quality warnings, and official result sources
 are functional parts of the record.
 
+Steel Challenge carries a route-scoped telemetry treatment: graphite panels, orange
+active signals, restrained green availability, a ruled season ledger, division
+cards, and source-backed result tables. Other disciplines retain the warm editorial
+palette.
+
 **Key Characteristics:**
 - Full-bleed season masthead; centered editorial reading measure below.
 - Opaque warm-paper surfaces and ruled, mostly square-corner reports.
 - Championship red marks current state, standings, source links, and plot series.
 - Reproducible season totals and rankings remain tied to official sources.
 - Official organization marks retain their original artwork and attribution.
+- Steel Challenge uses a route-scoped graphite telemetry variant; the warm editorial system remains the default for every other discipline.
 
 ## Colors
 
@@ -144,6 +199,17 @@ the interface accent.
 ranking or a chart series. Keep it functional rather than using it to fill report
 surfaces decoratively.
 
+### Steel Challenge route-scoped variant
+The Steel Challenge page temporarily replaces the warm paper canvas with graphite
+and cool light text. Orange marks selection, links, ranking emphasis, and signal
+tracks; green appears sparingly for verified archive availability. Inset panels,
+dividers, and row-hover tones keep the telemetry legible without changing the
+identity of other disciplines.
+
+**The Route Scope Rule.** Steel telemetry colors and treatments belong only to the
+Steel Challenge route. Do not promote its graphite surfaces or orange signal to
+the shared editorial palette.
+
 ## Typography
 
 **Display Font:** Barlow Condensed (with a sans-serif fallback; locally served Latin
@@ -167,6 +233,14 @@ readable. Both families are self-hosted with their Open Font License notices in
 **The Heading-First Rule.** Let the semantic title lead. Reserve uppercase label
 styling for controls and actual data terms, not decorative text above card headings.
 
+### Steel Challenge route-scoped type
+The Steel Challenge masthead, section headings, division titles, and data-panel
+headings use the locally hosted Barlow Condensed weights, matching the shared
+championship display voice. Monospaced figures and compact data labels identify
+values, dates, field sizes, column headers, and status; descriptive copy stays
+in DM Sans. At handset widths the masthead uses the smaller responsive display
+clamp.
+
 ## Layout
 
 The season masthead and footer backgrounds span the viewport. Their contents,
@@ -187,12 +261,21 @@ anchors. At tablet width the footer uses two discipline columns, expanding to fo
 from 1024px and one at phone widths. Charts and records keep `min-width: 0` behavior
 to avoid creating page-level horizontal overflow.
 
+On the Steel Challenge route, the content measure widens to 96rem. The masthead
+places title and a six-fact ruled ledger in two columns on wide screens; the
+ledger stacks on phones. Division cards use three columns above 1100px, two
+columns at tablet widths, and one on phones. The fine 24px dot field recedes
+behind the report content. Long record tables remain readable in horizontal
+overflow containers rather than forcing page-wide overflow.
+
 ## Elevation & Depth
 
 Surfaces are flat and opaque; tonal fields, typography, spacing, and one-pixel
 rules supply the report's depth. Cards do not use decorative shadows. A chart
 tooltip alone uses an offset soft shadow (`0 8px 24px rgb(26 27 25 / 12%)`) to
-remain legible above the plot.
+remain legible above the warm editorial plots. Steel Challenge retains flat card
+surfaces and ruled boundaries; its chart tooltip uses a stronger dark shadow
+(`0 8px 24px rgb(0 0 0 / 35%)`) for separation from the graphite plot.
 
 **The Rule-Over-Shadow Rule.** Prefer a visible editorial rule or tonal paper shift
 to adding elevation.
@@ -203,6 +286,12 @@ Report cards, rows, buttons, and navigation are square-edged with a one-pixel
 structural rule. Filter selects and participation controls use a restrained 0.65rem
 radius (10.4px); the active-filter count is minimally softened (2px). Logo plates
 are unrounded paper fields that preserve the original official colors.
+
+Steel Challenge division, insight, and report panels use a small, consistent
+rounded edge (4.8px); status chips and count badges are similarly restrained
+(4px). Thin cool-gray rules, rather than heavy outlines, define ledger rows and
+table structure. The fixed header's dark translucent fill and blur are also
+route-scoped.
 
 ## Components
 
@@ -242,6 +331,13 @@ and badge primitives live under `components/ui/`.
 ### Competition record
 - Competition entries use a semantic ordered list, date/time element, concise factual fields, and direct calendar/result source links.
 
+### Steel Challenge telemetry components (route-scoped)
+- **Status chips:** inset graphite, a fine border, compact monospaced uppercase text, orange archive/methodology signal, and a restrained green availability dot.
+- **Season ledger:** six compact facts presented as two columns of baseline-aligned label/value pairs on wide screens, with hairline row rules; it becomes a single ruled column on phones.
+- **Division cards:** restrained graphite panels with a ruled heading, division and comparable-field facts, and entrant count. Each card starts with three selectable leaderboard rows; a native disclosure reveals remaining ranked entries.
+- **Ranking rows:** monospaced position, readable competitor/club identity, right-aligned percentile and match count, and a thin orange score track. Hover/selected rows receive a subtle lighter graphite field.
+- **Record tables:** compact monospaced column headings, ruled rows, secondary metadata, row hover, and horizontal overflow at narrow widths. Official-source links remain explicit.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -250,8 +346,12 @@ and badge primitives live under `components/ui/`.
 - **Do** label and shape chart series with the existing palette, legible axes, and paper tooltips.
 - **Do** retain official organization artwork without recoloring or distorting it; its source-to-link mapping lives in `docs/asset-sources.md`.
 - **Do** maintain visible keyboard focus, a skip-to-content link, reduced-motion support, and a measured anchor offset.
+- **Do** confine the Steel Challenge telemetry variant to its own route, keep orange functional and green status-only, and retain the warm editorial discipline palette elsewhere.
+- **Do** keep Steel Challenge rankings tied to official placement percentiles and provide the source-backed season record; never infer unsupported performance measures from visual styling.
 
 ### Don't:
 - **Don't** imply sponsorship or endorsement through organization or discipline marks.
 - **Don't** use color as the only way to distinguish a ranking, state, or chart series.
 - **Don't** make report cards compete with the actual season figures using glass, gradients, decorative shadow stacks, or ornamental accents.
+- **Don't** apply Steel Challenge graphite, orange, or status-green tokens to other discipline routes by default.
+- **Don't** imply stage records, raw stage timings, plate layouts, shooter ratings, or calculator results that the published data does not establish.

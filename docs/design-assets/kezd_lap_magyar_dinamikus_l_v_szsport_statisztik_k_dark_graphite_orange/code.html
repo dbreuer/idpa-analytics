@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="hu"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<title>MDLSZ // STATS - Magyar Dinamikus Lövészsport Szövetség</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "charcoal": "#111418",
+            "graphite": "#1B2027",
+            "graphite-card": "#181D24",
+            "graphite-hover": "#222832",
+            "graphite-border": "#262D37",
+            "graphite-divider": "#1F252E",
+            "competition-orange": "#FF6B35",
+            "competition-orange-hover": "#E85D27",
+            "off-white": "#F4F6F8",
+            "cool-gray": "#9BA6B2",
+            "muted-gray": "#606C7A",
+            "positive-green": "#40B982",
+            "positive-green-bg": "rgba(64, 185, 130, 0.12)",
+          },
+          fontFamily: {
+            sans: ["IBM Plex Sans", "Inter", "sans-serif"],
+            mono: ["IBM Plex Mono", "monospace"],
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    body {
+      background-color: #111418;
+      color: #F4F6F8;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
+    .reticle-bg {
+      background-image: radial-gradient(rgba(255, 107, 53, 0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .crosshair-corner {
+      position: relative;
+    }
+    .crosshair-corner::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 6px;
+      height: 6px;
+      border-top: 1.5px solid #FF6B35;
+      border-left: 1.5px solid #FF6B35;
+      pointer-events-none;
+    }
+    .crosshair-corner::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 6px;
+      height: 6px;
+      border-bottom: 1.5px solid #FF6B35;
+      border-right: 1.5px solid #FF6B35;
+      pointer-events-none;
+    }
+  </style>
+</head>
+<body class="bg-charcoal min-h-screen flex flex-col antialiased selection:bg-competition-orange selection:text-white">
+<!-- 1. TOP NAVIGATION -->
+<header class="sticky top-0 z-50 bg-charcoal/95 backdrop-blur-md border-b border-graphite-border">
+<!-- Top System Telemetry Ticker -->
+<div class="border-b border-graphite-border/60 px-4 sm:px-8 py-1.5 flex items-center justify-between text-xs font-mono text-cool-gray">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1.5 text-off-white font-medium">
+<span class="inline-block w-2 h-2 rounded-full bg-positive-green animate-pulse"></span>
+          [2026 SZEZON] ÉLŐ ADATFOLYAM
+        </span>
+<span class="hidden md:inline text-graphite-border">|</span>
+<span class="hidden md:inline text-cool-gray">MDLSZ KÖZPONTI TELEMETRIA ENGINE // V26.4</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="hidden sm:inline">SZÖVETSÉGI IDŐSZÁMÍTÁS: 2026.04.14 • 19:42:08 CET</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded bg-graphite border border-graphite-border text-[11px] text-competition-orange font-semibold">HUN FEDERATION</span>
+</div>
+</div>
+<!-- Main Navigation Bar -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-6 py-3">
+<!-- Wordmark / Brand -->
+<a class="flex items-center gap-3 shrink-0 group" href="#">
+<div class="w-9 h-9 rounded bg-competition-orange/10 border border-competition-orange/40 flex items-center justify-center text-competition-orange">
+<span class="material-symbols-outlined text-[20px]">adjust</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-bold tracking-tight text-off-white text-lg font-mono">MDLSZ</span>
+<span class="text-competition-orange font-mono text-xs font-bold">//</span>
+<span class="font-semibold text-cool-gray text-base tracking-wide">STATS</span>
+</div>
+<span class="text-[10px] uppercase tracking-wider text-cool-gray font-medium">MAGYAR DINAMIKUS LÖVÉSZSPORT SZÖVETSÉG</span>
+</div>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
+<a class="px-3 py-1.5 rounded text-off-white bg-graphite border border-graphite-border text-xs font-semibold tracking-wide flex items-center gap-1.5" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-competition-orange"></span> Kezdőlap
+        </a>
+<a class="px-3 py-1.5 rounded text-cool-gray hover:text-off-white hover:bg-graphite transition-colors text-xs font-medium" href="#szakagak">
+          Szakágak
+        </a>
+<a class="px-3 py-1.5 rounded text-cool-gray hover:text-off-white hover:bg-graphite transition-colors text-xs font-medium" href="#eredmenyek">
+          Eredmények &amp; Ranglisták
+        </a>
+<a class="px-3 py-1.5 rounded text-cool-gray hover:text-off-white hover:bg-graphite transition-colors text-xs font-medium" href="#versenynaptar">
+          Versenynaptár 2026
+        </a>
+<a class="px-3 py-1.5 rounded text-cool-gray hover:text-off-white hover:bg-graphite transition-colors text-xs font-medium" href="#directory">
+          Versenyzők &amp; Klubok Kereső
+        </a>
+</nav>
+<!-- Global Search Input & Quick Auth Badge -->
+<div class="flex items-center gap-3">
+<div class="relative hidden sm:block w-64 lg:w-72">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-cool-gray text-[18px]">search</span>
+<input class="w-full bg-graphite border border-graphite-border rounded text-xs text-off-white placeholder:text-muted-gray pl-9 pr-3 py-2 focus:outline-none focus:border-competition-orange transition-colors font-mono" placeholder="Lövész, klub, rajtengedély..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-3 py-1.5 bg-graphite hover:bg-graphite-hover border border-graphite-border rounded text-xs font-mono text-off-white transition-colors">
+<span class="material-symbols-outlined text-[16px] text-competition-orange">account_circle</span>
+<span class="hidden md:inline">VERSENYZŐI PORTÁL</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col reticle-bg">
+<!-- 2. HERO SECTION & KEY TELEMETRY CARDS -->
+<section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+<div class="relative bg-graphite rounded-lg border border-graphite-border p-6 sm:p-8 overflow-hidden crosshair-corner">
+<!-- Target Ring Blueprint Optical Overlay Watermark -->
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full border border-graphite-border/70 pointer-events-none flex items-center justify-center opacity-40">
+<div class="w-64 h-64 rounded-full border border-graphite-border/80 flex items-center justify-center">
+<div class="w-48 h-48 rounded-full border border-graphite-border flex items-center justify-center">
+<div class="w-32 h-32 rounded-full border border-competition-orange/20 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border border-competition-orange/40"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Hero Content Header -->
+<div class="relative z-10 max-w-3xl">
+<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-charcoal border border-graphite-border mb-4 font-mono text-[11px] tracking-wider text-competition-orange uppercase font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-competition-orange"></span>
+            HIVATALOS MDLSZ ORSZÁGOS VERSENYADATBÁZIS &amp; TELEMETRIA
+          </div>
+<h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-off-white font-sans uppercase">
+            HUNGARIAN SHOOTING <span class="text-competition-orange">STATISTICS</span>
+</h1>
+<p class="mt-3 text-sm sm:text-base text-cool-gray max-w-2xl leading-relaxed">
+            Hitelesített szövetségi lőképi adatok, Hit Factor és split-idő kalkulációk, élő országos ranglisták az IPSC, Steel Challenge, Gyorspont és IDPA szakágakban.
+          </p>
+</div>
+<!-- 4 High-Contrast Key Macro Telemetry Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 relative z-10">
+<!-- Card 1 -->
+<div class="bg-graphite-card p-4 rounded border border-graphite-border flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs text-cool-gray uppercase font-mono tracking-wider">
+<span>Befejezett Verseny</span>
+<span class="material-symbols-outlined text-sm text-cool-gray">verified</span>
+</div>
+<div class="my-3">
+<div class="text-3xl font-bold font-mono text-off-white">42</div>
+<div class="text-[11px] font-mono text-cool-gray mt-1">Hivatalos szövetségi forduló (2026)</div>
+</div>
+<div class="text-[11px] font-mono text-positive-green flex items-center gap-1 font-semibold">
+<span>▲ +6</span>
+<span class="text-cool-gray font-normal">az előző hónaphoz képest</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-graphite-card p-4 rounded border border-graphite-border flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs text-cool-gray uppercase font-mono tracking-wider">
+<span>Hitelesített Sorozat</span>
+<span class="material-symbols-outlined text-sm text-competition-orange">radar</span>
+</div>
+<div class="my-3">
+<div class="text-3xl font-bold font-mono text-off-white">12,450+</div>
+<div class="text-[11px] font-mono text-cool-gray mt-1">Rögzített Stage &amp; String futam</div>
+</div>
+<div class="text-[11px] font-mono text-positive-green flex items-center gap-1 font-semibold">
+<span>▲ +18.4%</span>
+<span class="text-cool-gray font-normal">lövésvolumen növekedés</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-graphite-card p-4 rounded border border-graphite-border flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs text-cool-gray uppercase font-mono tracking-wider">
+<span>Aktív Versenyző</span>
+<span class="material-symbols-outlined text-sm text-cool-gray">group</span>
+</div>
+<div class="my-3">
+<div class="text-3xl font-bold font-mono text-off-white">3,480</div>
+<div class="text-[11px] font-mono text-cool-gray mt-1">Regisztrált MDLSZ versenyengedély</div>
+</div>
+<div class="text-[11px] font-mono text-positive-green flex items-center gap-1 font-semibold">
+<span>▲ +14.2%</span>
+<span class="text-cool-gray font-normal">idén regisztrált sportoló</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-graphite-card p-4 rounded border border-graphite-border flex flex-col justify-between">
+<div class="flex items-center justify-between text-xs text-cool-gray uppercase font-mono tracking-wider">
+<span>Akkreditált Klub</span>
+<span class="material-symbols-outlined text-sm text-cool-gray">domain</span>
+</div>
+<div class="my-3">
+<div class="text-3xl font-bold font-mono text-off-white">48 KLUB</div>
+<div class="text-[11px] font-mono text-cool-gray mt-1">Minősített bázis &amp; szabadtéri lőtér</div>
+</div>
+<div class="text-[11px] font-mono text-competition-orange flex items-center gap-1 font-semibold">
+<span>19 VÁRMEGYE</span>
+<span class="text-cool-gray font-normal">teljes országos lefedettség</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Prominent Global Search & Filter Bar Directly Below Hero -->
+<div class="mt-4 bg-graphite rounded-lg border border-graphite-border p-4 shadow-sm">
+<div class="flex items-center gap-2 mb-3 text-xs font-mono text-cool-gray uppercase">
+<span class="material-symbols-outlined text-[16px] text-competition-orange">tune</span>
+<span>Gyors Keresés &amp; Paraméteres Szűrő</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+<div>
+<label class="block text-[11px] font-mono text-cool-gray mb-1 uppercase">Név / Rajtszám</label>
+<div class="relative">
+<input class="w-full bg-graphite-card border border-graphite-border rounded px-3 py-2 text-xs font-mono text-off-white placeholder:text-muted-gray focus:outline-none focus:border-competition-orange" placeholder="Pl. Kovács Zoltán vagy 0482/24" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-[11px] font-mono text-cool-gray mb-1 uppercase">Szakág választó</label>
+<select class="w-full bg-graphite-card border border-graphite-border rounded px-3 py-2 text-xs font-mono text-off-white focus:outline-none focus:border-competition-orange">
+<option value="all">Minden Szakág</option>
+<option value="ipsc">IPSC (Nemzetközi Szituációs)</option>
+<option value="steel">Steel Challenge (Acélcél)</option>
+<option value="gyorspont">Gyorspont &amp; Precíziós</option>
+<option value="idpa">IDPA (Önvédelmi Szituációs)</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-mono text-cool-gray mb-1 uppercase">Vármegye / Régió</label>
+<select class="w-full bg-graphite-card border border-graphite-border rounded px-3 py-2 text-xs font-mono text-off-white focus:outline-none focus:border-competition-orange">
+<option value="all">Országos (Mind a 19 Vármegye)</option>
+<option value="pest">Budapest &amp; Pest vármegye</option>
+<option value="hajdu">Hajdú-Bihar vármegye</option>
+<option value="csongrad">Csongrád-Csanád vármegye</option>
+<option value="gyor">Győr-Moson-Sopron vármegye</option>
+<option value="veszprem">Veszprém vármegye</option>
+</select>
+</div>
+<div>
+<label class="block text-[11px] font-mono text-cool-gray mb-1 uppercase">Divízió</label>
+<div class="flex gap-2">
+<select class="flex-1 bg-graphite-card border border-graphite-border rounded px-3 py-2 text-xs font-mono text-off-white focus:outline-none focus:border-competition-orange">
+<option value="all">Összes Divízió</option>
+<option value="prod">Production / Prod Optics</option>
+<option value="open">Open</option>
+<option value="standard">Standard</option>
+<option value="co">Carry Optics</option>
+<option value="rfpo">RFPO (Rimfire Pistol Optics)</option>
+</select>
+<button class="px-4 py-2 bg-competition-orange hover:bg-competition-orange-hover text-white rounded font-mono text-xs font-semibold flex items-center justify-center shrink-0 transition-colors">
+                SZŰRÉS
+              </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. TOP-RANKED COMPETITORS (MDLSZ Nemzeti Ranglista Élmezőny) -->
+<section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono text-competition-orange uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">military_tech</span>
+<span>MDLSZ NEMZETI RANGLISTA ÉLMEZŐNY</span>
+</div>
+<h2 class="text-2xl font-bold font-sans tracking-tight text-off-white">Kiemelt Ranglista Vezetők</h2>
+</div>
+<a class="inline-flex items-center gap-1.5 text-xs font-mono text-cool-gray hover:text-competition-orange transition-colors" href="#eredmenyek">
+<span>TELJES SZÖVETSÉGI TABELLA</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- 4 High-Contrast Leader Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Leader Card 1: Kovács Zoltán -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-5 relative overflow-hidden flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<!-- Subtle Reticle Graphic in BG -->
+<div class="absolute -right-8 -top-8 w-28 h-28 rounded-full border border-graphite-border/40 pointer-events-none flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border border-graphite-border/30"></div>
+</div>
+<div>
+<div class="flex items-start justify-between">
+<span class="text-4xl font-bold font-mono text-competition-orange tracking-tight">#01</span>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card border border-graphite-border text-[11px] font-mono text-positive-green font-semibold">
+                  ▲ Tartja
+                </span>
+<span class="text-[10px] font-mono text-muted-gray mt-1">IPSC PRODUCTION</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-bold text-off-white">Kovács Zoltán</h3>
+<p class="text-xs text-cool-gray font-mono mt-0.5">BKV Technikai LSE</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider space-y-2">
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Pontszám / Arány:</span>
+<span class="text-off-white font-bold">100.00% / 1482.4 P</span>
+</div>
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-cool-gray">Átlagos Alpha %</span>
+<span class="text-competition-orange font-semibold">96.4%</span>
+</div>
+<div class="w-full bg-graphite-card h-1.5 rounded-full overflow-hidden">
+<div class="bg-competition-orange h-full rounded-full" style="width: 96.4%"></div>
+</div>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Átlag Draw Speed:</span>
+<span class="text-positive-green font-semibold">0.84s</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-[11px] font-mono text-cool-gray">
+<span>Hit Factor: <strong class="text-off-white">9.64 HF</strong></span>
+<span class="text-competition-orange">ELIT // PRO</span>
+</div>
+</div>
+<!-- Leader Card 2: Tóth Tamara -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-5 relative overflow-hidden flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<div class="absolute -right-8 -top-8 w-28 h-28 rounded-full border border-graphite-border/40 pointer-events-none flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border border-graphite-border/30"></div>
+</div>
+<div>
+<div class="flex items-start justify-between">
+<span class="text-4xl font-bold font-mono text-off-white tracking-tight">#01</span>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-competition-orange/15 border border-competition-orange/30 text-[11px] font-mono text-competition-orange font-semibold">
+                  Rekordtartó
+                </span>
+<span class="text-[10px] font-mono text-muted-gray mt-1">STEEL CHALLENGE RFPO</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-bold text-off-white">Tóth Tamara</h3>
+<p class="text-xs text-cool-gray font-mono mt-0.5">Debreceni VSE</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider space-y-2">
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">8 Pályás Összidő:</span>
+<span class="text-competition-orange font-bold">58.42s (NR)</span>
+</div>
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-cool-gray">Smoke &amp; Hope 4-String</span>
+<span class="text-positive-green font-semibold">6.72s</span>
+</div>
+<div class="w-full bg-graphite-card h-1.5 rounded-full overflow-hidden">
+<div class="bg-positive-green h-full rounded-full" style="width: 94%"></div>
+</div>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Legjobb String Idő:</span>
+<span class="text-positive-green font-semibold">1.42s</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-[11px] font-mono text-cool-gray">
+<span>Miss Arány: <strong class="text-positive-green">0.00%</strong></span>
+<span class="text-off-white">GRAND MASTER</span>
+</div>
+</div>
+<!-- Leader Card 3: Szabó Tibor -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-5 relative overflow-hidden flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<div class="absolute -right-8 -top-8 w-28 h-28 rounded-full border border-graphite-border/40 pointer-events-none flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border border-graphite-border/30"></div>
+</div>
+<div>
+<div class="flex items-start justify-between">
+<span class="text-4xl font-bold font-mono text-off-white tracking-tight">#01</span>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card border border-graphite-border text-[11px] font-mono text-positive-green font-semibold">
+                  ▲ +1 rang
+                </span>
+<span class="text-[10px] font-mono text-muted-gray mt-1">GYORSPONT KÖZP. GYÚJTÁS</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-bold text-off-white">Szabó Tibor</h3>
+<p class="text-xs text-cool-gray font-mono mt-0.5">MTK Budapest Sportlövő</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider space-y-2">
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Pontszám / Max:</span>
+<span class="text-off-white font-bold">298 / 300 Pts</span>
+</div>
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-cool-gray">10-es Kör Stabilitás</span>
+<span class="text-competition-orange font-semibold">92.4%</span>
+</div>
+<div class="w-full bg-graphite-card h-1.5 rounded-full overflow-hidden">
+<div class="bg-competition-orange h-full rounded-full" style="width: 92.4%"></div>
+</div>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Belső 10-es (X):</span>
+<span class="text-positive-green font-semibold">18 / 30</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-[11px] font-mono text-cool-gray">
+<span>Szóráskép: <strong class="text-off-white">1.3 MOA</strong></span>
+<span class="text-off-white">PRECÍZIÓS I.</span>
+</div>
+</div>
+<!-- Leader Card 4: Nagy Balázs -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-5 relative overflow-hidden flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<div class="absolute -right-8 -top-8 w-28 h-28 rounded-full border border-graphite-border/40 pointer-events-none flex items-center justify-center">
+<div class="w-16 h-16 rounded-full border border-graphite-border/30"></div>
+</div>
+<div>
+<div class="flex items-start justify-between">
+<span class="text-4xl font-bold font-mono text-off-white tracking-tight">#01</span>
+<div class="flex flex-col items-end">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card border border-graphite-border text-[11px] font-mono text-positive-green font-semibold">
+                  ▲ +1 rang
+                </span>
+<span class="text-[10px] font-mono text-muted-gray mt-1">IDPA CARRY OPTICS</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="text-lg font-bold text-off-white">Nagy Balázs</h3>
+<p class="text-xs text-cool-gray font-mono mt-0.5">Celeritas Sportlövő Egyesület</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider space-y-2">
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Végrehajtási Idő:</span>
+<span class="text-off-white font-bold">142.18s</span>
+</div>
+<div>
+<div class="flex justify-between text-[11px] font-mono mb-1">
+<span class="text-cool-gray">Pontvesztés (Points Down)</span>
+<span class="text-positive-green font-semibold">2 PD (Kiváló)</span>
+</div>
+<div class="w-full bg-graphite-card h-1.5 rounded-full overflow-hidden">
+<div class="bg-positive-green h-full rounded-full" style="width: 98%"></div>
+</div>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Büntetés (PE):</span>
+<span class="text-positive-green font-semibold">0 PE (Tiszta)</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-[11px] font-mono text-cool-gray">
+<span>Fedezékfegyelem: <strong class="text-off-white">100%</strong></span>
+<span class="text-competition-orange">MASTER</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. LATEST COMPETITION RESULTS (Legfrissebb Versenyeredmények) -->
+<section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6" id="eredmenyek">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-4">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono text-competition-orange uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">scoreboard</span>
+<span>HIVATALOS SZÖVETSÉGI JEGYZŐKÖNYVEK</span>
+</div>
+<h2 class="text-2xl font-bold font-sans tracking-tight text-off-white">Legfrissebb Versenyeredmények</h2>
+</div>
+<!-- Filter tabs -->
+<div class="flex items-center gap-1.5 bg-graphite p-1 rounded border border-graphite-border overflow-x-auto">
+<button class="px-3 py-1.5 rounded bg-competition-orange text-white text-xs font-mono font-semibold">
+            Minden szakág
+          </button>
+<button class="px-3 py-1.5 rounded hover:bg-graphite-card text-cool-gray hover:text-off-white text-xs font-mono transition-colors">
+            IPSC
+          </button>
+<button class="px-3 py-1.5 rounded hover:bg-graphite-card text-cool-gray hover:text-off-white text-xs font-mono transition-colors">
+            Steel Challenge
+          </button>
+<button class="px-3 py-1.5 rounded hover:bg-graphite-card text-cool-gray hover:text-off-white text-xs font-mono transition-colors">
+            Gyorspont
+          </button>
+<button class="px-3 py-1.5 rounded hover:bg-graphite-card text-cool-gray hover:text-off-white text-xs font-mono transition-colors">
+            IDPA
+          </button>
+</div>
+</div>
+<!-- Clean, Breathable Results Table with Subtle Dividers -->
+<div class="bg-graphite rounded-lg border border-graphite-border overflow-hidden shadow-sm">
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-sans text-xs sm:text-sm">
+<thead class="bg-graphite-card border-b border-graphite-border text-cool-gray font-mono text-xs uppercase tracking-wider">
+<tr>
+<th class="py-3.5 px-4 sm:px-6">Dátum &amp; Helyszín</th>
+<th class="py-3.5 px-4">Verseny Megnevezése</th>
+<th class="py-3.5 px-4">Szakág / Szint</th>
+<th class="py-3.5 px-4">Győztes Versenyző</th>
+<th class="py-3.5 px-4 font-mono">Győztes Hit Factor / Idő</th>
+<th class="py-3.5 px-4 sm:px-6 text-right">Jegyzőkönyv</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-graphite-divider text-off-white">
+<!-- Row 1: IPSC Páty -->
+<tr class="hover:bg-graphite-hover/60 transition-colors">
+<td class="py-4 px-4 sm:px-6 font-mono text-xs">
+<div class="font-bold text-off-white">2026.05.28</div>
+<div class="text-cool-gray text-[11px] mt-0.5">Páty Lőtér</div>
+</td>
+<td class="py-4 px-4 font-medium">
+<div class="text-off-white font-semibold">Pest Megyei IPSC Kupa II.</div>
+<div class="text-cool-gray text-xs">12 Pálya • Minősítő forduló</div>
+</td>
+<td class="py-4 px-4 font-mono text-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card border border-graphite-border text-competition-orange font-semibold">
+                    IPSC Level II
+                  </span>
+</td>
+<td class="py-4 px-4">
+<div class="font-bold text-off-white">Kovács Zoltán</div>
+<div class="text-cool-gray text-xs font-mono">Production Optics • BKV LSE</div>
+</td>
+<td class="py-4 px-4 font-mono">
+<span class="text-positive-green font-bold text-sm">HF 9.8410</span>
+<span class="text-cool-gray text-xs block">100.00%</span>
+</td>
+<td class="py-4 px-4 sm:px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-2.5 py-1 bg-graphite-card hover:bg-graphite border border-graphite-border hover:border-competition-orange text-cool-gray hover:text-off-white rounded text-xs font-mono transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">analytics</span>
+<span class="hidden sm:inline">Elemzés</span>
+</button>
+<button class="px-2.5 py-1 bg-competition-orange/15 hover:bg-competition-orange/25 border border-competition-orange/40 text-competition-orange rounded text-xs font-mono font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">description</span>
+<span>PDF</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Steel Challenge Debrecen -->
+<tr class="hover:bg-graphite-hover/60 transition-colors">
+<td class="py-4 px-4 sm:px-6 font-mono text-xs">
+<div class="font-bold text-off-white">2026.05.24</div>
+<div class="text-cool-gray text-[11px] mt-0.5">Debrecen Sportlőtér</div>
+</td>
+<td class="py-4 px-4 font-medium">
+<div class="text-off-white font-semibold">Országos Steel Challenge OB</div>
+<div class="text-cool-gray text-xs">8 Szabványos acélcél pálya</div>
+</td>
+<td class="py-4 px-4 font-mono text-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card border border-graphite-border text-off-white font-semibold">
+                    STEEL Tier III
+                  </span>
+</td>
+<td class="py-4 px-4">
+<div class="font-bold text-off-white">Tóth Tamara</div>
+<div class="text-cool-gray text-xs font-mono">RFPO • Debreceni VSE</div>
+</td>
+<td class="py-4 px-4 font-mono">
+<span class="text-positive-green font-bold text-sm">58.42s</span>
+<span class="text-cool-gray text-xs block">Országos Rekord</span>
+</td>
+<td class="py-4 px-4 sm:px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-2.5 py-1 bg-graphite-card hover:bg-graphite border border-graphite-border hover:border-competition-orange text-cool-gray hover:text-off-white rounded text-xs font-mono transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">analytics</span>
+<span class="hidden sm:inline">Elemzés</span>
+</button>
+<button class="px-2.5 py-1 bg-competition-orange/15 hover:bg-competition-orange/25 border border-competition-orange/40 text-competition-orange rounded text-xs font-mono font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">description</span>
+<span>PDF</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: IDPA Csepel -->
+<tr class="hover:bg-graphite-hover/60 transition-colors">
+<td class="py-4 px-4 sm:px-6 font-mono text-xs">
+<div class="font-bold text-off-white">2026.05.17</div>
+<div class="text-cool-gray text-[11px] mt-0.5">Csepel Lőbázis</div>
+</td>
+<td class="py-4 px-4 font-medium">
+<div class="text-off-white font-semibold">Budapest IDPA Grand Prix</div>
+<div class="text-cool-gray text-xs">10 Szituációs pálya • Taktikai fedezék</div>
+</td>
+<td class="py-4 px-4 font-mono text-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card border border-graphite-border text-off-white font-semibold">
+                    IDPA Tier II
+                  </span>
+</td>
+<td class="py-4 px-4">
+<div class="font-bold text-off-white">Nagy Balázs</div>
+<div class="text-cool-gray text-xs font-mono">Carry Optics • Celeritas SE</div>
+</td>
+<td class="py-4 px-4 font-mono">
+<span class="text-positive-green font-bold text-sm">142.18s</span>
+<span class="text-cool-gray text-xs block">2 PD / 0 PE</span>
+</td>
+<td class="py-4 px-4 sm:px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-2.5 py-1 bg-graphite-card hover:bg-graphite border border-graphite-border hover:border-competition-orange text-cool-gray hover:text-off-white rounded text-xs font-mono transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">analytics</span>
+<span class="hidden sm:inline">Elemzés</span>
+</button>
+<button class="px-2.5 py-1 bg-competition-orange/15 hover:bg-competition-orange/25 border border-competition-orange/40 text-competition-orange rounded text-xs font-mono font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">description</span>
+<span>PDF</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Gyorspont Szeged -->
+<tr class="hover:bg-graphite-hover/60 transition-colors">
+<td class="py-4 px-4 sm:px-6 font-mono text-xs">
+<div class="font-bold text-off-white">2026.05.10</div>
+<div class="text-cool-gray text-[11px] mt-0.5">Szeged Sportlőtér</div>
+</td>
+<td class="py-4 px-4 font-medium">
+<div class="text-off-white font-semibold">Dél-Alföldi Gyorspont Kupa</div>
+<div class="text-cool-gray text-xs">25m &amp; 50m precíziós minősítő</div>
+</td>
+<td class="py-4 px-4 font-mono text-xs">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card border border-graphite-border text-off-white font-semibold">
+                    Gyorspont Q
+                  </span>
+</td>
+<td class="py-4 px-4">
+<div class="font-bold text-off-white">Szabó Tibor</div>
+<div class="text-cool-gray text-xs font-mono">Közp. Gyújtás • MTK Budapest</div>
+</td>
+<td class="py-4 px-4 font-mono">
+<span class="text-positive-green font-bold text-sm">298 / 300 P</span>
+<span class="text-cool-gray text-xs block">18x Belső Tízes</span>
+</td>
+<td class="py-4 px-4 sm:px-6 text-right">
+<div class="inline-flex items-center gap-2">
+<button class="px-2.5 py-1 bg-graphite-card hover:bg-graphite border border-graphite-border hover:border-competition-orange text-cool-gray hover:text-off-white rounded text-xs font-mono transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">analytics</span>
+<span class="hidden sm:inline">Elemzés</span>
+</button>
+<button class="px-2.5 py-1 bg-competition-orange/15 hover:bg-competition-orange/25 border border-competition-orange/40 text-competition-orange rounded text-xs font-mono font-semibold transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">description</span>
+<span>PDF</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-graphite-card px-4 sm:px-6 py-3 border-t border-graphite-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-cool-gray">
+<span>Összesen 42 hitelesített jegyzőkönyv rögzítve a 2026-os versenyciklusban</span>
+<div class="flex items-center gap-1.5">
+<button class="px-2.5 py-1 rounded bg-graphite border border-graphite-border text-off-white hover:border-competition-orange transition-colors">1</button>
+<button class="px-2.5 py-1 rounded bg-graphite border border-graphite-border text-cool-gray hover:text-off-white transition-colors">2</button>
+<button class="px-2.5 py-1 rounded bg-graphite border border-graphite-border text-cool-gray hover:text-off-white transition-colors">3</button>
+<span class="px-1 text-muted-gray">...</span>
+<button class="px-2.5 py-1 rounded bg-graphite border border-graphite-border text-cool-gray hover:text-off-white transition-colors">Következő →</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. UPCOMING MATCHES & CALENDAR (Következő Versenyek) -->
+<section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6" id="versenynaptar">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono text-competition-orange uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+<span>SZÖVETSÉGI VERSENYNAPTÁR 2026</span>
+</div>
+<h2 class="text-2xl font-bold font-sans tracking-tight text-off-white">Következő Akkreditált Versenyek</h2>
+</div>
+<button class="px-3 py-1.5 bg-graphite hover:bg-graphite-card border border-graphite-border text-off-white rounded text-xs font-mono flex items-center gap-1.5 self-start sm:self-auto transition-colors">
+<span class="material-symbols-outlined text-[16px] text-competition-orange">event</span>
+<span>NAPTÁR SZINKRONIZÁLÁSA (.ICS)</span>
+</button>
+</div>
+<!-- Clean Timeline Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Match 1 -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-5 flex flex-col justify-between hover:border-competition-orange/50 transition-all">
+<div>
+<div class="flex items-start justify-between">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-competition-orange/15 text-competition-orange border border-competition-orange/30 font-mono text-[11px] font-semibold">
+                NEVEZÉS NYITVA
+              </span>
+<span class="text-xs font-mono text-cool-gray">IPSC Level II</span>
+</div>
+<h3 class="text-lg font-bold text-off-white mt-3">Duna Kupa III.</h3>
+<p class="text-xs text-cool-gray font-mono mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-competition-orange">location_on</span>
+              Győr Sportlőtér • 12 Pálya
+            </p>
+<div class="mt-4 p-3 rounded bg-graphite-card border border-graphite-border space-y-2">
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Dátum:</span>
+<span class="text-off-white font-semibold">2026. április 18.</span>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Nevezési határidő:</span>
+<span class="text-competition-orange font-semibold">4 nap hátralévő</span>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Szabad helyek:</span>
+<span class="text-positive-green font-semibold">18 / 120 slot</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between">
+<span class="text-xs text-cool-gray font-mono">MDLSZ-048/2026</span>
+<button class="px-3 py-1 bg-competition-orange hover:bg-competition-orange-hover text-white rounded text-xs font-mono font-semibold transition-colors">
+              NEVEZÉS
+            </button>
+</div>
+</div>
+<!-- Match 2 -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-5 flex flex-col justify-between hover:border-competition-orange/50 transition-all">
+<div>
+<div class="flex items-start justify-between">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-positive-green-bg text-positive-green border border-positive-green/30 font-mono text-[11px] font-semibold">
+                NEVEZÉS NYITVA
+              </span>
+<span class="text-xs font-mono text-cool-gray">Steel Challenge</span>
+</div>
+<h3 class="text-lg font-bold text-off-white mt-3">Bakony Dynamic Acél Párbaj</h3>
+<p class="text-xs text-cool-gray font-mono mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-competition-orange">location_on</span>
+              Veszprém Szabadtéri Lőtér • 8 Pálya
+            </p>
+<div class="mt-4 p-3 rounded bg-graphite-card border border-graphite-border space-y-2">
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Dátum:</span>
+<span class="text-off-white font-semibold">2026. április 25.</span>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Nevezési határidő:</span>
+<span class="text-off-white font-semibold">11 nap hátralévő</span>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Szabad helyek:</span>
+<span class="text-positive-green font-semibold">32 / 80 slot</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between">
+<span class="text-xs text-cool-gray font-mono">MDLSZ-052/2026</span>
+<button class="px-3 py-1 bg-competition-orange hover:bg-competition-orange-hover text-white rounded text-xs font-mono font-semibold transition-colors">
+              NEVEZÉS
+            </button>
+</div>
+</div>
+<!-- Match 3 -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-5 flex flex-col justify-between hover:border-competition-orange/50 transition-all">
+<div>
+<div class="flex items-start justify-between">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card text-cool-gray border border-graphite-border font-mono text-[11px] font-semibold">
+                ELŐREGISZTRÁCIÓ
+              </span>
+<span class="text-xs font-mono text-cool-gray">Gyorspont 25m/50m</span>
+</div>
+<h3 class="text-lg font-bold text-off-white mt-3">Kelet-Magyarországi Minősítő</h3>
+<p class="text-xs text-cool-gray font-mono mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-competition-orange">location_on</span>
+              Debrecen VSE Lőtér • Precíziós
+            </p>
+<div class="mt-4 p-3 rounded bg-graphite-card border border-graphite-border space-y-2">
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Dátum:</span>
+<span class="text-off-white font-semibold">2026. május 02.</span>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Nevezési határidő:</span>
+<span class="text-off-white font-semibold">18 nap hátralévő</span>
+</div>
+<div class="flex justify-between text-xs font-mono">
+<span class="text-cool-gray">Szabad helyek:</span>
+<span class="text-positive-green font-semibold">45 / 90 slot</span>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between">
+<span class="text-xs text-cool-gray font-mono">MDLSZ-058/2026</span>
+<button class="px-3 py-1 bg-graphite-card hover:bg-graphite border border-graphite-border text-off-white rounded text-xs font-mono font-semibold transition-colors">
+              RÉSZLETEK
+            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. PERFORMANCE TRENDS & NATION-WIDE TELEMETRY -->
+<section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+<div class="bg-graphite rounded-lg border border-graphite-border p-6">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6 pb-4 border-b border-graphite-divider">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono text-competition-orange uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">show_chart</span>
+<span>ORSZÁGOS TELJESÍTMÉNY TRENDEK // TELEMETRIA</span>
+</div>
+<h2 class="text-2xl font-bold font-sans tracking-tight text-off-white">Havi Hit Factor Progresszió &amp; Divízióarányok</h2>
+</div>
+<div class="flex items-center gap-3 text-xs font-mono text-cool-gray">
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-competition-orange"></span> Nemzeti Átlag HF</span>
+<span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-positive-green"></span> Elit TOP 10% HF</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Progression SVG Chart (7 cols) -->
+<div class="lg:col-span-7 bg-graphite-card p-4 rounded border border-graphite-border flex flex-col justify-between">
+<div class="flex justify-between items-center text-xs font-mono text-cool-gray mb-3">
+<span>Átlagos Hit Factor Alakulás (2026. Jan – Máj)</span>
+<span class="text-positive-green font-semibold">▲ +12.8% növekedés</span>
+</div>
+<div class="w-full h-48 py-2">
+<svg class="w-full h-full" fill="none" viewbox="0 0 500 180">
+<!-- Hairline Grid Lines -->
+<line stroke="#262D37" stroke-dasharray="3 3" x1="40" x2="480" y1="30" y2="30"></line>
+<line stroke="#262D37" stroke-dasharray="3 3" x1="40" x2="480" y1="75" y2="75"></line>
+<line stroke="#262D37" stroke-dasharray="3 3" x1="40" x2="480" y1="120" y2="120"></line>
+<line stroke="#262D37" x1="40" x2="480" y1="160" y2="160"></line>
+<!-- Y Axis Labels -->
+<text fill="#606C7A" font-family="monospace" font-size="10" x="15" y="34">8.5</text>
+<text fill="#606C7A" font-family="monospace" font-size="10" x="15" y="79">7.0</text>
+<text fill="#606C7A" font-family="monospace" font-size="10" x="15" y="124">5.5</text>
+<text fill="#606C7A" font-family="monospace" font-size="10" x="15" y="164">4.0</text>
+<!-- Area Fill for National Average -->
+<path d="M 60 135 L 150 125 L 240 110 L 330 98 L 440 85 L 440 160 L 60 160 Z" fill="rgba(255, 107, 53, 0.08)"></path>
+<!-- National Average Line -->
+<path d="M 60 135 L 150 125 L 240 110 L 330 98 L 440 85" stroke="#FF6B35" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Top 10% Elite Line -->
+<path d="M 60 80 L 150 70 L 240 58 L 330 45 L 440 38" stroke="#40B982" stroke-dasharray="4 2" stroke-linecap="round" stroke-width="2"></path>
+<!-- Data Points -->
+<circle cx="60" cy="135" fill="#FF6B35" r="3.5"></circle>
+<circle cx="150" cy="125" fill="#FF6B35" r="3.5"></circle>
+<circle cx="240" cy="110" fill="#FF6B35" r="3.5"></circle>
+<circle cx="330" cy="98" fill="#FF6B35" r="3.5"></circle>
+<circle cx="440" cy="85" fill="#FF6B35" r="4.5"></circle>
+<circle cx="440" cy="38" fill="#40B982" r="4"></circle>
+</svg>
+</div>
+<div class="flex justify-between items-center text-xs font-mono text-cool-gray pt-2 border-t border-graphite-divider px-2">
+<span>JAN (5.12 HF)</span>
+<span>FEB (5.40 HF)</span>
+<span>MÁR (5.92 HF)</span>
+<span>ÁPR (6.28 HF)</span>
+<span class="text-competition-orange font-bold">MÁJ (6.74 HF)</span>
+</div>
+</div>
+<!-- Division Breakdown & Transition Metrics (5 cols) -->
+<div class="lg:col-span-5 flex flex-col justify-between gap-4">
+<!-- Division Distribution -->
+<div class="bg-graphite-card p-4 rounded border border-graphite-border">
+<span class="text-xs font-mono text-cool-gray uppercase block mb-3">Divíziómegoszlás a 2026-os szezonban</span>
+<div class="space-y-2.5">
+<div>
+<div class="flex justify-between text-xs font-mono mb-1">
+<span class="text-off-white">Production &amp; Optics</span>
+<span class="text-competition-orange font-semibold">44% (1,531 fő)</span>
+</div>
+<div class="w-full bg-graphite h-1.5 rounded-full overflow-hidden">
+<div class="bg-competition-orange h-full rounded-full" style="width: 44%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-mono mb-1">
+<span class="text-off-white">Standard Division</span>
+<span class="text-cool-gray font-semibold">28% (974 fő)</span>
+</div>
+<div class="w-full bg-graphite h-1.5 rounded-full overflow-hidden">
+<div class="bg-cool-gray h-full rounded-full" style="width: 28%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-mono mb-1">
+<span class="text-off-white">Open Division</span>
+<span class="text-cool-gray font-semibold">16% (557 fő)</span>
+</div>
+<div class="w-full bg-graphite h-1.5 rounded-full overflow-hidden">
+<div class="bg-positive-green h-full rounded-full" style="width: 16%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs font-mono mb-1">
+<span class="text-off-white">Revolver &amp; Classic</span>
+<span class="text-muted-gray font-semibold">12% (418 fő)</span>
+</div>
+<div class="w-full bg-graphite h-1.5 rounded-full overflow-hidden">
+<div class="bg-muted-gray h-full rounded-full" style="width: 12%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Amateur-to-Master Transition metric pill -->
+<div class="bg-graphite-card p-4 rounded border border-graphite-border flex items-center justify-between">
+<div>
+<span class="text-[11px] font-mono text-cool-gray uppercase block">Átlagos Minősítési Időablak</span>
+<span class="text-base font-bold text-off-white font-mono">Marksman → Expert Transition</span>
+<span class="text-xs text-cool-gray block mt-0.5">Szövetségi felkészülési átlag: 14.2 versenyhónap</span>
+</div>
+<div class="text-right">
+<span class="text-2xl font-bold font-mono text-positive-green">-22%</span>
+<span class="text-[10px] font-mono text-cool-gray block">gyorsulás vs 2024</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. SEARCHABLE DATABASE & CLUB DIRECTORY QUICK ACCESS -->
+<section class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6" id="directory">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+<div>
+<div class="flex items-center gap-2 text-xs font-mono text-competition-orange uppercase tracking-wider mb-1">
+<span class="material-symbols-outlined text-[16px]">badge</span>
+<span>KERESHETŐ VERSENYZŐ &amp; EGYESÜLET ADATBÁZIS</span>
+</div>
+<h2 class="text-2xl font-bold font-sans tracking-tight text-off-white">Akkreditált Klubok és Szövetségi Nyilvántartás</h2>
+</div>
+<div class="flex items-center gap-1 font-mono text-xs text-cool-gray overflow-x-auto">
+<span class="px-2 py-1 rounded bg-graphite border border-graphite-border text-competition-orange font-bold">MIND</span>
+<span class="px-2 py-1 rounded bg-graphite hover:text-off-white cursor-pointer transition-colors">A-D</span>
+<span class="px-2 py-1 rounded bg-graphite hover:text-off-white cursor-pointer transition-colors">E-H</span>
+<span class="px-2 py-1 rounded bg-graphite hover:text-off-white cursor-pointer transition-colors">I-M</span>
+<span class="px-2 py-1 rounded bg-graphite hover:text-off-white cursor-pointer transition-colors">N-R</span>
+<span class="px-2 py-1 rounded bg-graphite hover:text-off-white cursor-pointer transition-colors">S-Z</span>
+</div>
+</div>
+<!-- Quick Directory Preview Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Club 1 -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-4 flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card text-[11px] font-mono text-competition-orange border border-graphite-border">
+                MDLSZ-AKKR-01
+              </span>
+<span class="text-xs font-mono text-cool-gray">Budapest</span>
+</div>
+<h3 class="text-base font-bold text-off-white">BKV Technikai LSE</h3>
+<p class="text-xs text-cool-gray mt-1">IPSC &amp; Gyorspont Bázis • Fedett és Szabadtér</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-xs font-mono">
+<span class="text-cool-gray">Versenyzők: <strong class="text-off-white">184 fő</strong></span>
+<span class="text-positive-green font-semibold">12 Elit Rang</span>
+</div>
+</div>
+<!-- Club 2 -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-4 flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card text-[11px] font-mono text-competition-orange border border-graphite-border">
+                MDLSZ-AKKR-04
+              </span>
+<span class="text-xs font-mono text-cool-gray">Hajdú-Bihar</span>
+</div>
+<h3 class="text-base font-bold text-off-white">Debreceni VSE</h3>
+<p class="text-xs text-cool-gray mt-1">Steel Challenge &amp; Nemzeti Lövészakadémia</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-xs font-mono">
+<span class="text-cool-gray">Versenyzők: <strong class="text-off-white">142 fő</strong></span>
+<span class="text-positive-green font-semibold">8 Elit Rang</span>
+</div>
+</div>
+<!-- Club 3 -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-4 flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card text-[11px] font-mono text-competition-orange border border-graphite-border">
+                MDLSZ-AKKR-08
+              </span>
+<span class="text-xs font-mono text-cool-gray">Pest</span>
+</div>
+<h3 class="text-base font-bold text-off-white">Celeritas Sportlövő SE</h3>
+<p class="text-xs text-cool-gray mt-1">IDPA &amp; Szituációs Tréningközpont</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-xs font-mono">
+<span class="text-cool-gray">Versenyzők: <strong class="text-off-white">165 fő</strong></span>
+<span class="text-positive-green font-semibold">10 Elit Rang</span>
+</div>
+</div>
+<!-- Club 4 -->
+<div class="bg-graphite rounded-lg border border-graphite-border p-4 flex flex-col justify-between hover:border-graphite-border/90 transition-all">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-graphite-card text-[11px] font-mono text-competition-orange border border-graphite-border">
+                MDLSZ-AKKR-12
+              </span>
+<span class="text-xs font-mono text-cool-gray">Budapest</span>
+</div>
+<h3 class="text-base font-bold text-off-white">MTK Budapest Sportlövő</h3>
+<p class="text-xs text-cool-gray mt-1">Gyorspont, Precíziós &amp; Utánpótlás Divízió</p>
+</div>
+<div class="mt-4 pt-3 border-t border-graphite-divider flex items-center justify-between text-xs font-mono">
+<span class="text-cool-gray">Versenyzők: <strong class="text-off-white">210 fő</strong></span>
+<span class="text-positive-green font-semibold">15 Elit Rang</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- 8. MINIMALIST PROFESSIONAL FOOTER -->
+<footer class="bg-graphite border-t border-graphite-border mt-12">
+<!-- Main Footer Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<!-- Col 1: Federation ID -->
+<div class="md:col-span-2">
+<div class="flex items-center gap-2 mb-3">
+<div class="w-7 h-7 rounded bg-competition-orange/15 border border-competition-orange/40 flex items-center justify-center text-competition-orange">
+<span class="material-symbols-outlined text-[16px]">adjust</span>
+</div>
+<span class="font-mono font-bold text-off-white tracking-wider text-base">MDLSZ // STATS</span>
+</div>
+<p class="text-xs text-cool-gray leading-relaxed max-w-md">
+            Magyar Dinamikus Lövészsport Szövetség. Hivatalos országos ranglisták, versenyeredmények, bírói jegyzőkönyvek és lövészsport telemetria a Magyar Sportlövők Szövetségével (MSSZ) és nemzetközi partnereivel összhangban.
+          </p>
+<div class="mt-4 flex items-center gap-2 text-[11px] font-mono text-cool-gray">
+<span class="w-2 h-2 rounded-full bg-positive-green"></span>
+<span>SZÖVETSÉGI ADATBÁZIS SZINKRONIZÁLVA (ISO-8434-HUN PROTOKOLL)</span>
+</div>
+</div>
+<!-- Col 2: Szabályzatok & Szakágak -->
+<div>
+<span class="text-xs font-mono text-off-white uppercase tracking-wider block mb-3 font-semibold">Szakágak &amp; Szabályzatok</span>
+<ul class="space-y-2 text-xs text-cool-gray font-sans">
+<li><a class="hover:text-competition-orange transition-colors" href="#">IPSC Versenyszabályzat 2026</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">Steel Challenge Szabvány Pályák</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">Gyorspont és Precíziós Lőlapok</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">IDPA Nemzetközi Szabálykönyv</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">Minősítési Értékhatárok</a></li>
+</ul>
+</div>
+<!-- Col 3: Szövetségi Linkek & Jog -->
+<div>
+<span class="text-xs font-mono text-off-white uppercase tracking-wider block mb-3 font-semibold">Hivatalos Elérhetőségek</span>
+<ul class="space-y-2 text-xs text-cool-gray font-sans">
+<li><a class="hover:text-competition-orange transition-colors" href="#">Országos Versenybírói Bizottság</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">Rajtengedély Igénylés &amp; Hosszabbítás</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">MSSZ / MDLSZ API Dokumentáció</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">Adatkezelési Tájékoztató (GDPR)</a></li>
+<li><a class="hover:text-competition-orange transition-colors" href="#">Kapcsolat és Sajtó</a></li>
+</ul>
+</div>
+</div>
+<!-- Bottom Bar -->
+<div class="mt-10 pt-6 border-t border-graphite-divider flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-cool-gray">
+<div>
+          © 2026 MAGYAR DINAMIKUS LÖVÉSZSPORT SZÖVETSÉG. MINDEN JOG FENNTARTVA.
+        </div>
+<div class="flex items-center gap-4 text-[11px]">
+<span>VERZIÓ: v26.4.1-PROD</span>
+<span class="text-graphite-border">|</span>
+<span class="text-competition-orange font-semibold">HIGH-PERFORMANCE ATHLETIC TELEMETRY</span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
