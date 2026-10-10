@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T05:36:12Z",
+  "title": "Design System: Hero of IDPA",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Championship Red",
+        "canonical": "#a82e2c",
+        "tonalRamp": ["oklch(15% 0.159 26)", "oklch(25% 0.159 26)", "oklch(35% 0.159 26)", "oklch(45% 0.159 26)", "oklch(55% 0.159 26)", "oklch(65% 0.159 26)", "oklch(75% 0.159 26)", "oklch(95% 0.159 26)"]
+      },
+      "primary-deep": {
+        "role": "secondary",
+        "displayName": "Deep Source Red",
+        "canonical": "#852321",
+        "tonalRamp": ["oklch(15% 0.133 26.1)", "oklch(25% 0.133 26.1)", "oklch(35% 0.133 26.1)", "oklch(45% 0.133 26.1)", "oklch(55% 0.133 26.1)", "oklch(65% 0.133 26.1)", "oklch(75% 0.133 26.1)", "oklch(95% 0.133 26.1)"]
+      },
+      "primary-wash": {
+        "role": "secondary",
+        "displayName": "Pale Competition Wash",
+        "canonical": "#f2e5df",
+        "tonalRamp": ["oklch(15% 0.016 46.6)", "oklch(25% 0.016 46.6)", "oklch(35% 0.016 46.6)", "oklch(45% 0.016 46.6)", "oklch(55% 0.016 46.6)", "oklch(65% 0.016 46.6)", "oklch(75% 0.016 46.6)", "oklch(95% 0.016 46.6)"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Warm Canvas",
+        "canonical": "#f3f0e8",
+        "tonalRamp": ["oklch(15% 0.011 89.7)", "oklch(25% 0.011 89.7)", "oklch(35% 0.011 89.7)", "oklch(45% 0.011 89.7)", "oklch(55% 0.011 89.7)", "oklch(65% 0.011 89.7)", "oklch(75% 0.011 89.7)", "oklch(95% 0.011 89.7)"]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Soft Paper",
+        "canonical": "#faf9f5",
+        "tonalRamp": ["oklch(15% 0.005 95.1)", "oklch(25% 0.005 95.1)", "oklch(35% 0.005 95.1)", "oklch(45% 0.005 95.1)", "oklch(55% 0.005 95.1)", "oklch(65% 0.005 95.1)", "oklch(75% 0.005 95.1)", "oklch(95% 0.005 95.1)"]
+      },
+      "paper-raised": {
+        "role": "neutral",
+        "displayName": "Raised Paper",
+        "canonical": "#fffefa",
+        "tonalRamp": ["oklch(15% 0.005 95.1)", "oklch(25% 0.005 95.1)", "oklch(35% 0.005 95.1)", "oklch(45% 0.005 95.1)", "oklch(55% 0.005 95.1)", "oklch(65% 0.005 95.1)", "oklch(75% 0.005 95.1)", "oklch(95% 0.005 95.1)"]
+      },
+      "paper-deep": {
+        "role": "neutral",
+        "displayName": "Deep Paper",
+        "canonical": "#ebe7dd",
+        "tonalRamp": ["oklch(15% 0.014 88.7)", "oklch(25% 0.014 88.7)", "oklch(35% 0.014 88.7)", "oklch(45% 0.014 88.7)", "oklch(55% 0.014 88.7)", "oklch(65% 0.014 88.7)", "oklch(75% 0.014 88.7)", "oklch(95% 0.014 88.7)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Championship Ink",
+        "canonical": "#1a1b19",
+        "tonalRamp": ["oklch(15% 0.004 128.7)", "oklch(25% 0.004 128.7)", "oklch(35% 0.004 128.7)", "oklch(45% 0.004 128.7)", "oklch(55% 0.004 128.7)", "oklch(65% 0.004 128.7)", "oklch(75% 0.004 128.7)", "oklch(95% 0.004 128.7)"]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#5d605c",
+        "tonalRamp": ["oklch(15% 0.007 137.8)", "oklch(25% 0.007 137.8)", "oklch(35% 0.007 137.8)", "oklch(45% 0.007 137.8)", "oklch(55% 0.007 137.8)", "oklch(65% 0.007 137.8)", "oklch(75% 0.007 137.8)", "oklch(95% 0.007 137.8)"]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule Gray",
+        "canonical": "#d4d0c6",
+        "tonalRamp": ["oklch(15% 0.014 88.7)", "oklch(25% 0.014 88.7)", "oklch(35% 0.014 88.7)", "oklch(45% 0.014 88.7)", "oklch(55% 0.014 88.7)", "oklch(65% 0.014 88.7)", "oklch(75% 0.014 88.7)", "oklch(95% 0.014 88.7)"]
+      },
+      "chart-grid": {
+        "role": "neutral",
+        "displayName": "Plot Grid",
+        "canonical": "#dedacf",
+        "tonalRamp": ["oklch(15% 0.015 90.2)", "oklch(25% 0.015 90.2)", "oklch(35% 0.015 90.2)", "oklch(45% 0.015 90.2)", "oklch(55% 0.015 90.2)", "oklch(65% 0.015 90.2)", "oklch(75% 0.015 90.2)", "oklch(95% 0.015 90.2)"]
+      },
+      "chart-ink": {
+        "role": "secondary",
+        "displayName": "Plot Ink",
+        "canonical": "#5f605b",
+        "tonalRamp": ["oklch(15% 0.008 115.9)", "oklch(25% 0.008 115.9)", "oklch(35% 0.008 115.9)", "oklch(45% 0.008 115.9)", "oklch(55% 0.008 115.9)", "oklch(65% 0.008 115.9)", "oklch(75% 0.008 115.9)", "oklch(95% 0.008 115.9)"]
+      },
+      "chart-teal": {
+        "role": "secondary",
+        "displayName": "Measured Teal",
+        "canonical": "#176a63",
+        "tonalRamp": ["oklch(15% 0.076 186.4)", "oklch(25% 0.076 186.4)", "oklch(35% 0.076 186.4)", "oklch(45% 0.076 186.4)", "oklch(55% 0.076 186.4)", "oklch(65% 0.076 186.4)", "oklch(75% 0.076 186.4)", "oklch(95% 0.076 186.4)"]
+      },
+      "chart-gold": {
+        "role": "secondary",
+        "displayName": "Competition Gold",
+        "canonical": "#976b17",
+        "tonalRamp": ["oklch(15% 0.109 77.9)", "oklch(25% 0.109 77.9)", "oklch(35% 0.109 77.9)", "oklch(45% 0.109 77.9)", "oklch(55% 0.109 77.9)", "oklch(65% 0.109 77.9)", "oklch(75% 0.109 77.9)", "oklch(95% 0.109 77.9)"]
+      },
+      "chart-purple": {
+        "role": "secondary",
+        "displayName": "Plot Purple",
+        "canonical": "#675381",
+        "tonalRamp": ["oklch(15% 0.076 303.7)", "oklch(25% 0.076 303.7)", "oklch(35% 0.076 303.7)", "oklch(45% 0.076 303.7)", "oklch(55% 0.076 303.7)", "oklch(65% 0.076 303.7)", "oklch(75% 0.076 303.7)", "oklch(95% 0.076 303.7)"]
+      },
+      "chart-blue": {
+        "role": "secondary",
+        "displayName": "Plot Blue",
+        "canonical": "#285e78",
+        "tonalRamp": ["oklch(15% 0.071 232.1)", "oklch(25% 0.071 232.1)", "oklch(35% 0.071 232.1)", "oklch(45% 0.071 232.1)", "oklch(55% 0.071 232.1)", "oklch(65% 0.071 232.1)", "oklch(75% 0.071 232.1)", "oklch(95% 0.071 232.1)"]
+      },
+      "chart-gray": {
+        "role": "secondary",
+        "displayName": "Plot Gray",
+        "canonical": "#65655e",
+        "tonalRamp": ["oklch(15% 0.011 106.8)", "oklch(25% 0.011 106.8)", "oklch(35% 0.011 106.8)", "oklch(45% 0.011 106.8)", "oklch(55% 0.011 106.8)", "oklch(65% 0.011 106.8)", "oklch(75% 0.011 106.8)", "oklch(95% 0.011 106.8)"]
+      },
+      "chart-orange": {
+        "role": "secondary",
+        "displayName": "Plot Orange",
+        "canonical": "#b86e28",
+        "tonalRamp": ["oklch(15% 0.124 59.6)", "oklch(25% 0.124 59.6)", "oklch(35% 0.124 59.6)", "oklch(45% 0.124 59.6)", "oklch(55% 0.124 59.6)", "oklch(65% 0.124 59.6)", "oklch(75% 0.124 59.6)", "oklch(95% 0.124 59.6)"]
+      },
+      "chart-slate": {
+        "role": "secondary",
+        "displayName": "Plot Slate",
+        "canonical": "#4d7181",
+        "tonalRamp": ["oklch(15% 0.048 227.5)", "oklch(25% 0.048 227.5)", "oklch(35% 0.048 227.5)", "oklch(45% 0.048 227.5)", "oklch(55% 0.048 227.5)", "oklch(65% 0.048 227.5)", "oklch(75% 0.048 227.5)", "oklch(95% 0.048 227.5)"]
+      },
+      "footer-accent": {
+        "role": "secondary",
+        "displayName": "Footer Coral",
+        "canonical": "#e07868",
+        "tonalRamp": ["oklch(15% 0.132 30)", "oklch(25% 0.132 30)", "oklch(35% 0.132 30)", "oklch(45% 0.132 30)", "oklch(55% 0.132 30)", "oklch(65% 0.132 30)", "oklch(75% 0.132 30)", "oklch(95% 0.132 30)"]
+      },
+      "footer-copy": {
+        "role": "secondary",
+        "displayName": "Footer Copy",
+        "canonical": "#d0cec8",
+        "tonalRamp": ["oklch(15% 0.009 91.5)", "oklch(25% 0.009 91.5)", "oklch(35% 0.009 91.5)", "oklch(45% 0.009 91.5)", "oklch(55% 0.009 91.5)", "oklch(65% 0.009 91.5)", "oklch(75% 0.009 91.5)", "oklch(95% 0.009 91.5)"]
+      },
+      "footer-muted": {
+        "role": "secondary",
+        "displayName": "Footer Muted",
+        "canonical": "#aaa8a2",
+        "tonalRamp": ["oklch(15% 0.009 91.5)", "oklch(25% 0.009 91.5)", "oklch(35% 0.009 91.5)", "oklch(45% 0.009 91.5)", "oklch(55% 0.009 91.5)", "oklch(65% 0.009 91.5)", "oklch(75% 0.009 91.5)", "oklch(95% 0.009 91.5)"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Season Display",
+        "purpose": "Season masthead and product wordmark."
+      },
+      "headline": {
+        "displayName": "Section Heading",
+        "purpose": "Semantically named dashboard sections."
+      },
+      "title": {
+        "displayName": "Report Title",
+        "purpose": "Ranking, club, and report titles."
+      },
+      "body": {
+        "displayName": "Report Body",
+        "purpose": "Explanatory copy, interface controls, and competitor records."
+      },
+      "label": {
+        "displayName": "Control Label",
+        "purpose": "Concise uppercase control and data labels."
+      }
+    },
+    "shadows": [
+      {
+        "name": "chart-tooltip",
+        "value": "0 8px 24px rgb(26 27 25 / 12%)",
+        "purpose": "Keep chart tooltip legible above plotted data."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-transition",
+        "value": "150ms-160ms ease",
+        "purpose": "Subtle hover, focus, and disclosure state changes."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disable nonessential transitions and smooth scrolling."
+      }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Square ink button for an emphasized action, with red hover and keyboard focus.",
+      "html": "<button class=\"ds-primary-button\" type=\"button\">Open results</button>",
+      "css": ".ds-primary-button{display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border:1px solid var(--ink);border-radius:0;background:var(--ink);color:var(--paper);font:600 0.875rem 'DM Sans',sans-serif;transition:background-color 150ms ease}.ds-primary-button:hover{background:var(--signal-dark)}.ds-primary-button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}.ds-primary-button:disabled{cursor:not-allowed;opacity:.5}"
+    },
+    {
+      "name": "Filter Select",
+      "kind": "input",
+      "refersTo": "filter-control",
+      "description": "Labeled compact selector with warm paper fill and visible red focus.",
+      "html": "<label class=\"ds-filter-label\" for=\"season-filter\">Division</label><select id=\"season-filter\" class=\"ds-filter-control\"><option>All divisions</option></select>",
+      "css": ".ds-filter-label{display:block;color:var(--ink-muted);font:700 0.67rem 'DM Sans',sans-serif;letter-spacing:.14em;text-transform:uppercase}.ds-filter-control{display:block;width:100%;margin-top:6px;padding:8px 12px;border:1px solid var(--rule);border-radius:10.4px;background:var(--paper);color:var(--ink);font:400 0.875rem 'DM Sans',sans-serif}.ds-filter-control:hover{border-color:var(--ink-muted)}.ds-filter-control:focus-visible{border-color:var(--signal);outline:2px solid var(--signal);outline-offset:2px}"
+    },
+    {
+      "name": "Section Navigation Link",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "An anchor to a semantic season-report section; current destination is underlined in red.",
+      "html": "<a class=\"ds-section-link ds-section-link-active\" href=\"#rankings\" aria-current=\"location\">Rankings</a>",
+      "css": ".ds-section-link{position:relative;display:inline-flex;min-height:2.75rem;align-items:center;padding:0 .55rem;color:var(--ink-muted);font:600 .79rem 'DM Sans',sans-serif;text-decoration:none;white-space:nowrap;transition:color 160ms ease}.ds-section-link:hover,.ds-section-link-active{color:var(--ink)}.ds-section-link-active:after{position:absolute;right:.55rem;bottom:.25rem;left:.55rem;height:2px;background:var(--signal);content:''}.ds-section-link:focus-visible{outline:2px solid var(--signal);outline-offset:3px}"
+    },
+    {
+      "name": "Active Filter Count",
+      "kind": "chip",
+      "refersTo": "filter-count",
+      "description": "A small red numeric count identifies active mobile filters.",
+      "html": "<span class=\"ds-filter-count\" aria-label=\"2 active filters\">2</span>",
+      "css": ".ds-filter-count{display:inline-flex;min-width:20px;min-height:20px;align-items:center;justify-content:center;padding:2px 6px;border-radius:2px;background:var(--signal);color:var(--paper);font:700 .75rem/1 'DM Sans',sans-serif;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Editorial Report Panel",
+      "kind": "card",
+      "refersTo": "report-card",
+      "description": "Flat paper report field separated from neighboring content by an ink hairline.",
+      "html": "<section class=\"ds-report-panel\"><h3>Season standings</h3><p>Official result totals.</p></section>",
+      "css": ".ds-report-panel{min-width:0;padding:20px;border-top:1px solid var(--rule);background:var(--paper)}.ds-report-panel h3{margin:0;color:var(--ink);font:700 1.875rem/1 'Barlow Condensed',sans-serif}.ds-report-panel p{color:var(--ink-muted);font:400 .875rem/1.55 'DM Sans',sans-serif}"
+    },
+    {
+      "name": "Ranking Scoreline",
+      "kind": "custom",
+      "refersTo": "report-card",
+      "description": "A factual score and proportionally sized red hairline preserve rank readability without decorative imagery.",
+      "html": "<div class=\"ds-scoreline\"><strong>01</strong><span>Competitor name</span><output>1131 points</output><span class=\"ds-score-track\"><i style=\"width:72%\"></i></span></div>",
+      "css": ".ds-scoreline{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:16px;border-bottom:1px solid var(--rule);background:var(--paper-raised);color:var(--ink);font:600 .9rem 'DM Sans',sans-serif}.ds-scoreline strong{color:var(--signal);font:700 1.5rem 'Barlow Condensed',sans-serif}.ds-scoreline output{font-variant-numeric:tabular-nums}.ds-score-track{grid-column:1/-1;display:block;height:5px;background:var(--paper-deep)}.ds-score-track i{display:block;height:100%;background:var(--signal)}"
+    },
+    {
+      "name": "Footer Discipline Link",
+      "kind": "nav",
+      "refersTo": "discipline-link",
+      "description": "A real official federation page link with an unmodified mark and a visible discipline name.",
+      "html": "<a class=\"ds-discipline-link\" href=\"https://mdlsz.com/idpa-szakag/\"><img alt=\"\" src=\"/logos/idpa-discipline.png\"><span>IDPA</span><span aria-hidden=\"true\">↗</span></a>",
+      "css": ".ds-discipline-link{display:flex;min-width:0;min-height:4rem;align-items:center;gap:10px;padding:8px;border:1px solid rgb(250 249 245 / 20%);color:var(--paper);font:600 .76rem/1.25 'DM Sans',sans-serif;text-decoration:none;transition:border-color 150ms ease,background-color 150ms ease}.ds-discipline-link:hover{border-color:var(--footer-accent);background:rgb(250 249 245 / 5%)}.ds-discipline-link img{width:59px;height:42px;object-fit:contain;background:var(--paper-raised)}.ds-discipline-link:focus-visible{outline:2px solid var(--footer-accent);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Championship Record",
+    "overview": "Hero of IDPA reads each season as a traceable championship editorial record. A full-width season masthead, measured totals, open report grids, official links, and restrained data plots make rankings legible without presenting them as free-floating claims. The audience is competitors comparing a season of official Hungarian IDPA results.\n\nWarm opaque paper, championship ink, hairline rules, and a precise red signal form the page's reusable grammar. Display lettering carries the competition identity; ordinary interface work remains easy to read and operate. Section links, live season filters, year-specific routes, quality warnings, and official result sources are functional parts of the record.",
+    "keyCharacteristics": [
+      "Full-bleed season masthead; centered editorial reading measure below.",
+      "Opaque warm-paper surfaces and ruled, mostly square-corner reports.",
+      "Championship red marks current state, standings, source links, and plot series.",
+      "Reproducible season totals and rankings remain tied to official sources.",
+      "Official organization marks retain their original artwork and attribution."
+    ],
+    "rules": [
+      {
+        "name": "The Scoreline Rule",
+        "body": "Red identifies an active navigation state, a source link, a ranking or a chart series. Keep it functional rather than using it to fill report surfaces decoratively.",
+        "section": "colors"
+      },
+      {
+        "name": "The Heading-First Rule",
+        "body": "Let the semantic title lead. Reserve uppercase label styling for controls and actual data terms, not decorative text above card headings.",
+        "section": "typography"
+      },
+      {
+        "name": "The Rule-Over-Shadow Rule",
+        "body": "Prefer a visible editorial rule or tonal paper shift to adding elevation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep one URL and data set per published season; the selector lists available seasons only.",
+      "Do retain source attribution, visible parsing/quality states, and semantic season-wide versus filtered scope.",
+      "Do label and shape chart series with the existing palette, legible axes, and paper tooltips.",
+      "Do retain official organization artwork without recoloring or distorting it; its source-to-link mapping lives in docs/asset-sources.md.",
+      "Do maintain visible keyboard focus, a skip-to-content link, reduced-motion support, and a measured anchor offset."
+    ],
+    "donts": [
+      "Don't imply sponsorship or endorsement through organization or discipline marks.",
+      "Don't use color as the only way to distinguish a ranking, state, or chart series.",
+      "Don't make report cards compete with the actual season figures using glass, gradients, decorative shadow stacks, or ornamental accents."
+    ]
+  }
+}

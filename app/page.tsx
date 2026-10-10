@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { getAvailableYears } from "@/lib/data";
 
 export const dynamic = "force-static";
@@ -8,13 +9,16 @@ export default function Home() {
   if (latestYear !== undefined) redirect(`/${latestYear}`);
 
   return (
-    <main className="min-h-screen bg-[linear-gradient(180deg,#020617_0%,#020617_35%,#111827_100%)] px-4 py-8 md:px-8">
-      <div className="mx-auto max-w-7xl">
-        <h1 className="text-4xl font-black text-white">Season data not generated yet</h1>
-        <p className="mt-4 text-slate-300">
-          Generate a season with <code>npm run pipeline:all -- --year 2026</code>, then rebuild the site.
-        </p>
-      </div>
-    </main>
+    <>
+      <main className="empty-main min-h-screen">
+        <div className="mx-auto max-w-4xl px-5 py-16">
+          <h1 className="font-display text-5xl font-extrabold">Season data not generated yet</h1>
+          <p className="mt-4 max-w-prose text-[var(--ink-muted)]">
+            Generate a season with <code className="rounded border border-[var(--rule)] bg-[var(--paper)] px-1.5 py-1">npm run pipeline:all -- --year 2026</code>, then rebuild the site.
+          </p>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

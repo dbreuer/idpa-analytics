@@ -2,25 +2,7 @@
   "detector": {
     "ignoreRules": [],
     "ignoreFiles": [],
-    "ignoreValues": [
-      {
-        "rule": "gradient-text",
-        "value": "*",
-        "files": [
-          "components/dashboard/dashboard-app.tsx"
-        ],
-        "createdAt": "2026-10-09T18:40:29.856Z",
-        "reason": "User confirmed keeping the current design; existing gradient headings are outside this season-routing change."
-      },
-      {
-        "rule": "ai-color-palette",
-        "value": "*",
-        "files": [
-          "components/dashboard/dashboard-app.tsx"
-        ],
-        "createdAt": "2026-10-09T18:40:29.919Z",
-        "reason": "User confirmed keeping the current design; cyan-on-dark and the existing chart palette are incumbent design authority."
-      }
-    ]
-  }
+    "ignoreValues": []
+  },
+  "buildPath": "code"
 }

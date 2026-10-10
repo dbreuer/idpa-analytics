@@ -15,7 +15,7 @@ export function SectionChart({ title, description, children }: SectionChartProps
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </div>
-      <div className="h-[320px]">{children}</div>
+      <div className="h-[280px] min-w-0 md:h-[320px]">{children}</div>
     </Card>
   );
 }

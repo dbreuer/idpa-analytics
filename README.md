@@ -4,7 +4,9 @@ Interactive Next.js dashboard and Python data pipeline for analyzing official Hu
 
 The intended production domain is `https://hero-of-idpa.hu`. Each generated season has
 its own page (for example `/2025` or `/2026`), and `/` redirects to the latest available
-season. The season navigation preserves the existing dashboard design.
+season. The dashboard uses a championship-editorial design with a fixed filter and section
+navigation, a full-width season hero, season-specific analytics, and an official
+organization/discipline directory footer.
 
 ## Stack
 
@@ -85,6 +87,15 @@ Available settings:
 
 The Python scripts read these from the process environment, not automatically from `.env`.
 
+### Design assets
+
+The wordmark and display fonts use locally hosted Barlow Condensed and DM Sans font
+files distributed under the Open Font License; their license notices are in
+`public/licenses/`. Official MDLSZ and IDPA organization marks and the seven MDLSZ
+discipline logos in `public/logos/` are locally hosted source artwork linked to
+official federation pages. Their file-to-source mapping is recorded in
+`docs/asset-sources.md`. They are not endorsements or sponsorship claims.
+
 ## Production
 
 ```bash
@@ -119,14 +130,17 @@ The original raw value is preserved. Failed parsing is surfaced via `parseError`
 
 ## Dashboard Features
 
-- Premium dark analytics layout
+- Championship-editorial season dashboard
+- Fixed two-row filters and section navigation with mobile disclosure
+- Full-width season hero and latest season totals
+- MDLSZ and IDPA organization links, plus official MDLSZ discipline logo directory
 - Separate season URLs, year navigation, and a latest-season homepage
 - Global competition, division, club, and participation filters
 - Top competitor leaderboard
 - Club power and club strength ranking
 - Competitor detail trends
 - Competition timeline with source links
-- Division, performance, and speed/consistency charts
+- Division, performance, and speed/consistency charts with season-scope labels
 - Methodology page
 - Data quality dashboard
 
@@ -137,6 +151,7 @@ Verified in this repository with:
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
 node --test tests/year-data.test.mjs
+node --test tests/site-navigation.test.mjs
 npm run lint
 npm run build
 ```

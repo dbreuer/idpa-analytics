@@ -1,14 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Trophy } from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import type { CompetitorStanding } from "@/lib/types";
 import { formatNullableNumber, formatNumber } from "@/lib/utils";
-
-const medals = ["🥇", "🥈", "🥉", "4️⃣", "5️⃣"];
 
 interface TopCompetitorsProps {
   year: number;
@@ -17,65 +11,58 @@ interface TopCompetitorsProps {
 }
 
 export function TopCompetitors({ year, competitors, onSelect }: TopCompetitorsProps) {
-  const maxScore = competitors[0]?.overallScore ?? 1;
+  const maxScore = Math.max(competitors[0]?.overallScore ?? 0, 1);
 
   return (
-    <Card className="overflow-hidden">
-      <div className="mb-6 flex items-center justify-between gap-4">
+    <Card className="competitor-panel">
+      <div className="mb-5 flex items-end justify-between gap-4">
         <div>
-          <Badge>Top 5 Competitors</Badge>
-          <CardTitle className="mt-3 text-3xl">IDPA Hungary {year}</CardTitle>
-          <CardDescription>Configurable overall performance score with wins, podiums, participation, and consistency.</CardDescription>
+          <CardTitle className="font-display text-3xl">Top competitors</CardTitle>
+          <CardDescription className="mt-1">IDPA Hungary · {year}</CardDescription>
         </div>
-        <div className="hidden rounded-full border border-amber-300/30 bg-amber-300/10 p-4 text-amber-100 md:block">
-          <Trophy className="h-6 w-6" />
-        </div>
+        <p className="hidden text-right text-xs text-[var(--ink-muted)] sm:block">Overall<br />performance</p>
       </div>
-      <div className="space-y-4">
-        {competitors.map((competitor, index) => (
-          <button
-            key={competitor.normalizedCompetitorName}
-            type="button"
-            onClick={() => onSelect(competitor)}
-            className="w-full text-left"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.08 }}
-              className="rounded-3xl border border-white/8 bg-slate-950/70 p-4 transition hover:border-cyan-300/30"
-            >
-              <div className="mb-3 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{medals[index] ?? `${index + 1}.`}</span>
-                  <div>
-                    <p className="text-lg font-semibold text-white">{competitor.competitorName}</p>
-                    <p className="text-sm text-slate-400">{competitor.club ?? "No club data"}</p>
+      {competitors.length ? (
+        <ol className="m-0 list-none p-0">
+          {competitors.map((competitor, index) => (
+            <li key={competitor.normalizedCompetitorName}>
+              <button
+                type="button"
+                onClick={() => onSelect(competitor)}
+                aria-label={`View ${competitor.competitorName}: ${formatNumber(competitor.overallScore, 0)} performance points`}
+                className="competitor-row editorial-row w-full p-4 text-left"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex min-w-0 items-start gap-3">
+                    <span className={`rank-number ${index < 3 ? "rank-number-podium" : ""}`}>{String(index + 1).padStart(2, "0")}</span>
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold text-[var(--ink)]">{competitor.competitorName}</p>
+                      <p className="mt-0.5 truncate text-sm text-[var(--ink-muted)]">{competitor.club ?? "No club data"}</p>
+                    </div>
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <p className="font-display text-2xl font-bold leading-none tabular-nums">{formatNumber(competitor.overallScore, 0)}</p>
+                    <p className="mt-1 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-[var(--ink-muted)]">Points</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Performance Points</p>
-                  <p className="text-xl font-semibold text-white">{formatNumber(competitor.overallScore, 0)}</p>
-                </div>
-              </div>
-              <div className="mb-3 h-3 overflow-hidden rounded-full bg-white/5">
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-fuchsia-500 via-cyan-400 to-orange-400"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(competitor.overallScore / maxScore) * 100}%` }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                />
-              </div>
-              <div className="grid gap-2 text-sm text-slate-300 md:grid-cols-4">
-                <span>Wins: {competitor.wins}</span>
-                <span>Podiums: {competitor.podiums}</span>
-                <span>Appearances: {competitor.uniqueCompetitions}</span>
-                <span>Fastest: {formatNullableNumber(competitor.fastestTime, 2)}</span>
-              </div>
-            </motion.div>
-          </button>
-        ))}
-      </div>
+                <span className="score-track mt-3 block" aria-hidden="true">
+                  <span style={{ width: `${Math.min((competitor.overallScore / maxScore) * 100, 100)}%` }} />
+                </span>
+                <span className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-[var(--ink-muted)] sm:grid-cols-4">
+                  <span>Wins <strong className="text-[var(--ink)]">{competitor.wins}</strong></span>
+                  <span>Podiums <strong className="text-[var(--ink)]">{competitor.podiums}</strong></span>
+                  <span>Matches <strong className="text-[var(--ink)]">{competitor.uniqueCompetitions}</strong></span>
+                  <span>Fastest <strong className="text-[var(--ink)]">{formatNullableNumber(competitor.fastestTime, 2)}</strong></span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p className="border-y border-[var(--rule)] py-8 text-sm text-[var(--ink-muted)]" role="status">
+          No competitors match these filters. Broaden the selections above to see season standings.
+        </p>
+      )}
     </Card>
   );
 }
